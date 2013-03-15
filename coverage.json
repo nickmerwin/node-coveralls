@@ -1,0 +1,5574 @@
+make[1]: Entering directory `/home/cainus/percolator'
+current_path:  DOES_NOT_EXIST mount_path:  browser
+{
+  "instrumentation": "node-jscoverage",
+  "sloc": 567,
+  "hits": 523,
+  "misses": 44,
+  "coverage": 92.23985890652557,
+  "files": [
+    {
+      "filename": "CRUDCollection.js",
+      "coverage": 94.20289855072464,
+      "hits": 65,
+      "misses": 4,
+      "sloc": 69,
+      "source": {
+        "1": {
+          "source": "var JSV = require('JSV').JSV;",
+          "coverage": 1
+        },
+        "2": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "3": {
+          "source": "",
+          "coverage": ""
+        },
+        "4": {
+          "source": "var CRUDCollection = function(options){",
+          "coverage": 1
+        },
+        "5": {
+          "source": "",
+          "coverage": ""
+        },
+        "6": {
+          "source": "  if (!options || (!options.list &amp;&amp; !options.collectionGET)){",
+          "coverage": 24
+        },
+        "7": {
+          "source": "    throw \"the options parameter should have a list() or collectionGET() function.\";",
+          "coverage": 1
+        },
+        "8": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "9": {
+          "source": "",
+          "coverage": ""
+        },
+        "10": {
+          "source": "  // TODO: list() array or object",
+          "coverage": ""
+        },
+        "11": {
+          "source": "  if (options.create &amp;&amp; !options.createSchema &amp;&amp; !!options.schema){",
+          "coverage": 23
+        },
+        "12": {
+          "source": "    options.createSchema = options.schema;",
+          "coverage": 2
+        },
+        "13": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "14": {
+          "source": "  if (!options.updateSchema &amp;&amp; !!options.schema){",
+          "coverage": 23
+        },
+        "15": {
+          "source": "    options.updateSchema = options.schema;",
+          "coverage": 4
+        },
+        "16": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "17": {
+          "source": "  if (!options.update &amp;&amp; !options.upsert){",
+          "coverage": 23
+        },
+        "18": {
+          "source": "    delete options.updateSchema; // if there's no update(), we ignore any updateSchema",
+          "coverage": 18
+        },
+        "19": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "20": {
+          "source": "",
+          "coverage": ""
+        },
+        "21": {
+          "source": "  var outputList = function(req, res, list, key){",
+          "coverage": 23
+        },
+        "22": {
+          "source": "    var collection = res.collection(list, key);",
+          "coverage": 3
+        },
+        "23": {
+          "source": "    if (req.app.autoLink){",
+          "coverage": 3
+        },
+        "24": {
+          "source": "      collection = collection.linkEach('self', function(item, name){",
+          "coverage": 3
+        },
+        "25": {
+          "source": "        if (!!key){",
+          "coverage": 0
+        },
+        "26": {
+          "source": "          return req.uri.child(item[key]);  // allow 'options' to provide another key to link on.",
+          "coverage": 0
+        },
+        "27": {
+          "source": "        } else {",
+          "coverage": ""
+        },
+        "28": {
+          "source": "          return req.uri.child(name);",
+          "coverage": 0
+        },
+        "29": {
+          "source": "        }",
+          "coverage": ""
+        },
+        "30": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "31": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "32": {
+          "source": "    if (!!options.createSchema &amp;&amp; req.app.autoLink){",
+          "coverage": 3
+        },
+        "33": {
+          "source": "      collection = collection.link('create',",
+          "coverage": 2
+        },
+        "34": {
+          "source": "                                   req.uri.query(false),",
+          "coverage": ""
+        },
+        "35": {
+          "source": "                                   { method : 'POST',",
+          "coverage": ""
+        },
+        "36": {
+          "source": "                                     schema : options.createSchema});",
+          "coverage": ""
+        },
+        "37": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "38": {
+          "source": "    collection.send();",
+          "coverage": 3
+        },
+        "39": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "40": {
+          "source": "",
+          "coverage": ""
+        },
+        "41": {
+          "source": "  this.handler = {",
+          "coverage": 23
+        },
+        "42": {
+          "source": "    GET : function(req, res){",
+          "coverage": ""
+        },
+        "43": {
+          "source": "      options.list(req, res, function(err, items, options){",
+          "coverage": 3
+        },
+        "44": {
+          "source": "        if (!!err){",
+          "coverage": 3
+        },
+        "45": {
+          "source": "          return res.status.internalServerError(err);",
+          "coverage": 0
+        },
+        "46": {
+          "source": "        }",
+          "coverage": ""
+        },
+        "47": {
+          "source": "        outputList(req, res, items, options);",
+          "coverage": 3
+        },
+        "48": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "49": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "50": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "51": {
+          "source": "",
+          "coverage": ""
+        },
+        "52": {
+          "source": "  if (!!options.create){",
+          "coverage": 23
+        },
+        "53": {
+          "source": "    this.handler.POST = function(req, res){",
+          "coverage": 4
+        },
+        "54": {
+          "source": "      req.onJson(options.createSchema, function(err, obj){",
+          "coverage": 2
+        },
+        "55": {
+          "source": "        options.create(req, res, obj, function(){",
+          "coverage": 2
+        },
+        "56": {
+          "source": "          return res.status.created(req.uri);",
+          "coverage": 1
+        },
+        "57": {
+          "source": "        });",
+          "coverage": ""
+        },
+        "58": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "59": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "60": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "61": {
+          "source": "",
+          "coverage": ""
+        },
+        "62": {
+          "source": "  this.wildcard = { };",
+          "coverage": 23
+        },
+        "63": {
+          "source": "",
+          "coverage": ""
+        },
+        "64": {
+          "source": "  if (!!options.fetch){",
+          "coverage": 23
+        },
+        "65": {
+          "source": "    this.wildcard.fetch = options.fetch;",
+          "coverage": 6
+        },
+        "66": {
+          "source": "    this.wildcard.GET = function(req, res){",
+          "coverage": 6
+        },
+        "67": {
+          "source": "      var resource = res.object(req.fetched);",
+          "coverage": 5
+        },
+        "68": {
+          "source": "      if ((!!options.update || !!options.upsert) &amp;&amp; (req.app.autoLink)){",
+          "coverage": 5
+        },
+        "69": {
+          "source": "        resource.link( \"update\", req.uri, {method : 'PUT', schema : options.updateSchema});",
+          "coverage": 1
+        },
+        "70": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "71": {
+          "source": "      if (!!options.destroy &amp;&amp; req.app.autoLink){",
+          "coverage": 5
+        },
+        "72": {
+          "source": "        resource.link( \"delete\", req.uri, {method : 'DELETE'});",
+          "coverage": 1
+        },
+        "73": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "74": {
+          "source": "      resource.send();",
+          "coverage": 5
+        },
+        "75": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "76": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "77": {
+          "source": "",
+          "coverage": ""
+        },
+        "78": {
+          "source": "  // UPDATE",
+          "coverage": ""
+        },
+        "79": {
+          "source": "  if (!!options.update){",
+          "coverage": 23
+        },
+        "80": {
+          "source": "    this.wildcard.fetchOnPUT = true;",
+          "coverage": 3
+        },
+        "81": {
+          "source": "    this.wildcard.PUT = function(req, res){",
+          "coverage": 3
+        },
+        "82": {
+          "source": "      req.onJson(options.updateSchema, function(err, obj){",
+          "coverage": 2
+        },
+        "83": {
+          "source": "        var id = req.uri.child();",
+          "coverage": 2
+        },
+        "84": {
+          "source": "        options.update(req, res, id, obj, function(){",
+          "coverage": 2
+        },
+        "85": {
+          "source": "          res.setHeader('Location', req.uri);",
+          "coverage": 1
+        },
+        "86": {
+          "source": "          res.writeHead(303);",
+          "coverage": 1
+        },
+        "87": {
+          "source": "          return res.end();",
+          "coverage": 1
+        },
+        "88": {
+          "source": "        });",
+          "coverage": ""
+        },
+        "89": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "90": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "91": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "92": {
+          "source": "",
+          "coverage": ""
+        },
+        "93": {
+          "source": "  // UPSERT",
+          "coverage": ""
+        },
+        "94": {
+          "source": "  if (!!options.upsert){",
+          "coverage": 23
+        },
+        "95": {
+          "source": "    // fetch is not used here, because this is for create as well as update",
+          "coverage": ""
+        },
+        "96": {
+          "source": "    this.wildcard.fetchOnPUT = false;",
+          "coverage": 2
+        },
+        "97": {
+          "source": "",
+          "coverage": ""
+        },
+        "98": {
+          "source": "    this.wildcard.PUT = function(req, res){",
+          "coverage": 2
+        },
+        "99": {
+          "source": "      req.onJson(options.updateSchema, function(err, obj){",
+          "coverage": 2
+        },
+        "100": {
+          "source": "        var id = req.uri.child();",
+          "coverage": 2
+        },
+        "101": {
+          "source": "        options.upsert(req, res, id, obj, function(){",
+          "coverage": 2
+        },
+        "102": {
+          "source": "          res.setHeader('Location', req.uri);",
+          "coverage": 1
+        },
+        "103": {
+          "source": "          res.writeHead(303);",
+          "coverage": 1
+        },
+        "104": {
+          "source": "          return res.end();",
+          "coverage": 1
+        },
+        "105": {
+          "source": "        });",
+          "coverage": ""
+        },
+        "106": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "107": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "108": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "109": {
+          "source": "",
+          "coverage": ""
+        },
+        "110": {
+          "source": "  // DESTROY",
+          "coverage": ""
+        },
+        "111": {
+          "source": "  if (!!options.destroy){",
+          "coverage": 23
+        },
+        "112": {
+          "source": "    this.wildcard.DELETE = function(req, res){",
+          "coverage": 3
+        },
+        "113": {
+          "source": "      options.destroy(req, res, req.uri.child(), function(){",
+          "coverage": 2
+        },
+        "114": {
+          "source": "        res.writeHead(204);",
+          "coverage": 1
+        },
+        "115": {
+          "source": "        res.end();",
+          "coverage": 1
+        },
+        "116": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "117": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "118": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "119": {
+          "source": "",
+          "coverage": ""
+        },
+        "120": {
+          "source": "  if (!!options.collectionGET){",
+          "coverage": 23
+        },
+        "121": {
+          "source": "    this.handler.GET = options.collectionGET;",
+          "coverage": 1
+        },
+        "122": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "123": {
+          "source": "",
+          "coverage": ""
+        },
+        "124": {
+          "source": "  if (!!options.memberGET){",
+          "coverage": 23
+        },
+        "125": {
+          "source": "    this.wildcard.GET = options.memberGET;",
+          "coverage": 1
+        },
+        "126": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "127": {
+          "source": "",
+          "coverage": ""
+        },
+        "128": {
+          "source": "};",
+          "coverage": ""
+        },
+        "129": {
+          "source": "module.exports = CRUDCollection;",
+          "coverage": 1
+        }
+      }
+    },
+    {
+      "filename": "ContextFaker.js",
+      "coverage": 86.27450980392157,
+      "hits": 88,
+      "misses": 14,
+      "sloc": 102,
+      "source": {
+        "1": {
+          "source": "var assert = require('assert');",
+          "coverage": 1
+        },
+        "2": {
+          "source": "var nodeUrl = require('url');",
+          "coverage": 1
+        },
+        "3": {
+          "source": "var urlgrey = require('urlgrey');",
+          "coverage": 1
+        },
+        "4": {
+          "source": "var StatusManager = require('../index').StatusManager;",
+          "coverage": 1
+        },
+        "5": {
+          "source": "var ObjectHelper = require('../index').ObjectHelper;",
+          "coverage": 1
+        },
+        "6": {
+          "source": "var FetchHelper = require('../index').FetchHelper;",
+          "coverage": 1
+        },
+        "7": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "8": {
+          "source": "var detour = require('detour');",
+          "coverage": 1
+        },
+        "9": {
+          "source": "",
+          "coverage": ""
+        },
+        "10": {
+          "source": "var ContextFaker = function(method, url, headers, body){",
+          "coverage": 1
+        },
+        "11": {
+          "source": "  this._method = method || 'GET';",
+          "coverage": 9
+        },
+        "12": {
+          "source": "  this._url = url || '/';",
+          "coverage": 9
+        },
+        "13": {
+          "source": "  this._headers = headers || {};",
+          "coverage": 9
+        },
+        "14": {
+          "source": "  this._body = body || '';",
+          "coverage": 9
+        },
+        "15": {
+          "source": "  this.expect = this._expectObject();",
+          "coverage": 9
+        },
+        "16": {
+          "source": "  this.expectations = {};",
+          "coverage": 9
+        },
+        "17": {
+          "source": "  this._refreshFake();",
+          "coverage": 9
+        },
+        "18": {
+          "source": "  this.$ = {};",
+          "coverage": 9
+        },
+        "19": {
+          "source": "};",
+          "coverage": ""
+        },
+        "20": {
+          "source": "",
+          "coverage": ""
+        },
+        "21": {
+          "source": "ContextFaker.prototype._refreshFake = function(){",
+          "coverage": 1
+        },
+        "22": {
+          "source": "  this.$ = new ContextFake(this._method,",
+          "coverage": 21
+        },
+        "23": {
+          "source": "                              this._url,",
+          "coverage": ""
+        },
+        "24": {
+          "source": "                              this._headers,",
+          "coverage": ""
+        },
+        "25": {
+          "source": "                              this._body,",
+          "coverage": ""
+        },
+        "26": {
+          "source": "                              this.expectations,",
+          "coverage": ""
+        },
+        "27": {
+          "source": "                              this.done);",
+          "coverage": ""
+        },
+        "28": {
+          "source": "  this.req = this.$.req;",
+          "coverage": 21
+        },
+        "29": {
+          "source": "  this.res = this.$.res;",
+          "coverage": 21
+        },
+        "30": {
+          "source": "};",
+          "coverage": ""
+        },
+        "31": {
+          "source": "",
+          "coverage": ""
+        },
+        "32": {
+          "source": "ContextFaker.prototype.route = function(module, done){",
+          "coverage": 1
+        },
+        "33": {
+          "source": "  var req = this.req;",
+          "coverage": 9
+        },
+        "34": {
+          "source": "  var res = this.res;",
+          "coverage": 9
+        },
+        "35": {
+          "source": "  var body = this._body;",
+          "coverage": 9
+        },
+        "36": {
+          "source": "  this.$.done = done;",
+          "coverage": 9
+        },
+        "37": {
+          "source": "  FetchHelper(req, res, module, function(){",
+          "coverage": 9
+        },
+        "38": {
+          "source": "    module[req.method](req, res);",
+          "coverage": 7
+        },
+        "39": {
+          "source": "    req.end(body);",
+          "coverage": 7
+        },
+        "40": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "41": {
+          "source": "};",
+          "coverage": ""
+        },
+        "42": {
+          "source": "",
+          "coverage": ""
+        },
+        "43": {
+          "source": "ContextFaker.prototype.headers = function(headers){",
+          "coverage": 1
+        },
+        "44": {
+          "source": "  this._headers = headers;",
+          "coverage": 1
+        },
+        "45": {
+          "source": "  this._refreshFake();",
+          "coverage": 1
+        },
+        "46": {
+          "source": "  return this;",
+          "coverage": 1
+        },
+        "47": {
+          "source": "};",
+          "coverage": ""
+        },
+        "48": {
+          "source": "ContextFaker.prototype.header = function(name, value){",
+          "coverage": 1
+        },
+        "49": {
+          "source": "  this._headers[name] = value;",
+          "coverage": 1
+        },
+        "50": {
+          "source": "  this._refreshFake();",
+          "coverage": 1
+        },
+        "51": {
+          "source": "  return this;",
+          "coverage": 1
+        },
+        "52": {
+          "source": "};",
+          "coverage": ""
+        },
+        "53": {
+          "source": "ContextFaker.prototype.url = function(url){",
+          "coverage": 1
+        },
+        "54": {
+          "source": "  this._url = url;",
+          "coverage": 9
+        },
+        "55": {
+          "source": "  this._refreshFake();",
+          "coverage": 9
+        },
+        "56": {
+          "source": "  return this;",
+          "coverage": 9
+        },
+        "57": {
+          "source": "};",
+          "coverage": ""
+        },
+        "58": {
+          "source": "ContextFaker.prototype.method = function(method){",
+          "coverage": 1
+        },
+        "59": {
+          "source": "  this._method = method;",
+          "coverage": 0
+        },
+        "60": {
+          "source": "  this._refreshFake();",
+          "coverage": 0
+        },
+        "61": {
+          "source": "  return this;",
+          "coverage": 0
+        },
+        "62": {
+          "source": "};",
+          "coverage": ""
+        },
+        "63": {
+          "source": "ContextFaker.prototype.body = function(thebody){",
+          "coverage": 1
+        },
+        "64": {
+          "source": "  this._body = thebody;",
+          "coverage": 1
+        },
+        "65": {
+          "source": "  this._refreshFake();",
+          "coverage": 1
+        },
+        "66": {
+          "source": "  return this;",
+          "coverage": 1
+        },
+        "67": {
+          "source": "};",
+          "coverage": ""
+        },
+        "68": {
+          "source": "",
+          "coverage": ""
+        },
+        "69": {
+          "source": "ContextFaker.prototype._expectObject = function(){",
+          "coverage": 1
+        },
+        "70": {
+          "source": "  var faker = this;",
+          "coverage": 9
+        },
+        "71": {
+          "source": "  return {",
+          "coverage": 9
+        },
+        "72": {
+          "source": "    statusCode : function(code){",
+          "coverage": ""
+        },
+        "73": {
+          "source": "      faker.expectations.statusCode = code;",
+          "coverage": 0
+        },
+        "74": {
+          "source": "      return faker;",
+          "coverage": 0
+        },
+        "75": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "76": {
+          "source": "    body : function(bodyVal){",
+          "coverage": ""
+        },
+        "77": {
+          "source": "      faker.expectations.body = bodyVal;",
+          "coverage": 0
+        },
+        "78": {
+          "source": "      return faker;",
+          "coverage": 0
+        },
+        "79": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "80": {
+          "source": "    header : function(name, value){",
+          "coverage": ""
+        },
+        "81": {
+          "source": "      faker.expectations.headers[name] = value;",
+          "coverage": 0
+        },
+        "82": {
+          "source": "      return faker;",
+          "coverage": 0
+        },
+        "83": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "84": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "85": {
+          "source": "};",
+          "coverage": ""
+        },
+        "86": {
+          "source": "",
+          "coverage": ""
+        },
+        "87": {
+          "source": "var ContextFake = function(method, url, headers, body, expectations){",
+          "coverage": 1
+        },
+        "88": {
+          "source": "  var fake = this;",
+          "coverage": 21
+        },
+        "89": {
+          "source": "  var parsedUrl = nodeUrl.parse(url);",
+          "coverage": 21
+        },
+        "90": {
+          "source": "  var protocol = 'http';",
+          "coverage": 21
+        },
+        "91": {
+          "source": "  if (parsedUrl.protocol){",
+          "coverage": 21
+        },
+        "92": {
+          "source": "    this.protocol = parsedUrl.protocol.slice(0, -1);",
+          "coverage": 0
+        },
+        "93": {
+          "source": "    // remove trailing ':'",
+          "coverage": ""
+        },
+        "94": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "95": {
+          "source": "  var hostname = parsedUrl.hostname || 'localhost';",
+          "coverage": 21
+        },
+        "96": {
+          "source": "  var port = parsedUrl.port || 80;",
+          "coverage": 21
+        },
+        "97": {
+          "source": "  this.router = {",
+          "coverage": 21
+        },
+        "98": {
+          "source": "  };  ",
+          "coverage": ""
+        },
+        "99": {
+          "source": "  this.done = function(){};",
+          "coverage": 21
+        },
+        "100": {
+          "source": "  var endHandler = function(){};",
+          "coverage": 21
+        },
+        "101": {
+          "source": "  var dataHandler = function(){};",
+          "coverage": 21
+        },
+        "102": {
+          "source": "  this.req = {",
+          "coverage": 21
+        },
+        "103": {
+          "source": "    app : {},",
+          "coverage": ""
+        },
+        "104": {
+          "source": "    headers : headers,",
+          "coverage": ""
+        },
+        "105": {
+          "source": "    method : method,",
+          "coverage": ""
+        },
+        "106": {
+          "source": "    url : url,",
+          "coverage": ""
+        },
+        "107": {
+          "source": "    uri : urlgrey(url),",
+          "coverage": ""
+        },
+        "108": {
+          "source": "    resume : function(){},",
+          "coverage": ""
+        },
+        "109": {
+          "source": "    on : function(eventName, cb){",
+          "coverage": ""
+        },
+        "110": {
+          "source": "      if (eventName === 'data'){",
+          "coverage": 2
+        },
+        "111": {
+          "source": "        dataHandler = cb;",
+          "coverage": 1
+        },
+        "112": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "113": {
+          "source": "      if (eventName === 'end'){",
+          "coverage": 2
+        },
+        "114": {
+          "source": "        endHandler = cb;",
+          "coverage": 1
+        },
+        "115": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "116": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "117": {
+          "source": "    write : function(data){",
+          "coverage": ""
+        },
+        "118": {
+          "source": "      dataHandler(data);",
+          "coverage": 0
+        },
+        "119": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "120": {
+          "source": "    end : function(data){",
+          "coverage": ""
+        },
+        "121": {
+          "source": "      endHandler(data);",
+          "coverage": 7
+        },
+        "122": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "123": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "124": {
+          "source": "  this.actual = {};",
+          "coverage": 21
+        },
+        "125": {
+          "source": "  this.actual.body = '';",
+          "coverage": 21
+        },
+        "126": {
+          "source": "  this.actual.headers = {};",
+          "coverage": 21
+        },
+        "127": {
+          "source": "  this.res = {",
+          "coverage": 21
+        },
+        "128": {
+          "source": "    writeHead : function(statusCode, reasonPhrase, headers){",
+          "coverage": ""
+        },
+        "129": {
+          "source": "      fake.res.statusCode = statusCode;",
+          "coverage": 2
+        },
+        "130": {
+          "source": "      fake.actual.statusCode = statusCode;",
+          "coverage": 2
+        },
+        "131": {
+          "source": "      fake.actual.headers = _.extend(fake.actual.headers, headers);",
+          "coverage": 2
+        },
+        "132": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "133": {
+          "source": "    setHeader : function(name, value){",
+          "coverage": ""
+        },
+        "134": {
+          "source": "      fake.actual.headers[name] = value;",
+          "coverage": 8
+        },
+        "135": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "136": {
+          "source": "    statusCode : 200,",
+          "coverage": ""
+        },
+        "137": {
+          "source": "    write : function(data, encoding){",
+          "coverage": ""
+        },
+        "138": {
+          "source": "      fake.actual.body += data;",
+          "coverage": 0
+        },
+        "139": {
+          "source": "    },",
+          "coverage": ""
+        },
+        "140": {
+          "source": "    end : function(data, encoding){",
+          "coverage": ""
+        },
+        "141": {
+          "source": "      fake.actual.statusCode = fake.res.statusCode;",
+          "coverage": 9
+        },
+        "142": {
+          "source": "      if (data){",
+          "coverage": 9
+        },
+        "143": {
+          "source": "        fake.actual.body += data;",
+          "coverage": 9
+        },
+        "144": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "145": {
+          "source": "      fake.validate();",
+          "coverage": 9
+        },
+        "146": {
+          "source": "      if (fake.done){",
+          "coverage": 9
+        },
+        "147": {
+          "source": "        fake.done(fake.actual);",
+          "coverage": 9
+        },
+        "148": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "149": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "150": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "151": {
+          "source": "  ObjectHelper(this.req, this.res);",
+          "coverage": 21
+        },
+        "152": {
+          "source": "  this.res.status = (new StatusManager()).createResponder(this.req, this.res);",
+          "coverage": 21
+        },
+        "153": {
+          "source": "  this.res.status.on('error', function(data){ /* do nothing */});",
+          "coverage": 21
+        },
+        "154": {
+          "source": "  this.res.status.emit = function(){};  // swallow events",
+          "coverage": 21
+        },
+        "155": {
+          "source": "  //TODO can validate() be hidden?  it's only called from res.end() right?",
+          "coverage": ""
+        },
+        "156": {
+          "source": "  // does it ever need to be called explicitly?",
+          "coverage": ""
+        },
+        "157": {
+          "source": "  this.validate = function(){",
+          "coverage": 21
+        },
+        "158": {
+          "source": "    if (expectations.statusCode){",
+          "coverage": 9
+        },
+        "159": {
+          "source": "      assert.equal(this.res.statusCode,",
+          "coverage": 0
+        },
+        "160": {
+          "source": "                   expectations.statusCode,",
+          "coverage": ""
+        },
+        "161": {
+          "source": "                   \"response statusCode should have been \" +",
+          "coverage": ""
+        },
+        "162": {
+          "source": "                     expectations.statusCode +",
+          "coverage": ""
+        },
+        "163": {
+          "source": "                     \" but was \" +",
+          "coverage": ""
+        },
+        "164": {
+          "source": "                     this.res.statusCode",
+          "coverage": ""
+        },
+        "165": {
+          "source": "                     );",
+          "coverage": ""
+        },
+        "166": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "167": {
+          "source": "    if (expectations.body){",
+          "coverage": 9
+        },
+        "168": {
+          "source": "      assert.equal(this.actual.body,",
+          "coverage": 0
+        },
+        "169": {
+          "source": "                   expectations.body,",
+          "coverage": ""
+        },
+        "170": {
+          "source": "                   \"response body should have been: \\n \" +",
+          "coverage": ""
+        },
+        "171": {
+          "source": "                     expectations.body +",
+          "coverage": ""
+        },
+        "172": {
+          "source": "                     \"\\n\\n ...but was: \\n\" +",
+          "coverage": ""
+        },
+        "173": {
+          "source": "                     this.actual.body + \"\\n\\n\"",
+          "coverage": ""
+        },
+        "174": {
+          "source": "                     );",
+          "coverage": ""
+        },
+        "175": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "176": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "177": {
+          "source": "};",
+          "coverage": ""
+        },
+        "178": {
+          "source": "",
+          "coverage": ""
+        },
+        "179": {
+          "source": "module.exports = ContextFaker;",
+          "coverage": 1
+        },
+        "180": {
+          "source": "",
+          "coverage": ""
+        },
+        "181": {
+          "source": "",
+          "coverage": ""
+        },
+        "182": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "ContextHelpers/Authenticate.js",
+      "coverage": 100,
+      "hits": 11,
+      "misses": 0,
+      "sloc": 11,
+      "source": {
+        "1": {
+          "source": "",
+          "coverage": ""
+        },
+        "2": {
+          "source": "",
+          "coverage": ""
+        },
+        "3": {
+          "source": "var AuthenticateHelper = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "4": {
+          "source": "  //  if handler has an authenticate defined, call it.",
+          "coverage": ""
+        },
+        "5": {
+          "source": "  if (!!handler.authenticate &amp;&amp; (typeof(handler.authenticate) == 'function')){",
+          "coverage": 19
+        },
+        "6": {
+          "source": "    handler.authenticate(req, res, function(err, authenticated){",
+          "coverage": 4
+        },
+        "7": {
+          "source": "      if (err === true){",
+          "coverage": 3
+        },
+        "8": {
+          "source": "        // if it returns an error, throw a 401",
+          "coverage": ""
+        },
+        "9": {
+          "source": "        return res.status.unauthenticated();",
+          "coverage": 1
+        },
+        "10": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "11": {
+          "source": "      if (!!err){",
+          "coverage": 2
+        },
+        "12": {
+          "source": "        return res.status.internalServerError(err);",
+          "coverage": 1
+        },
+        "13": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "14": {
+          "source": "      // if it returns an object set handler.authenticated",
+          "coverage": ""
+        },
+        "15": {
+          "source": "      req.authenticated = authenticated;",
+          "coverage": 1
+        },
+        "16": {
+          "source": "      cb();  // no error",
+          "coverage": 1
+        },
+        "17": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "18": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "19": {
+          "source": "    cb();  // no error if no authenticate()",
+          "coverage": 15
+        },
+        "20": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "21": {
+          "source": "};",
+          "coverage": ""
+        },
+        "22": {
+          "source": "",
+          "coverage": ""
+        },
+        "23": {
+          "source": "",
+          "coverage": ""
+        },
+        "24": {
+          "source": "module.exports = AuthenticateHelper;",
+          "coverage": 1
+        },
+        "25": {
+          "source": "",
+          "coverage": ""
+        },
+        "26": {
+          "source": "",
+          "coverage": ""
+        },
+        "27": {
+          "source": "",
+          "coverage": ""
+        },
+        "28": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "ContextHelpers/BasicAuthenticate.js",
+      "coverage": 100,
+      "hits": 22,
+      "misses": 0,
+      "sloc": 22,
+      "source": {
+        "1": {
+          "source": "",
+          "coverage": ""
+        },
+        "2": {
+          "source": "",
+          "coverage": ""
+        },
+        "3": {
+          "source": "var BasicAuthenticateContextHelper = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "4": {
+          "source": "  //  if handler has a basicAuthenticate defined, call it.",
+          "coverage": ""
+        },
+        "5": {
+          "source": "  if (!!handler.basicAuthenticate &amp;&amp; (typeof(handler.basicAuthenticate) == 'function')){",
+          "coverage": 7
+        },
+        "6": {
+          "source": "    var header = req.headers.authorization;",
+          "coverage": 6
+        },
+        "7": {
+          "source": "",
+          "coverage": ""
+        },
+        "8": {
+          "source": "    if (!header){",
+          "coverage": 6
+        },
+        "9": {
+          "source": "      return unauthenticated(res);",
+          "coverage": 1
+        },
+        "10": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "11": {
+          "source": "",
+          "coverage": ""
+        },
+        "12": {
+          "source": "    var pieces = header.split(\" \");",
+          "coverage": 5
+        },
+        "13": {
+          "source": "    var scheme = pieces[0];",
+          "coverage": 5
+        },
+        "14": {
+          "source": "",
+          "coverage": ""
+        },
+        "15": {
+          "source": "    if (scheme !== 'Basic'){",
+          "coverage": 5
+        },
+        "16": {
+          "source": "      return unauthenticated(res);",
+          "coverage": 1
+        },
+        "17": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "18": {
+          "source": "    var credentials = new Buffer(pieces[1], 'base64').toString('utf8').split(\":\");",
+          "coverage": 4
+        },
+        "19": {
+          "source": "",
+          "coverage": ""
+        },
+        "20": {
+          "source": "    handler.basicAuthenticate(credentials[0], credentials[1], req, res, function(err, authenticated){",
+          "coverage": 4
+        },
+        "21": {
+          "source": "      if (err === true){",
+          "coverage": 3
+        },
+        "22": {
+          "source": "        // if it returns an error, throw a 401",
+          "coverage": ""
+        },
+        "23": {
+          "source": "        return unauthenticated(res);",
+          "coverage": 1
+        },
+        "24": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "25": {
+          "source": "      if (!!err){",
+          "coverage": 2
+        },
+        "26": {
+          "source": "        return res.status.internalServerError(err);",
+          "coverage": 1
+        },
+        "27": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "28": {
+          "source": "      // if it returns an object set handler.authenticated",
+          "coverage": ""
+        },
+        "29": {
+          "source": "      req.authenticated = authenticated;",
+          "coverage": 1
+        },
+        "30": {
+          "source": "      cb();  // no error",
+          "coverage": 1
+        },
+        "31": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "32": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "33": {
+          "source": "    cb();  // no error if no authenticate()",
+          "coverage": 1
+        },
+        "34": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "35": {
+          "source": "};",
+          "coverage": ""
+        },
+        "36": {
+          "source": "",
+          "coverage": ""
+        },
+        "37": {
+          "source": "",
+          "coverage": ""
+        },
+        "38": {
+          "source": "module.exports = BasicAuthenticateContextHelper;",
+          "coverage": 1
+        },
+        "39": {
+          "source": "",
+          "coverage": ""
+        },
+        "40": {
+          "source": "var unauthenticated = function(res){",
+          "coverage": 1
+        },
+        "41": {
+          "source": "    res.setHeader('WWW-Authenticate', 'Basic');",
+          "coverage": 3
+        },
+        "42": {
+          "source": "    res.status.unauthenticated({scheme : 'Basic'});",
+          "coverage": 3
+        },
+        "43": {
+          "source": "};",
+          "coverage": ""
+        },
+        "44": {
+          "source": "",
+          "coverage": ""
+        },
+        "45": {
+          "source": "",
+          "coverage": ""
+        },
+        "46": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "ContextHelpers/Fetch.js",
+      "coverage": 100,
+      "hits": 13,
+      "misses": 0,
+      "sloc": 13,
+      "source": {
+        "1": {
+          "source": "/*",
+          "coverage": ""
+        },
+        "2": {
+          "source": "",
+          "coverage": ""
+        },
+        "3": {
+          "source": "The purpose of the fetch helper is to use ",
+          "coverage": ""
+        },
+        "4": {
+          "source": "a resource-defined fetch() method and automatically retrieve",
+          "coverage": ""
+        },
+        "5": {
+          "source": "the requested data, or show appropriate error messages.",
+          "coverage": ""
+        },
+        "6": {
+          "source": "",
+          "coverage": ""
+        },
+        "7": {
+          "source": "If fetch() is not defined on the resource, there will be no ",
+          "coverage": ""
+        },
+        "8": {
+          "source": "effect all.",
+          "coverage": ""
+        },
+        "9": {
+          "source": "",
+          "coverage": ""
+        },
+        "10": {
+          "source": "If you find that you want to do your own error handling, this",
+          "coverage": ""
+        },
+        "11": {
+          "source": "helper is probably unnecessary as it will do little ",
+          "coverage": ""
+        },
+        "12": {
+          "source": "else other than setting req.fetched for you.",
+          "coverage": ""
+        },
+        "13": {
+          "source": "",
+          "coverage": ""
+        },
+        "14": {
+          "source": "*/",
+          "coverage": ""
+        },
+        "15": {
+          "source": "",
+          "coverage": ""
+        },
+        "16": {
+          "source": "",
+          "coverage": ""
+        },
+        "17": {
+          "source": "",
+          "coverage": ""
+        },
+        "18": {
+          "source": "var FetchHelper = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "19": {
+          "source": "",
+          "coverage": ""
+        },
+        "20": {
+          "source": "  if (!req.fetched &amp;&amp; !!handler.fetch &amp;&amp; (typeof(handler.fetch) == 'function')){",
+          "coverage": 29
+        },
+        "21": {
+          "source": "    if (req.method !== \"PUT\" || handler.fetchOnPUT !== false){",
+          "coverage": 8
+        },
+        "22": {
+          "source": "      handler.fetch(req, res, function(err, fetched){",
+          "coverage": 7
+        },
+        "23": {
+          "source": "        if (err === true){",
+          "coverage": 6
+        },
+        "24": {
+          "source": "          // if it returns an error, throw a 404",
+          "coverage": ""
+        },
+        "25": {
+          "source": "          return res.status.notFound(req.url);",
+          "coverage": 2
+        },
+        "26": {
+          "source": "        }",
+          "coverage": ""
+        },
+        "27": {
+          "source": "        if (!!err){",
+          "coverage": 4
+        },
+        "28": {
+          "source": "          return res.status.internalServerError(err);",
+          "coverage": 2
+        },
+        "29": {
+          "source": "        }",
+          "coverage": ""
+        },
+        "30": {
+          "source": "        req.fetched = fetched;",
+          "coverage": 2
+        },
+        "31": {
+          "source": "        return cb();",
+          "coverage": 2
+        },
+        "32": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "33": {
+          "source": "    } else {",
+          "coverage": ""
+        },
+        "34": {
+          "source": "      return cb();",
+          "coverage": 1
+        },
+        "35": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "36": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "37": {
+          "source": "    return cb();",
+          "coverage": 21
+        },
+        "38": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "39": {
+          "source": "};",
+          "coverage": ""
+        },
+        "40": {
+          "source": "",
+          "coverage": ""
+        },
+        "41": {
+          "source": "module.exports = FetchHelper;",
+          "coverage": 1
+        },
+        "42": {
+          "source": "",
+          "coverage": ""
+        },
+        "43": {
+          "source": "",
+          "coverage": ""
+        },
+        "44": {
+          "source": "",
+          "coverage": ""
+        },
+        "45": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "ContextHelpers/Object.js",
+      "coverage": 53.57142857142857,
+      "hits": 15,
+      "misses": 13,
+      "sloc": 28,
+      "source": {
+        "1": {
+          "source": "/*",
+          "coverage": ""
+        },
+        "2": {
+          "source": " This helper adds a object function to the",
+          "coverage": ""
+        },
+        "3": {
+          "source": " object and callsback when done.",
+          "coverage": ""
+        },
+        "4": {
+          "source": "",
+          "coverage": ""
+        },
+        "5": {
+          "source": " The json function takes json object, and allows you to",
+          "coverage": ""
+        },
+        "6": {
+          "source": "manipulate it in various ways, and either send it as",
+          "coverage": ""
+        },
+        "7": {
+          "source": "a response ( .send() ), return it as a string ",
+          "coverage": ""
+        },
+        "8": {
+          "source": "( .toString() ), or return it as an object ( .toObject() ).",
+          "coverage": ""
+        },
+        "9": {
+          "source": "",
+          "coverage": ""
+        },
+        "10": {
+          "source": " */",
+          "coverage": ""
+        },
+        "11": {
+          "source": "",
+          "coverage": ""
+        },
+        "12": {
+          "source": "var HyperJson = require('../HyperJson');",
+          "coverage": 1
+        },
+        "13": {
+          "source": "var HyperJsonCollection = require('../HyperJsonCollection');",
+          "coverage": 1
+        },
+        "14": {
+          "source": "",
+          "coverage": ""
+        },
+        "15": {
+          "source": "var ObjectHelper = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "16": {
+          "source": "  res.object = function(obj){",
+          "coverage": 35
+        },
+        "17": {
+          "source": "    var json = new HyperJson(obj);",
+          "coverage": 6
+        },
+        "18": {
+          "source": "    json.send = function(){send(req, res, json);};",
+          "coverage": 12
+        },
+        "19": {
+          "source": "    return json;",
+          "coverage": 6
+        },
+        "20": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "21": {
+          "source": "  res.collection = function(objArr, key){",
+          "coverage": 35
+        },
+        "22": {
+          "source": "    var json = new HyperJsonCollection(objArr, key);",
+          "coverage": 0
+        },
+        "23": {
+          "source": "    json.send = function(){send(req, res, json);};",
+          "coverage": 0
+        },
+        "24": {
+          "source": "    return json;",
+          "coverage": 0
+        },
+        "25": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "26": {
+          "source": "  if (cb){",
+          "coverage": 35
+        },
+        "27": {
+          "source": "    cb();",
+          "coverage": 0
+        },
+        "28": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "29": {
+          "source": "};",
+          "coverage": ""
+        },
+        "30": {
+          "source": "",
+          "coverage": ""
+        },
+        "31": {
+          "source": "",
+          "coverage": ""
+        },
+        "32": {
+          "source": "module.exports = ObjectHelper;",
+          "coverage": 1
+        },
+        "33": {
+          "source": "",
+          "coverage": ""
+        },
+        "34": {
+          "source": "function send(req, res, json){",
+          "coverage": 1
+        },
+        "35": {
+          "source": "  if (req.app.autoLink){",
+          "coverage": 6
+        },
+        "36": {
+          "source": "    addDefaultLinks(req, res, json);",
+          "coverage": 0
+        },
+        "37": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "38": {
+          "source": "  res.setHeader('content-type', 'application/json');",
+          "coverage": 6
+        },
+        "39": {
+          "source": "  res.end(json.toString());",
+          "coverage": 6
+        },
+        "40": {
+          "source": "}",
+          "coverage": ""
+        },
+        "41": {
+          "source": "",
+          "coverage": ""
+        },
+        "42": {
+          "source": "function addDefaultLinks(req, res, json){",
+          "coverage": 1
+        },
+        "43": {
+          "source": "  var current = json.toObject();",
+          "coverage": 0
+        },
+        "44": {
+          "source": "  if (!current._links || !current._links.parent){",
+          "coverage": 0
+        },
+        "45": {
+          "source": "    try {",
+          "coverage": 0
+        },
+        "46": {
+          "source": "      var parent = req.uri.parent();",
+          "coverage": 0
+        },
+        "47": {
+          "source": "      json.link('parent', parent);",
+          "coverage": 0
+        },
+        "48": {
+          "source": "    } catch(ex){",
+          "coverage": ""
+        },
+        "49": {
+          "source": "      if (ex.message !== \"The given path has no parent path\"){",
+          "coverage": 0
+        },
+        "50": {
+          "source": "        throw ex;",
+          "coverage": 0
+        },
+        "51": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "52": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "53": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "54": {
+          "source": "  return current;",
+          "coverage": 0
+        },
+        "55": {
+          "source": "}",
+          "coverage": ""
+        },
+        "56": {
+          "source": "",
+          "coverage": ""
+        },
+        "57": {
+          "source": "",
+          "coverage": ""
+        },
+        "58": {
+          "source": "",
+          "coverage": ""
+        },
+        "59": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "ContextHelpers/onBody.js",
+      "coverage": 100,
+      "hits": 12,
+      "misses": 0,
+      "sloc": 12,
+      "source": {
+        "1": {
+          "source": "/*",
+          "coverage": ""
+        },
+        "2": {
+          "source": " This helper just adds an onBody function to the",
+          "coverage": ""
+        },
+        "3": {
+          "source": " req and calls back when done.",
+          "coverage": ""
+        },
+        "4": {
+          "source": "",
+          "coverage": ""
+        },
+        "5": {
+          "source": " The onBody function takes a callback in the form",
+          "coverage": ""
+        },
+        "6": {
+          "source": " function(err, body){ ...",
+          "coverage": ""
+        },
+        "7": {
+          "source": " where error is an error that may have occurred and body",
+          "coverage": ""
+        },
+        "8": {
+          "source": " is the entire body of the request.",
+          "coverage": ""
+        },
+        "9": {
+          "source": "",
+          "coverage": ""
+        },
+        "10": {
+          "source": " onBody is useful when you don't care about streaming the",
+          "coverage": ""
+        },
+        "11": {
+          "source": " body and would rather just wait to get the whole thing to",
+          "coverage": ""
+        },
+        "12": {
+          "source": " do any processiong.",
+          "coverage": ""
+        },
+        "13": {
+          "source": "",
+          "coverage": ""
+        },
+        "14": {
+          "source": " */",
+          "coverage": ""
+        },
+        "15": {
+          "source": "",
+          "coverage": ""
+        },
+        "16": {
+          "source": "",
+          "coverage": ""
+        },
+        "17": {
+          "source": "var onBodyHelper = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "18": {
+          "source": "  req.onBody = function(onBodyCB){",
+          "coverage": 13
+        },
+        "19": {
+          "source": "    var body = '';",
+          "coverage": 3
+        },
+        "20": {
+          "source": "    req.on('data', function(data){",
+          "coverage": 3
+        },
+        "21": {
+          "source": "      body += data;",
+          "coverage": 3
+        },
+        "22": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "23": {
+          "source": "    req.on('error', function(err){",
+          "coverage": 3
+        },
+        "24": {
+          "source": "      return onBodyCB(err, body);",
+          "coverage": 1
+        },
+        "25": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "26": {
+          "source": "    req.on('end', function(){",
+          "coverage": 3
+        },
+        "27": {
+          "source": "      return onBodyCB(null, body);",
+          "coverage": 2
+        },
+        "28": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "29": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "30": {
+          "source": "  if (cb){",
+          "coverage": 13
+        },
+        "31": {
+          "source": "    cb();",
+          "coverage": 13
+        },
+        "32": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "33": {
+          "source": "};",
+          "coverage": ""
+        },
+        "34": {
+          "source": "",
+          "coverage": ""
+        },
+        "35": {
+          "source": "",
+          "coverage": ""
+        },
+        "36": {
+          "source": "module.exports = onBodyHelper;",
+          "coverage": 1
+        },
+        "37": {
+          "source": "",
+          "coverage": ""
+        },
+        "38": {
+          "source": "",
+          "coverage": ""
+        },
+        "39": {
+          "source": "",
+          "coverage": ""
+        },
+        "40": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "ContextHelpers/onJson.js",
+      "coverage": 100,
+      "hits": 30,
+      "misses": 0,
+      "sloc": 30,
+      "source": {
+        "1": {
+          "source": "/*",
+          "coverage": ""
+        },
+        "2": {
+          "source": " This helper just adds an onJson function to the",
+          "coverage": ""
+        },
+        "3": {
+          "source": " req and calls back when done.",
+          "coverage": ""
+        },
+        "4": {
+          "source": "",
+          "coverage": ""
+        },
+        "5": {
+          "source": " As a last or only parameter, the onJson function takes a ",
+          "coverage": ""
+        },
+        "6": {
+          "source": " callback in the form:",
+          "coverage": ""
+        },
+        "7": {
+          "source": " function(err, body){ ...",
+          "coverage": ""
+        },
+        "8": {
+          "source": " where error is an error that may have occurred and body",
+          "coverage": ""
+        },
+        "9": {
+          "source": " is the entire body of the request.",
+          "coverage": ""
+        },
+        "10": {
+          "source": "",
+          "coverage": ""
+        },
+        "11": {
+          "source": " An optional first parameter representing a json schema as",
+          "coverage": ""
+        },
+        "12": {
+          "source": " an object is also allowed.  If specified it will be used ",
+          "coverage": ""
+        },
+        "13": {
+          "source": " for validation.",
+          "coverage": ""
+        },
+        "14": {
+          "source": "",
+          "coverage": ""
+        },
+        "15": {
+          "source": " */",
+          "coverage": ""
+        },
+        "16": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "17": {
+          "source": "var JSV = require('JSV').JSV;",
+          "coverage": 1
+        },
+        "18": {
+          "source": "",
+          "coverage": ""
+        },
+        "19": {
+          "source": "var onJsonHelper = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "20": {
+          "source": "  req.onJson = function(){",
+          "coverage": 17
+        },
+        "21": {
+          "source": "",
+          "coverage": ""
+        },
+        "22": {
+          "source": "    var args = _.toArray(arguments);",
+          "coverage": 6
+        },
+        "23": {
+          "source": "    var schema, onBodyCB;",
+          "coverage": 6
+        },
+        "24": {
+          "source": "    switch(args.length){",
+          "coverage": 6
+        },
+        "25": {
+          "source": "      case 1:",
+          "coverage": ""
+        },
+        "26": {
+          "source": "        onBodyCB = args[0];",
+          "coverage": 3
+        },
+        "27": {
+          "source": "        break;",
+          "coverage": 3
+        },
+        "28": {
+          "source": "",
+          "coverage": ""
+        },
+        "29": {
+          "source": "      case 2:",
+          "coverage": ""
+        },
+        "30": {
+          "source": "        schema = args[0];",
+          "coverage": 2
+        },
+        "31": {
+          "source": "        onBodyCB = args[1];",
+          "coverage": 2
+        },
+        "32": {
+          "source": "        break;",
+          "coverage": 2
+        },
+        "33": {
+          "source": "",
+          "coverage": ""
+        },
+        "34": {
+          "source": "      default : throw \"req.onJson() was called with the wrong number of properties.\";",
+          "coverage": 1
+        },
+        "35": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "36": {
+          "source": "",
+          "coverage": ""
+        },
+        "37": {
+          "source": "    var body = '';",
+          "coverage": 5
+        },
+        "38": {
+          "source": "    req.on('data', function(data){",
+          "coverage": 5
+        },
+        "39": {
+          "source": "      body += data;",
+          "coverage": 5
+        },
+        "40": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "41": {
+          "source": "    req.on('error', function(err){",
+          "coverage": 5
+        },
+        "42": {
+          "source": "      return onBodyCB(err, body);",
+          "coverage": 1
+        },
+        "43": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "44": {
+          "source": "    req.on('end', function(){",
+          "coverage": 5
+        },
+        "45": {
+          "source": "      var obj;",
+          "coverage": 4
+        },
+        "46": {
+          "source": "      try {",
+          "coverage": 4
+        },
+        "47": {
+          "source": "        obj = JSON.parse(body);",
+          "coverage": 4
+        },
+        "48": {
+          "source": "      } catch(ex) {",
+          "coverage": ""
+        },
+        "49": {
+          "source": "        // if it's not valid JSON...",
+          "coverage": ""
+        },
+        "50": {
+          "source": "        return res.status.badRequest('invalid json.', body);",
+          "coverage": 1
+        },
+        "51": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "52": {
+          "source": "      if (!!schema){",
+          "coverage": 3
+        },
+        "53": {
+          "source": "        var report = JSV.createEnvironment().validate(obj, schema);",
+          "coverage": 2
+        },
+        "54": {
+          "source": "        if (report.errors.length &gt; 0){",
+          "coverage": 2
+        },
+        "55": {
+          "source": "          return res.status.badRequest('json failed schema validation.', report.errors);",
+          "coverage": 2
+        },
+        "56": {
+          "source": "        }",
+          "coverage": ""
+        },
+        "57": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "58": {
+          "source": "",
+          "coverage": ""
+        },
+        "59": {
+          "source": "      return onBodyCB(null, obj);",
+          "coverage": 1
+        },
+        "60": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "61": {
+          "source": "",
+          "coverage": ""
+        },
+        "62": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "63": {
+          "source": "  cb();",
+          "coverage": 17
+        },
+        "64": {
+          "source": "};",
+          "coverage": ""
+        },
+        "65": {
+          "source": "",
+          "coverage": ""
+        },
+        "66": {
+          "source": "",
+          "coverage": ""
+        },
+        "67": {
+          "source": "module.exports = onJsonHelper;",
+          "coverage": 1
+        },
+        "68": {
+          "source": "",
+          "coverage": ""
+        },
+        "69": {
+          "source": "",
+          "coverage": ""
+        },
+        "70": {
+          "source": "",
+          "coverage": ""
+        },
+        "71": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "HyperJson.js",
+      "coverage": 100,
+      "hits": 27,
+      "misses": 0,
+      "sloc": 27,
+      "source": {
+        "1": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "2": {
+          "source": "",
+          "coverage": ""
+        },
+        "3": {
+          "source": "HyperJson = function(obj){",
+          "coverage": 1
+        },
+        "4": {
+          "source": "  this.obj = _.clone(obj);",
+          "coverage": 17
+        },
+        "5": {
+          "source": "};",
+          "coverage": ""
+        },
+        "6": {
+          "source": "",
+          "coverage": ""
+        },
+        "7": {
+          "source": "HyperJson.prototype.toString = function(){",
+          "coverage": 1
+        },
+        "8": {
+          "source": "  return JSON.stringify(this.obj);",
+          "coverage": 7
+        },
+        "9": {
+          "source": "};",
+          "coverage": ""
+        },
+        "10": {
+          "source": "",
+          "coverage": ""
+        },
+        "11": {
+          "source": "HyperJson.prototype.toObject = function(){",
+          "coverage": 1
+        },
+        "12": {
+          "source": "  return this.obj;",
+          "coverage": 17
+        },
+        "13": {
+          "source": "};",
+          "coverage": ""
+        },
+        "14": {
+          "source": "",
+          "coverage": ""
+        },
+        "15": {
+          "source": "HyperJson.prototype.property =function(name, value){",
+          "coverage": 1
+        },
+        "16": {
+          "source": "  this.obj[name] = value;",
+          "coverage": 1
+        },
+        "17": {
+          "source": "  return this;",
+          "coverage": 1
+        },
+        "18": {
+          "source": "};",
+          "coverage": ""
+        },
+        "19": {
+          "source": "",
+          "coverage": ""
+        },
+        "20": {
+          "source": "HyperJson.prototype.link = function(rel, href, opts){",
+          "coverage": 1
+        },
+        "21": {
+          "source": "  var options = opts || {};",
+          "coverage": 8
+        },
+        "22": {
+          "source": "  var linkObj = { href : href};",
+          "coverage": 8
+        },
+        "23": {
+          "source": "  for (var name in options){",
+          "coverage": 8
+        },
+        "24": {
+          "source": "    if (name != 'method' &amp;&amp; name != 'type' &amp;&amp; name != 'schema'){",
+          "coverage": 4
+        },
+        "25": {
+          "source": "      throw \"unknown option: \" + name;",
+          "coverage": 1
+        },
+        "26": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "27": {
+          "source": "    linkObj[name] = options[name];",
+          "coverage": 3
+        },
+        "28": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "29": {
+          "source": "  if (!this.obj._links){",
+          "coverage": 7
+        },
+        "30": {
+          "source": "    this.obj._links = {};",
+          "coverage": 6
+        },
+        "31": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "32": {
+          "source": "  if (!this.obj._links[rel]){",
+          "coverage": 7
+        },
+        "33": {
+          "source": "    this.obj._links[rel] = linkObj;",
+          "coverage": 6
+        },
+        "34": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "35": {
+          "source": "    var relObj = this.obj._links[rel];",
+          "coverage": 1
+        },
+        "36": {
+          "source": "    if (!Array.isArray(relObj)){",
+          "coverage": 1
+        },
+        "37": {
+          "source": "      this.obj._links[rel] = [relObj];",
+          "coverage": 1
+        },
+        "38": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "39": {
+          "source": "    this.obj._links[rel].push(linkObj);",
+          "coverage": 1
+        },
+        "40": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "41": {
+          "source": "  return this;",
+          "coverage": 7
+        },
+        "42": {
+          "source": "};",
+          "coverage": ""
+        },
+        "43": {
+          "source": "",
+          "coverage": ""
+        },
+        "44": {
+          "source": "module.exports = HyperJson;",
+          "coverage": 1
+        },
+        "45": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "HyperJsonCollection.js",
+      "coverage": 100,
+      "hits": 32,
+      "misses": 0,
+      "sloc": 32,
+      "source": {
+        "1": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "2": {
+          "source": "var HyperJson = require('./HyperJson');",
+          "coverage": 1
+        },
+        "3": {
+          "source": "",
+          "coverage": ""
+        },
+        "4": {
+          "source": "HyperJsonCollection = function(obj, key){",
+          "coverage": 1
+        },
+        "5": {
+          "source": "  obj = _.clone(obj);",
+          "coverage": 8
+        },
+        "6": {
+          "source": "  if (_.isArray(obj)){",
+          "coverage": 8
+        },
+        "7": {
+          "source": "    if (!!key){",
+          "coverage": 4
+        },
+        "8": {
+          "source": "      var newObj = {};",
+          "coverage": 1
+        },
+        "9": {
+          "source": "      var index = 0;",
+          "coverage": 1
+        },
+        "10": {
+          "source": "      _.each(obj, function(item){",
+          "coverage": 1
+        },
+        "11": {
+          "source": "        newObj[item[key]] = item;",
+          "coverage": 2
+        },
+        "12": {
+          "source": "      });",
+          "coverage": ""
+        },
+        "13": {
+          "source": "      obj = newObj;",
+          "coverage": 1
+        },
+        "14": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "15": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "16": {
+          "source": "  this.obj = { _items : obj};",
+          "coverage": 8
+        },
+        "17": {
+          "source": "};",
+          "coverage": ""
+        },
+        "18": {
+          "source": "",
+          "coverage": ""
+        },
+        "19": {
+          "source": "HyperJsonCollection.prototype = Object.create(HyperJson.prototype);",
+          "coverage": 1
+        },
+        "20": {
+          "source": "",
+          "coverage": ""
+        },
+        "21": {
+          "source": "HyperJsonCollection.prototype.each = function(cb){",
+          "coverage": 1
+        },
+        "22": {
+          "source": "  var items = this.obj._items;",
+          "coverage": 3
+        },
+        "23": {
+          "source": "  if (Array.isArray(items)){",
+          "coverage": 3
+        },
+        "24": {
+          "source": "    var len = (!!items) ? items.length : 0;",
+          "coverage": 1
+        },
+        "25": {
+          "source": "    for(var i = 0; i &lt; len; i++){",
+          "coverage": 1
+        },
+        "26": {
+          "source": "      items[i] = cb(items[i]);",
+          "coverage": 2
+        },
+        "27": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "28": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "29": {
+          "source": "    for(var x in items){",
+          "coverage": 2
+        },
+        "30": {
+          "source": "      items[x] = cb(_.clone(items[x]), x);",
+          "coverage": 3
+        },
+        "31": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "32": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "33": {
+          "source": "  return this;",
+          "coverage": 3
+        },
+        "34": {
+          "source": "};",
+          "coverage": ""
+        },
+        "35": {
+          "source": "",
+          "coverage": ""
+        },
+        "36": {
+          "source": "HyperJsonCollection.prototype.linkEach = function(rel, cb){",
+          "coverage": 1
+        },
+        "37": {
+          "source": "  var items = this.obj._items;",
+          "coverage": 2
+        },
+        "38": {
+          "source": "  if (Array.isArray(items)){",
+          "coverage": 2
+        },
+        "39": {
+          "source": "    var len = (!!items) ? items.length : 0;",
+          "coverage": 1
+        },
+        "40": {
+          "source": "    for(var i = 0; i &lt; len; i++){",
+          "coverage": 1
+        },
+        "41": {
+          "source": "      items[i] = new HyperJson(_.clone(items[i])).link(rel, cb(items[i], i)).toObject();",
+          "coverage": 2
+        },
+        "42": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "43": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "44": {
+          "source": "    for(var x in items){",
+          "coverage": 1
+        },
+        "45": {
+          "source": "      items[x] = new HyperJson(_.clone(items[x])).link(rel, cb(items[x], x)).toObject();",
+          "coverage": 2
+        },
+        "46": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "47": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "48": {
+          "source": "  return this;",
+          "coverage": 2
+        },
+        "49": {
+          "source": "};",
+          "coverage": ""
+        },
+        "50": {
+          "source": "",
+          "coverage": ""
+        },
+        "51": {
+          "source": "module.exports = HyperJsonCollection;",
+          "coverage": 1
+        },
+        "52": {
+          "source": "",
+          "coverage": ""
+        },
+        "53": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "JsonResponder.js",
+      "coverage": 100,
+      "hits": 47,
+      "misses": 0,
+      "sloc": 47,
+      "source": {
+        "1": {
+          "source": "var EventEmitter = require('events').EventEmitter;",
+          "coverage": 1
+        },
+        "2": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "3": {
+          "source": "",
+          "coverage": ""
+        },
+        "4": {
+          "source": "var util = require('util');",
+          "coverage": 1
+        },
+        "5": {
+          "source": "",
+          "coverage": ""
+        },
+        "6": {
+          "source": "var JsonResponder = function(req, res){",
+          "coverage": 1
+        },
+        "7": {
+          "source": "  this.req = req;",
+          "coverage": 53
+        },
+        "8": {
+          "source": "  this.res = res;",
+          "coverage": 53
+        },
+        "9": {
+          "source": "};",
+          "coverage": ""
+        },
+        "10": {
+          "source": "JsonResponder.prototype = Object.create(EventEmitter.prototype);",
+          "coverage": 1
+        },
+        "11": {
+          "source": "",
+          "coverage": ""
+        },
+        "12": {
+          "source": "var errors = {",
+          "coverage": 1
+        },
+        "13": {
+          "source": "  'badRequest' :            {type : 400, message : 'Bad Request'},",
+          "coverage": ""
+        },
+        "14": {
+          "source": "  'unauthenticated' :       {type : 401, message : 'Unauthenticated'},",
+          "coverage": ""
+        },
+        "15": {
+          "source": "  'forbidden' :             {type : 403, message : 'Forbidden'},",
+          "coverage": ""
+        },
+        "16": {
+          "source": "  'notFound' :              {type : 404, message : 'Not Found'},",
+          "coverage": ""
+        },
+        "17": {
+          "source": "  'methodNotAllowed' :      {type : 405, message : 'Method Not Allowed'},",
+          "coverage": ""
+        },
+        "18": {
+          "source": "  'notAcceptable' :         {type : 406, message : 'Not Acceptable'},",
+          "coverage": ""
+        },
+        "19": {
+          "source": "  'conflict' :              {type : 409, message : 'Conflict'},",
+          "coverage": ""
+        },
+        "20": {
+          "source": "  'gone' :                  {type : 410, message : 'Gone'},",
+          "coverage": ""
+        },
+        "21": {
+          "source": "  'lengthRequired' :        {type : 411, message : 'Length Required'},",
+          "coverage": ""
+        },
+        "22": {
+          "source": "  'preconditionFailed' :    {type : 412, message : 'Precondition Failed'},",
+          "coverage": ""
+        },
+        "23": {
+          "source": "  'requestEntityTooLarge' : {type : 413, message : 'Request Entity Too Large'},",
+          "coverage": ""
+        },
+        "24": {
+          "source": "  'requestUriTooLong' :     {type : 414, message : 'Request URI Too Long'},",
+          "coverage": ""
+        },
+        "25": {
+          "source": "  'unsupportedMediaType' :  {type : 415, message : 'Unsupported Media Type'},",
+          "coverage": ""
+        },
+        "26": {
+          "source": "  'unprocessableEntity' :   {type : 422, message : 'Unprocessable Entity'},",
+          "coverage": ""
+        },
+        "27": {
+          "source": "  'tooManyRequests' :       {type : 429, message : 'Too Many Requests'},",
+          "coverage": ""
+        },
+        "28": {
+          "source": "  'internalServerError' :   {type : 500, message : 'Internal Server Error'},",
+          "coverage": ""
+        },
+        "29": {
+          "source": "  'notImplemented' :        {type : 501, message : 'Not Implemented'},",
+          "coverage": ""
+        },
+        "30": {
+          "source": "  'badGateway' :            {type : 502, message : 'Bad Gateway'},",
+          "coverage": ""
+        },
+        "31": {
+          "source": "  'serviceUnavailable' :    {type : 503, message : 'Service Unavailable'},",
+          "coverage": ""
+        },
+        "32": {
+          "source": "  'gatewayTimeout' :        {type : 504, message : 'Gateway Timeout'}",
+          "coverage": ""
+        },
+        "33": {
+          "source": "};",
+          "coverage": ""
+        },
+        "34": {
+          "source": "",
+          "coverage": ""
+        },
+        "35": {
+          "source": "",
+          "coverage": ""
+        },
+        "36": {
+          "source": "/* set methods on the JsonResponder for every kind of error that could occur.  */",
+          "coverage": ""
+        },
+        "37": {
+          "source": "_.each(errors, function(v, k){",
+          "coverage": 1
+        },
+        "38": {
+          "source": "  JsonResponder.prototype[k] = function(detail){",
+          "coverage": 20
+        },
+        "39": {
+          "source": "    var obj = {\"error\" : v};",
+          "coverage": 12
+        },
+        "40": {
+          "source": "",
+          "coverage": ""
+        },
+        "41": {
+          "source": "    detail = detail || {};",
+          "coverage": 12
+        },
+        "42": {
+          "source": "    // if detail is circular, just flatten it to a string.",
+          "coverage": ""
+        },
+        "43": {
+          "source": "    try {",
+          "coverage": 12
+        },
+        "44": {
+          "source": "      JSON.stringify(detail);  // will throw if circular",
+          "coverage": 12
+        },
+        "45": {
+          "source": "    } catch(ex) {",
+          "coverage": ""
+        },
+        "46": {
+          "source": "      detail = util.inspect(detail);  // stringifies.  only goes one level deep.",
+          "coverage": 1
+        },
+        "47": {
+          "source": "    }",
+          "coverage": ""
+        },
+        "48": {
+          "source": "",
+          "coverage": ""
+        },
+        "49": {
+          "source": "    obj.error.detail = detail;",
+          "coverage": 12
+        },
+        "50": {
+          "source": "",
+          "coverage": ""
+        },
+        "51": {
+          "source": "    this.res.setHeader('Content-Type', 'application/json');",
+          "coverage": 12
+        },
+        "52": {
+          "source": "    this.res.writeHead(v.type);",
+          "coverage": 12
+        },
+        "53": {
+          "source": "    var out = JSON.stringify(obj);",
+          "coverage": 12
+        },
+        "54": {
+          "source": "    this.res.end(out);",
+          "coverage": 12
+        },
+        "55": {
+          "source": "    this.emit(\"error\", { req : this.req, res : this.res, type : v.type, message : v.message, detail : detail } );",
+          "coverage": 12
+        },
+        "56": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "57": {
+          "source": "});",
+          "coverage": ""
+        },
+        "58": {
+          "source": "",
+          "coverage": ""
+        },
+        "59": {
+          "source": "JsonResponder.prototype.created = function(url){",
+          "coverage": 1
+        },
+        "60": {
+          "source": "  url = url || '';",
+          "coverage": 1
+        },
+        "61": {
+          "source": "  this.res.setHeader('Location', url);",
+          "coverage": 1
+        },
+        "62": {
+          "source": "  this.res.writeHead(201);",
+          "coverage": 1
+        },
+        "63": {
+          "source": "  this.res.end();",
+          "coverage": 1
+        },
+        "64": {
+          "source": "};",
+          "coverage": ""
+        },
+        "65": {
+          "source": "",
+          "coverage": ""
+        },
+        "66": {
+          "source": "JsonResponder.prototype.accepted = function(){",
+          "coverage": 1
+        },
+        "67": {
+          "source": "  this.res.writeHead(202);",
+          "coverage": 1
+        },
+        "68": {
+          "source": "  this.res.end();",
+          "coverage": 1
+        },
+        "69": {
+          "source": "};",
+          "coverage": ""
+        },
+        "70": {
+          "source": "",
+          "coverage": ""
+        },
+        "71": {
+          "source": "JsonResponder.prototype.noContent = function(){",
+          "coverage": 1
+        },
+        "72": {
+          "source": "  this.res.writeHead(204);",
+          "coverage": 1
+        },
+        "73": {
+          "source": "  this.res.end();",
+          "coverage": 1
+        },
+        "74": {
+          "source": "};",
+          "coverage": ""
+        },
+        "75": {
+          "source": "",
+          "coverage": ""
+        },
+        "76": {
+          "source": "JsonResponder.prototype.resetContent = function(){",
+          "coverage": 1
+        },
+        "77": {
+          "source": "  this.res.writeHead(205);",
+          "coverage": 1
+        },
+        "78": {
+          "source": "  this.res.end();",
+          "coverage": 1
+        },
+        "79": {
+          "source": "};",
+          "coverage": ""
+        },
+        "80": {
+          "source": "",
+          "coverage": ""
+        },
+        "81": {
+          "source": "JsonResponder.prototype.movedPermanently = function(url){",
+          "coverage": 1
+        },
+        "82": {
+          "source": "  this.redirect(url);",
+          "coverage": 2
+        },
+        "83": {
+          "source": "};",
+          "coverage": ""
+        },
+        "84": {
+          "source": "",
+          "coverage": ""
+        },
+        "85": {
+          "source": "JsonResponder.prototype.redirect = function(url){",
+          "coverage": 1
+        },
+        "86": {
+          "source": "  url = url || '';",
+          "coverage": 2
+        },
+        "87": {
+          "source": "  this.res.setHeader('Location', url);",
+          "coverage": 2
+        },
+        "88": {
+          "source": "  this.res.writeHead(301);",
+          "coverage": 2
+        },
+        "89": {
+          "source": "  this.res.end();",
+          "coverage": 2
+        },
+        "90": {
+          "source": "};",
+          "coverage": ""
+        },
+        "91": {
+          "source": "",
+          "coverage": ""
+        },
+        "92": {
+          "source": "JsonResponder.prototype.OPTIONS = function(methods){",
+          "coverage": 1
+        },
+        "93": {
+          "source": "    this.res.setHeader('Allow', methods.join(\",\"));",
+          "coverage": 2
+        },
+        "94": {
+          "source": "    this.res.writeHead(200);",
+          "coverage": 2
+        },
+        "95": {
+          "source": "    return this.res.end(JSON.stringify({\"allowed methods\" : methods}));",
+          "coverage": 2
+        },
+        "96": {
+          "source": "};",
+          "coverage": ""
+        },
+        "97": {
+          "source": "",
+          "coverage": ""
+        },
+        "98": {
+          "source": "",
+          "coverage": ""
+        },
+        "99": {
+          "source": "module.exports = JsonResponder;",
+          "coverage": 1
+        }
+      }
+    },
+    {
+      "filename": "Percolator.js",
+      "coverage": 92.25806451612904,
+      "hits": 143,
+      "misses": 12,
+      "sloc": 155,
+      "source": {
+        "1": {
+          "source": "var Reaper = require('reaper').Reaper;",
+          "coverage": 1
+        },
+        "2": {
+          "source": "var EventEmitter = require('events').EventEmitter;",
+          "coverage": 1
+        },
+        "3": {
+          "source": "var index = require('../index');",
+          "coverage": 1
+        },
+        "4": {
+          "source": "var JsonResponder = index.JsonResponder;",
+          "coverage": 1
+        },
+        "5": {
+          "source": "var onBodyHelper = index.onBodyHelper;",
+          "coverage": 1
+        },
+        "6": {
+          "source": "var onJsonHelper = index.onJsonHelper;",
+          "coverage": 1
+        },
+        "7": {
+          "source": "var fetchHelper = index.FetchHelper;",
+          "coverage": 1
+        },
+        "8": {
+          "source": "var AuthenticateHelper = index.AuthenticateHelper;",
+          "coverage": 1
+        },
+        "9": {
+          "source": "var ObjectHelper = index.ObjectHelper;",
+          "coverage": 1
+        },
+        "10": {
+          "source": "var StatusManager = index.StatusManager;",
+          "coverage": 1
+        },
+        "11": {
+          "source": "var _ = require('underscore');",
+          "coverage": 1
+        },
+        "12": {
+          "source": "var fs = require('fs');",
+          "coverage": 1
+        },
+        "13": {
+          "source": "var Server = require('oneone');",
+          "coverage": 1
+        },
+        "14": {
+          "source": "var hyperjsonBrowser = require('hyperjson-browser');",
+          "coverage": 1
+        },
+        "15": {
+          "source": "var urlgrey = require('urlgrey');",
+          "coverage": 1
+        },
+        "16": {
+          "source": "",
+          "coverage": ""
+        },
+        "17": {
+          "source": "",
+          "coverage": ""
+        },
+        "18": {
+          "source": "Percolator = function(options){",
+          "coverage": 1
+        },
+        "19": {
+          "source": "  options = options || {};",
+          "coverage": 20
+        },
+        "20": {
+          "source": "  this.options = options;",
+          "coverage": 20
+        },
+        "21": {
+          "source": "  this.options.port = this.options.port || 3000;",
+          "coverage": 20
+        },
+        "22": {
+          "source": "  if (this.options.autoLink !== false){",
+          "coverage": 20
+        },
+        "23": {
+          "source": "    this.options.autoLink = true;",
+          "coverage": 20
+        },
+        "24": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "25": {
+          "source": "  this.options.protocol = this.options.protocol || 'http';",
+          "coverage": 20
+        },
+        "26": {
+          "source": "  this.options.resourcePath = this.options.resourcePath || '/';",
+          "coverage": 20
+        },
+        "27": {
+          "source": "  this.options.parseBody = this.options.parseBody || false;",
+          "coverage": 20
+        },
+        "28": {
+          "source": "  this.port = this.options.port;",
+          "coverage": 20
+        },
+        "29": {
+          "source": "  this.protocol = this.options.protocol;",
+          "coverage": 20
+        },
+        "30": {
+          "source": "  this.resourcePath = this.options.resourcePath;",
+          "coverage": 20
+        },
+        "31": {
+          "source": "  this.server = new Server(this.port, this.protocol, this.resourcePath);",
+          "coverage": 20
+        },
+        "32": {
+          "source": "  if (!!options.staticDir){",
+          "coverage": 20
+        },
+        "33": {
+          "source": "    this.staticDir = options.staticDir;",
+          "coverage": 2
+        },
+        "34": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "35": {
+          "source": "  var protocol = this.protocol;",
+          "coverage": 20
+        },
+        "36": {
+          "source": "  var that = this;",
+          "coverage": 20
+        },
+        "37": {
+          "source": "  this.statusman = new StatusManager();",
+          "coverage": 20
+        },
+        "38": {
+          "source": "  this.statusman.on('error', function(errorObject){",
+          "coverage": 20
+        },
+        "39": {
+          "source": "    that.emit(\"errorResponse\", errorObject);",
+          "coverage": 7
+        },
+        "40": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "41": {
+          "source": "  this.mediaTypes = new Reaper();",
+          "coverage": 20
+        },
+        "42": {
+          "source": "  this.onRequestHandler = function(req, res, handler, cb){",
+          "coverage": 20
+        },
+        "43": {
+          "source": "    cb();  // do nothing with it by default",
+          "coverage": 13
+        },
+        "44": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "45": {
+          "source": "  this.onResponseHandler = function(req, res, handler){",
+          "coverage": 20
+        },
+        "46": {
+          "source": "    // do nothing with it by default",
+          "coverage": ""
+        },
+        "47": {
+          "source": "  };",
+          "coverage": ""
+        },
+        "48": {
+          "source": "  this.server.onRequest(function(handler, context, cb){",
+          "coverage": 20
+        },
+        "49": {
+          "source": "    var req = context.req;",
+          "coverage": 14
+        },
+        "50": {
+          "source": "    var res = context.res;",
+          "coverage": 14
+        },
+        "51": {
+          "source": "    req.app = that.options;",
+          "coverage": 14
+        },
+        "52": {
+          "source": "    var router = that.server.router;",
+          "coverage": 14
+        },
+        "53": {
+          "source": "    req.router = router;  // TODO is there any use-case for this?  delete?",
+          "coverage": 14
+        },
+        "54": {
+          "source": "    req.uri = urlgrey(protocol + '://' + req.headers.host + req.url);",
+          "coverage": 14
+        },
+        "55": {
+          "source": "    ObjectHelper(req, res);",
+          "coverage": 14
+        },
+        "56": {
+          "source": "    res.status = that.statusman.createResponder(req, res);",
+          "coverage": 14
+        },
+        "57": {
+          "source": "    var oldEnd = res.end;",
+          "coverage": 14
+        },
+        "58": {
+          "source": "    res.end = function(data, encoding){",
+          "coverage": 14
+        },
+        "59": {
+          "source": "      oldEnd.apply(res, [data, encoding]);",
+          "coverage": 14
+        },
+        "60": {
+          "source": "      that.onResponseHandler(req, res, handler);",
+          "coverage": 14
+        },
+        "61": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "62": {
+          "source": "    that.onRequestHandler(req, res, handler, function(){",
+          "coverage": 14
+        },
+        "63": {
+          "source": "      var accept = req.headers.accept || '*/*';",
+          "coverage": 14
+        },
+        "64": {
+          "source": "      if (!that.mediaTypes.isAcceptable(accept)){",
+          "coverage": 14
+        },
+        "65": {
+          "source": "        that.statusman.createResponder(req, res).notAcceptable();",
+          "coverage": 0
+        },
+        "66": {
+          "source": "      } else {",
+          "coverage": ""
+        },
+        "67": {
+          "source": "        that.defaultRequestHandler(req, res, handler, cb);",
+          "coverage": 14
+        },
+        "68": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "69": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "70": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "71": {
+          "source": "  this._assignErrorHandlers();",
+          "coverage": 20
+        },
+        "72": {
+          "source": "  this.registerMediaTypes();",
+          "coverage": 20
+        },
+        "73": {
+          "source": "",
+          "coverage": ""
+        },
+        "74": {
+          "source": "  this.server.onOPTIONS(function(resource){",
+          "coverage": 20
+        },
+        "75": {
+          "source": "    resource.OPTIONS = function($){",
+          "coverage": 18
+        },
+        "76": {
+          "source": "      var responder = that.statusman.createResponder($.req, $.res);",
+          "coverage": 1
+        },
+        "77": {
+          "source": "      return responder.OPTIONS(that._getMethods(resource));",
+          "coverage": 1
+        },
+        "78": {
+          "source": "    };",
+          "coverage": ""
+        },
+        "79": {
+          "source": "    return resource;",
+          "coverage": 18
+        },
+        "80": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "81": {
+          "source": "",
+          "coverage": ""
+        },
+        "82": {
+          "source": "};",
+          "coverage": ""
+        },
+        "83": {
+          "source": "",
+          "coverage": ""
+        },
+        "84": {
+          "source": "Percolator.prototype = Object.create(EventEmitter.prototype);",
+          "coverage": 1
+        },
+        "85": {
+          "source": "",
+          "coverage": ""
+        },
+        "86": {
+          "source": "Percolator.prototype.defaultRequestHandler = function(req, res, handler, cb){",
+          "coverage": 1
+        },
+        "87": {
+          "source": "  var that = this;",
+          "coverage": 14
+        },
+        "88": {
+          "source": "  req.pause();",
+          "coverage": 14
+        },
+        "89": {
+          "source": "  AuthenticateHelper(req, res, handler, function(){",
+          "coverage": 14
+        },
+        "90": {
+          "source": "    fetchHelper(req, res, handler, function(){",
+          "coverage": 14
+        },
+        "91": {
+          "source": "      if (!!that.options.parseBody){",
+          "coverage": 14
+        },
+        "92": {
+          "source": "        req.resume();",
+          "coverage": 4
+        },
+        "93": {
+          "source": "        var ctxt = context(req, res);",
+          "coverage": 4
+        },
+        "94": {
+          "source": "        that.mediaTypes.connectMiddleware(ctxt)(req, res, function(err){",
+          "coverage": 4
+        },
+        "95": {
+          "source": "          req.body = ctxt.body;",
+          "coverage": 4
+        },
+        "96": {
+          "source": "          req.rawBody = ctxt.rawBody;",
+          "coverage": 4
+        },
+        "97": {
+          "source": "          if (!!err) {",
+          "coverage": 4
+        },
+        "98": {
+          "source": "            if (err.match(/^Parse Error:/)){",
+          "coverage": 3
+        },
+        "99": {
+          "source": "              that.statusman.createResponder(req, res).badRequest(err);",
+          "coverage": 1
+        },
+        "100": {
+          "source": "              return;",
+          "coverage": 1
+        },
+        "101": {
+          "source": "            }",
+          "coverage": ""
+        },
+        "102": {
+          "source": "            if (err === \"Missing Content-Type\"){",
+          "coverage": 2
+        },
+        "103": {
+          "source": "              that.statusman.createResponder(req, res).unsupportedMediaType(\"None provided.\");",
+          "coverage": 1
+        },
+        "104": {
+          "source": "              return;",
+          "coverage": 1
+        },
+        "105": {
+          "source": "            }",
+          "coverage": ""
+        },
+        "106": {
+          "source": "            if (err === \"Unregistered content-type.\"){",
+          "coverage": 1
+        },
+        "107": {
+          "source": "              that.statusman.createResponder(req, res).unsupportedMediaType(req.headers['content-type']);",
+          "coverage": 1
+        },
+        "108": {
+          "source": "              return;",
+          "coverage": 1
+        },
+        "109": {
+          "source": "            } ",
+          "coverage": ""
+        },
+        "110": {
+          "source": "            console.log(\"post mediaTypes middleware error:\");",
+          "coverage": 0
+        },
+        "111": {
+          "source": "            console.log(err);",
+          "coverage": 0
+        },
+        "112": {
+          "source": "            return cb(err);",
+          "coverage": 0
+        },
+        "113": {
+          "source": "          } else {",
+          "coverage": ""
+        },
+        "114": {
+          "source": "            cb(null, context(req, res));",
+          "coverage": 1
+        },
+        "115": {
+          "source": "          }",
+          "coverage": ""
+        },
+        "116": {
+          "source": "        });",
+          "coverage": ""
+        },
+        "117": {
+          "source": "      } else {",
+          "coverage": ""
+        },
+        "118": {
+          "source": "        req.onBody = onBodyHelper(req, res, handler, function(){",
+          "coverage": 10
+        },
+        "119": {
+          "source": "          req.onJson = onJsonHelper(req, res, handler, function(){",
+          "coverage": 10
+        },
+        "120": {
+          "source": "            req.resume();",
+          "coverage": 10
+        },
+        "121": {
+          "source": "            cb(null, context(req, res));",
+          "coverage": 10
+        },
+        "122": {
+          "source": "          });",
+          "coverage": ""
+        },
+        "123": {
+          "source": "        });",
+          "coverage": ""
+        },
+        "124": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "125": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "126": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "127": {
+          "source": "};",
+          "coverage": ""
+        },
+        "128": {
+          "source": "",
+          "coverage": ""
+        },
+        "129": {
+          "source": "",
+          "coverage": ""
+        },
+        "130": {
+          "source": "",
+          "coverage": ""
+        },
+        "131": {
+          "source": "Percolator.prototype.route = function(path, handler){",
+          "coverage": 1
+        },
+        "132": {
+          "source": "  return this.server.route(path, handler);",
+          "coverage": 18
+        },
+        "133": {
+          "source": "};",
+          "coverage": ""
+        },
+        "134": {
+          "source": "",
+          "coverage": ""
+        },
+        "135": {
+          "source": "Percolator.prototype.before = function(handler){",
+          "coverage": 1
+        },
+        "136": {
+          "source": "  this.onRequestHandler = handler;",
+          "coverage": 1
+        },
+        "137": {
+          "source": "};",
+          "coverage": ""
+        },
+        "138": {
+          "source": "",
+          "coverage": ""
+        },
+        "139": {
+          "source": "Percolator.prototype.after = function(handler){",
+          "coverage": 1
+        },
+        "140": {
+          "source": "  this.onResponseHandler = handler;",
+          "coverage": 1
+        },
+        "141": {
+          "source": "};",
+          "coverage": ""
+        },
+        "142": {
+          "source": "",
+          "coverage": ""
+        },
+        "143": {
+          "source": "",
+          "coverage": ""
+        },
+        "144": {
+          "source": "Percolator.prototype._getMethods = function(resource){",
+          "coverage": 1
+        },
+        "145": {
+          "source": "  var serverSupportedMethods = [\"GET\", \"POST\", ",
+          "coverage": 1
+        },
+        "146": {
+          "source": "                                \"PUT\", \"DELETE\",",
+          "coverage": ""
+        },
+        "147": {
+          "source": "                                \"HEAD\", \"OPTIONS\"];",
+          "coverage": ""
+        },
+        "148": {
+          "source": "  var moduleMethods = _.functions(resource);",
+          "coverage": 1
+        },
+        "149": {
+          "source": "  var methods = _.intersection(moduleMethods, serverSupportedMethods);",
+          "coverage": 1
+        },
+        "150": {
+          "source": "  var additionalMethods = ['OPTIONS'];",
+          "coverage": 1
+        },
+        "151": {
+          "source": "  if (_.isFunction(resource.GET)){",
+          "coverage": 1
+        },
+        "152": {
+          "source": "    additionalMethods.push('HEAD');",
+          "coverage": 1
+        },
+        "153": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "154": {
+          "source": "  methods = _.union(additionalMethods, methods);",
+          "coverage": 1
+        },
+        "155": {
+          "source": "  return methods;",
+          "coverage": 1
+        },
+        "156": {
+          "source": "};",
+          "coverage": ""
+        },
+        "157": {
+          "source": "",
+          "coverage": ""
+        },
+        "158": {
+          "source": "// route a directory call the callback afterward",
+          "coverage": ""
+        },
+        "159": {
+          "source": "Percolator.prototype.routeDirectory = function(directory, path, cb){",
+          "coverage": 1
+        },
+        "160": {
+          "source": "  this.server.routeDirectory(directory, path, cb);",
+          "coverage": 0
+        },
+        "161": {
+          "source": "};",
+          "coverage": ""
+        },
+        "162": {
+          "source": "",
+          "coverage": ""
+        },
+        "163": {
+          "source": "",
+          "coverage": ""
+        },
+        "164": {
+          "source": "// register error handlers for each content type",
+          "coverage": ""
+        },
+        "165": {
+          "source": "Percolator.prototype._assignErrorHandlers = function(){",
+          "coverage": 1
+        },
+        "166": {
+          "source": "  // tell the server about the error handlers it can use",
+          "coverage": ""
+        },
+        "167": {
+          "source": "  var statusman = this.statusman;",
+          "coverage": 20
+        },
+        "168": {
+          "source": "  var that = this;",
+          "coverage": 20
+        },
+        "169": {
+          "source": "",
+          "coverage": ""
+        },
+        "170": {
+          "source": "  this.server.on414(function($){",
+          "coverage": 20
+        },
+        "171": {
+          "source": "    statusman.createResponder($.req, $.res).requestUriTooLong();",
+          "coverage": 1
+        },
+        "172": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "173": {
+          "source": "",
+          "coverage": ""
+        },
+        "174": {
+          "source": "  this.server.on404(function($){",
+          "coverage": 20
+        },
+        "175": {
+          "source": "    // TODO fix resource.fetch to use this handle404 instead of default!!!",
+          "coverage": ""
+        },
+        "176": {
+          "source": "",
+          "coverage": ""
+        },
+        "177": {
+          "source": "    var path = that.options.resourcePath;",
+          "coverage": 1
+        },
+        "178": {
+          "source": "    var browserPath = urlgrey(path).child('browser').path().toString();",
+          "coverage": 1
+        },
+        "179": {
+          "source": "    hyperjsonBrowser(browserPath, path)($.req, $.res, function(){",
+          "coverage": 1
+        },
+        "180": {
+          "source": "      var responder = statusman.createResponder($.req, $.res);",
+          "coverage": 1
+        },
+        "181": {
+          "source": "      responder.notFound($.req.url);",
+          "coverage": 1
+        },
+        "182": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "183": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "184": {
+          "source": "",
+          "coverage": ""
+        },
+        "185": {
+          "source": "  this.server.on405(function($){",
+          "coverage": 20
+        },
+        "186": {
+          "source": "    statusman.createResponder($.req, $.res).methodNotAllowed();",
+          "coverage": 1
+        },
+        "187": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "188": {
+          "source": "",
+          "coverage": ""
+        },
+        "189": {
+          "source": "  this.server.on501(function($){",
+          "coverage": 20
+        },
+        "190": {
+          "source": "    statusman.createResponder($.req, $.res).notImplemented();",
+          "coverage": 1
+        },
+        "191": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "192": {
+          "source": "",
+          "coverage": ""
+        },
+        "193": {
+          "source": "  this.server.on500(function(context, ex){",
+          "coverage": 20
+        },
+        "194": {
+          "source": "    var req = context.req;",
+          "coverage": 0
+        },
+        "195": {
+          "source": "    console.log(\"===============================\");",
+          "coverage": 0
+        },
+        "196": {
+          "source": "    console.log(\"Uncaught Exception\");",
+          "coverage": 0
+        },
+        "197": {
+          "source": "    console.log(ex);",
+          "coverage": 0
+        },
+        "198": {
+          "source": "    console.log(req.method, ' ', req.url);",
+          "coverage": 0
+        },
+        "199": {
+          "source": "    console.log(ex.stack);",
+          "coverage": 0
+        },
+        "200": {
+          "source": "    statusman.createResponder(req, res).internalServerError();",
+          "coverage": 0
+        },
+        "201": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "202": {
+          "source": "",
+          "coverage": ""
+        },
+        "203": {
+          "source": "",
+          "coverage": ""
+        },
+        "204": {
+          "source": "};",
+          "coverage": ""
+        },
+        "205": {
+          "source": "",
+          "coverage": ""
+        },
+        "206": {
+          "source": "Percolator.prototype.registerMediaType = function(type, instr, outobj){",
+          "coverage": 1
+        },
+        "207": {
+          "source": "  this.mediaTypes.register(type, instr, outobj);",
+          "coverage": 20
+        },
+        "208": {
+          "source": "};",
+          "coverage": ""
+        },
+        "209": {
+          "source": "",
+          "coverage": ""
+        },
+        "210": {
+          "source": "Percolator.prototype.registerStatusResponder = function(type, responder){",
+          "coverage": 1
+        },
+        "211": {
+          "source": "  this.statusman.register(type, responder);",
+          "coverage": 20
+        },
+        "212": {
+          "source": "};",
+          "coverage": ""
+        },
+        "213": {
+          "source": "",
+          "coverage": ""
+        },
+        "214": {
+          "source": "Percolator.prototype.registerMediaTypes = function(){",
+          "coverage": 1
+        },
+        "215": {
+          "source": "  var jsonType = require('./mediaTypes/json');",
+          "coverage": 20
+        },
+        "216": {
+          "source": "  this.registerMediaType('application/json', jsonType.fromString, jsonType.toString);",
+          "coverage": 20
+        },
+        "217": {
+          "source": "  this.registerStatusResponder('application/json',  JsonResponder);",
+          "coverage": 20
+        },
+        "218": {
+          "source": "};",
+          "coverage": ""
+        },
+        "219": {
+          "source": "",
+          "coverage": ""
+        },
+        "220": {
+          "source": "",
+          "coverage": ""
+        },
+        "221": {
+          "source": "Percolator.prototype.listen = function(cb){",
+          "coverage": 1
+        },
+        "222": {
+          "source": "  var that = this;",
+          "coverage": 19
+        },
+        "223": {
+          "source": "  if (!!this.staticDir){",
+          "coverage": 19
+        },
+        "224": {
+          "source": "    this.server.staticRoute(this.staticDir, function(err){",
+          "coverage": 2
+        },
+        "225": {
+          "source": "      if (!!err){",
+          "coverage": 2
+        },
+        "226": {
+          "source": "        cb(\"Your staticDir path could not be found.\");",
+          "coverage": 1
+        },
+        "227": {
+          "source": "      }",
+          "coverage": ""
+        },
+        "228": {
+          "source": "      that.server.listen(cb);",
+          "coverage": 2
+        },
+        "229": {
+          "source": "    });",
+          "coverage": ""
+        },
+        "230": {
+          "source": "  } else {",
+          "coverage": ""
+        },
+        "231": {
+          "source": "      that.server.listen(cb);",
+          "coverage": 17
+        },
+        "232": {
+          "source": "  }",
+          "coverage": ""
+        },
+        "233": {
+          "source": "};",
+          "coverage": ""
+        },
+        "234": {
+          "source": "",
+          "coverage": ""
+        },
+        "235": {
+          "source": "Percolator.prototype.close = function(cb){",
+          "coverage": 1
+        },
+        "236": {
+          "source": "  this.server.close(cb);",
+          "coverage": 39
+        },
+        "237": {
+          "source": "};",
+          "coverage": ""
+        },
+        "238": {
+          "source": "",
+          "coverage": ""
+        },
+        "239": {
+          "source": "",
+          "coverage": ""
+        },
+        "240": {
+          "source": "// what about body parsing based on content-type?",
+          "coverage": ""
+        },
+        "241": {
+          "source": "// example \"accept only\" (throws errors for unsupported types ) ",
+          "coverage": ""
+        },
+        "242": {
+          "source": "//   onBody(['application/json', application/xml'], function(err, type, body){ ... });",
+          "coverage": ""
+        },
+        "243": {
+          "source": "// example \"accept all types\"",
+          "coverage": ""
+        },
+        "244": {
+          "source": "//   onBody(function(err, type, body){ ... });",
+          "coverage": ""
+        },
+        "245": {
+          "source": "// TODO: max-size parameter?",
+          "coverage": ""
+        },
+        "246": {
+          "source": "// TODO: whether parseBody is true or not, we should use the same handler either way.",
+          "coverage": ""
+        },
+        "247": {
+          "source": "",
+          "coverage": ""
+        },
+        "248": {
+          "source": "",
+          "coverage": ""
+        },
+        "249": {
+          "source": "module.exports = Percolator;",
+          "coverage": 1
+        },
+        "250": {
+          "source": "",
+          "coverage": ""
+        },
+        "251": {
+          "source": "",
+          "coverage": ""
+        },
+        "252": {
+          "source": "function context(req, res){",
+          "coverage": 1
+        },
+        "253": {
+          "source": "  return {req : req, res : res};",
+          "coverage": 15
+        },
+        "254": {
+          "source": "}",
+          "coverage": ""
+        }
+      }
+    },
+    {
+      "filename": "StatusManager.js",
+      "coverage": 100,
+      "hits": 15,
+      "misses": 0,
+      "sloc": 15,
+      "source": {
+        "1": {
+          "source": "_ = require('underscore');",
+          "coverage": 1
+        },
+        "2": {
+          "source": "JsonResponder = require('../index').JsonResponder;",
+          "coverage": 1
+        },
+        "3": {
+          "source": "var EventEmitter = require('events').EventEmitter;",
+          "coverage": 1
+        },
+        "4": {
+          "source": "",
+          "coverage": ""
+        },
+        "5": {
+          "source": "var StatusManager = function(){",
+          "coverage": 1
+        },
+        "6": {
+          "source": "  this.registry = {};",
+          "coverage": 42
+        },
+        "7": {
+          "source": "};",
+          "coverage": ""
+        },
+        "8": {
+          "source": "",
+          "coverage": ""
+        },
+        "9": {
+          "source": "StatusManager.prototype = Object.create(EventEmitter.prototype);",
+          "coverage": 1
+        },
+        "10": {
+          "source": "",
+          "coverage": ""
+        },
+        "11": {
+          "source": "StatusManager.prototype.register = function(contentType, responder){",
+          "coverage": 1
+        },
+        "12": {
+          "source": "  this.registry[contentType] = responder;",
+          "coverage": 20
+        },
+        "13": {
+          "source": "};",
+          "coverage": ""
+        },
+        "14": {
+          "source": "",
+          "coverage": ""
+        },
+        "15": {
+          "source": "StatusManager.prototype.createResponder = function(req, res){",
+          "coverage": 1
+        },
+        "16": {
+          "source": "  // TODO make this do conneg and pick a responder from the registry!",
+          "coverage": ""
+        },
+        "17": {
+          "source": "",
+          "coverage": ""
+        },
+        "18": {
+          "source": "  // TODO make default text/plain, text/html, application/xml,",
+          "coverage": ""
+        },
+        "19": {
+          "source": "  // application/octet-sctream, form-url-encoded responders",
+          "coverage": ""
+        },
+        "20": {
+          "source": "  var responder = new JsonResponder(req, res);",
+          "coverage": 43
+        },
+        "21": {
+          "source": "  var that = this;",
+          "coverage": 43
+        },
+        "22": {
+          "source": "  responder.on('error', function(data){",
+          "coverage": 43
+        },
+        "23": {
+          "source": "    that.emit('error', data);",
+          "coverage": 7
+        },
+        "24": {
+          "source": "  });",
+          "coverage": ""
+        },
+        "25": {
+          "source": "  return responder;",
+          "coverage": 43
+        },
+        "26": {
+          "source": "};",
+          "coverage": ""
+        },
+        "27": {
+          "source": "",
+          "coverage": ""
+        },
+        "28": {
+          "source": "module.exports = StatusManager;",
+          "coverage": 1
+        }
+      }
+    },
+    {
+      "filename": "mediaTypes/json.js",
+      "coverage": 75,
+      "hits": 3,
+      "misses": 1,
+      "sloc": 4,
+      "source": {
+        "1": {
+          "source": "",
+          "coverage": ""
+        },
+        "2": {
+          "source": "exports.fromString = function (str){",
+          "coverage": 1
+        },
+        "3": {
+          "source": "  return JSON.parse(str);",
+          "coverage": 2
+        },
+        "4": {
+          "source": "};",
+          "coverage": ""
+        },
+        "5": {
+          "source": "",
+          "coverage": ""
+        },
+        "6": {
+          "source": "exports.toString = function(obj){",
+          "coverage": 1
+        },
+        "7": {
+          "source": "  return JSON.stringify(obj);",
+          "coverage": 0
+        },
+        "8": {
+          "source": "};",
+          "coverage": ""
+        },
+        "9": {
+          "source": "",
+          "coverage": ""
+        }
+      }
+    }
+  ],
+  "stats": {
+    "suites": 38,
+    "tests": 107,
+    "passes": 107,
+    "pending": 0,
+    "failures": 0,
+    "start": "2013-03-15T01:00:32.918Z",
+    "end": "2013-03-15T01:00:33.317Z",
+    "duration": 399
+  },
+  "tests": [
+    {
+      "title": "does nothing if the handler has no basicAuthenticate method",
+      "fullTitle": "BasicAuthenticateHelper does nothing if the handler has no basicAuthenticate method",
+      "duration": 1
+    },
+    {
+      "title": "runs the object's basicAuthenticate method if it has one",
+      "fullTitle": "BasicAuthenticateHelper runs the object's basicAuthenticate method if it has one",
+      "duration": 1
+    },
+    {
+      "title": "sets authenticated on the object",
+      "fullTitle": "BasicAuthenticateHelper sets authenticated on the object",
+      "duration": 1
+    },
+    {
+      "title": "sets returns 401 when the scheme is not basic",
+      "fullTitle": "BasicAuthenticateHelper sets returns 401 when the scheme is not basic",
+      "duration": 0
+    },
+    {
+      "title": "responds with an unauthenticated status if Authorization header isn't there",
+      "fullTitle": "BasicAuthenticateHelper responds with an unauthenticated status if Authorization header isn't there",
+      "duration": 1
+    },
+    {
+      "title": "responds with an unauthenticated status if the err is true",
+      "fullTitle": "BasicAuthenticateHelper responds with an unauthenticated status if the err is true",
+      "duration": 0
+    },
+    {
+      "title": "responds with an internalServerError if the err is non-true/non-falsey",
+      "fullTitle": "BasicAuthenticateHelper responds with an internalServerError if the err is non-true/non-falsey",
+      "duration": 0
+    },
+    {
+      "title": "does nothing if the handler has no fetch method",
+      "fullTitle": "FetchHelper does nothing if the handler has no fetch method",
+      "duration": 1
+    },
+    {
+      "title": "runs the object's fetch method if it has one",
+      "fullTitle": "FetchHelper runs the object's fetch method if it has one",
+      "duration": 0
+    },
+    {
+      "title": "sets fetched on the object",
+      "fullTitle": "FetchHelper sets fetched on the object",
+      "duration": 0
+    },
+    {
+      "title": "does nothing if the method is PUT AND handler.fetchOnPUT is false",
+      "fullTitle": "FetchHelper does nothing if the method is PUT AND handler.fetchOnPUT is false",
+      "duration": 0
+    },
+    {
+      "title": "responds with a notFound status if the err is true",
+      "fullTitle": "FetchHelper responds with a notFound status if the err is true",
+      "duration": 1
+    },
+    {
+      "title": "responds with an internalServerError if the err is non-true/non-falsey",
+      "fullTitle": "FetchHelper responds with an internalServerError if the err is non-true/non-falsey",
+      "duration": 0
+    },
+    {
+      "title": "does nothing if the handler has no authenticate method",
+      "fullTitle": "AuthenticateHelper does nothing if the handler has no authenticate method",
+      "duration": 0
+    },
+    {
+      "title": "runs the object's authenticate method if it has one",
+      "fullTitle": "AuthenticateHelper runs the object's authenticate method if it has one",
+      "duration": 0
+    },
+    {
+      "title": "sets authenticated on the object",
+      "fullTitle": "AuthenticateHelper sets authenticated on the object",
+      "duration": 0
+    },
+    {
+      "title": "responds with an unauthenticated status if the err is true",
+      "fullTitle": "AuthenticateHelper responds with an unauthenticated status if the err is true",
+      "duration": 1
+    },
+    {
+      "title": "responds with an internalServerError if the err is non-true/non-falsey",
+      "fullTitle": "AuthenticateHelper responds with an internalServerError if the err is non-true/non-falsey",
+      "duration": 0
+    },
+    {
+      "title": "sets onBody on the object",
+      "fullTitle": "onBodyHelper sets onBody on the object",
+      "duration": 1
+    },
+    {
+      "title": "sets the error param when there's an error",
+      "fullTitle": "onBodyHelper sets the error param when there's an error",
+      "duration": 0
+    },
+    {
+      "title": "sets a body param when successful",
+      "fullTitle": "onBodyHelper sets a body param when successful",
+      "duration": 0
+    },
+    {
+      "title": "fakes a 200 response",
+      "fullTitle": "ContextFaker fakes a 200 response",
+      "duration": 1
+    },
+    {
+      "title": "can fake a call to req.uri.parent()",
+      "fullTitle": "ContextFaker can fake a call to req.uri.parent()",
+      "duration": 1
+    },
+    {
+      "title": "fakes a 200 response with an asynch call",
+      "fullTitle": "ContextFaker fakes a 200 response with an asynch call",
+      "duration": 21
+    },
+    {
+      "title": "fakes a json POST",
+      "fullTitle": "ContextFaker fakes a json POST",
+      "duration": 1
+    },
+    {
+      "title": "fakes header setting",
+      "fullTitle": "ContextFaker fakes header setting",
+      "duration": 0
+    },
+    {
+      "title": "fakes headers setting",
+      "fullTitle": "ContextFaker fakes headers setting",
+      "duration": 0
+    },
+    {
+      "title": "fakes a 200 request to a module that implements fetch()",
+      "fullTitle": "ContextFaker fakes a 200 request to a module that implements fetch()",
+      "duration": 1
+    },
+    {
+      "title": "fakes a 404 request to a module that implements fetch()",
+      "fullTitle": "ContextFaker fakes a 404 request to a module that implements fetch()",
+      "duration": 0
+    },
+    {
+      "title": "fakes a 500 request to a module that implements fetch()",
+      "fullTitle": "ContextFaker fakes a 500 request to a module that implements fetch()",
+      "duration": 0
+    },
+    {
+      "title": "should return a json string",
+      "fullTitle": "HyperJson #toString should return a json string",
+      "duration": 0
+    },
+    {
+      "title": "should return a json object when given one",
+      "fullTitle": "HyperJson #toObject should return a json object when given one",
+      "duration": 1
+    },
+    {
+      "title": "should add a property to a json object that doesn't have it",
+      "fullTitle": "HyperJson #property should add a property to a json object that doesn't have it",
+      "duration": 0
+    },
+    {
+      "title": "should add a link to a json object that has no links",
+      "fullTitle": "HyperJson #link should add a link to a json object that has no links",
+      "duration": 0
+    },
+    {
+      "title": "should add a link to a json object that has a link",
+      "fullTitle": "HyperJson #link should add a link to a json object that has a link",
+      "duration": 0
+    },
+    {
+      "title": "should error if its options array has anything other than method, schema, type",
+      "fullTitle": "HyperJson #link should error if its options array has anything other than method, schema, type",
+      "duration": 0
+    },
+    {
+      "title": "should add a link with type, method and schema options",
+      "fullTitle": "HyperJson #link should add a link with type, method and schema options",
+      "duration": 0
+    },
+    {
+      "title": "has default error handlers for 404s",
+      "fullTitle": "Percolator has default error handlers for 404s",
+      "duration": 48
+    },
+    {
+      "title": "has default error handlers for 405s",
+      "fullTitle": "Percolator has default error handlers for 405s",
+      "duration": 8
+    },
+    {
+      "title": "has default error handlers for 501s",
+      "fullTitle": "Percolator has default error handlers for 501s",
+      "duration": 4
+    },
+    {
+      "title": "has a default error handler for 414s",
+      "fullTitle": "Percolator has a default error handler for 414s",
+      "duration": 10
+    },
+    {
+      "title": "exposes a before hook for executing logic before requests",
+      "fullTitle": "Percolator exposes a before hook for executing logic before requests",
+      "duration": 3
+    },
+    {
+      "title": "exposes an after hook for executing logic after requests",
+      "fullTitle": "Percolator exposes an after hook for executing logic after requests",
+      "duration": 2
+    },
+    {
+      "title": "can respond to simple requests",
+      "fullTitle": "Percolator can respond to simple requests",
+      "duration": 3
+    },
+    {
+      "title": "can respond to static requests",
+      "fullTitle": "Percolator can respond to static requests",
+      "duration": 19
+    },
+    {
+      "title": "throws an error when staticDir is set, but the dir doesn't exist.",
+      "fullTitle": "Percolator throws an error when staticDir is set, but the dir doesn't exist.",
+      "duration": 1
+    },
+    {
+      "title": "passes options on to the req's 'app' namespace",
+      "fullTitle": "Percolator passes options on to the req's 'app' namespace",
+      "duration": 2
+    },
+    {
+      "title": "adds a router reference to every req",
+      "fullTitle": "Percolator adds a router reference to every req",
+      "duration": 5
+    },
+    {
+      "title": "HEAD for a GET-only resource returns the same headers, blank resource",
+      "fullTitle": "Percolator HEAD for a GET-only resource returns the same headers, blank resource",
+      "duration": 3
+    },
+    {
+      "title": "OPTIONS for a GET-only resource returns, GET, HEAD, OPTIONS",
+      "fullTitle": "Percolator OPTIONS for a GET-only resource returns, GET, HEAD, OPTIONS",
+      "duration": 2
+    },
+    {
+      "title": "can be created",
+      "fullTitle": "Percolator #ctor can be created",
+      "duration": 1
+    },
+    {
+      "title": "can override the default port",
+      "fullTitle": "Percolator #ctor can override the default port",
+      "duration": 3
+    },
+    {
+      "title": "parsed body gets added to the req",
+      "fullTitle": "Percolator when managing a text/plain body parsed body gets added to the req",
+      "duration": 2
+    },
+    {
+      "title": "parsed body gets added to the req",
+      "fullTitle": "Percolator when managing a json body parsed body gets added to the req",
+      "duration": 3
+    },
+    {
+      "title": "responds 415 when Content-Type is unsupported",
+      "fullTitle": "Percolator when managing a json body responds 415 when Content-Type is unsupported",
+      "duration": 3
+    },
+    {
+      "title": "responds 415 when Content-Type is missing on PUT",
+      "fullTitle": "Percolator when managing a json body responds 415 when Content-Type is missing on PUT",
+      "duration": 2
+    },
+    {
+      "title": "responds 400 when Content-Type is json, but body doesn't contain JSON",
+      "fullTitle": "Percolator when managing a json body responds 400 when Content-Type is json, but body doesn't contain JSON",
+      "duration": 4
+    },
+    {
+      "title": "can be constructed",
+      "fullTitle": "StatusManager can be constructed",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 500 when the detail is a simple object",
+      "fullTitle": "JsonResponder #internalServerError sets the status to 500 when the detail is a simple object",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 500 when the detail is a 'circular' object",
+      "fullTitle": "JsonResponder #internalServerError sets the status to 500 when the detail is a 'circular' object",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 400",
+      "fullTitle": "JsonResponder #badRequest sets the status to 400",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 202",
+      "fullTitle": "JsonResponder #accepted sets the status to 202",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 204",
+      "fullTitle": "JsonResponder #noContent sets the status to 204",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 205",
+      "fullTitle": "JsonResponder #resetContent sets the status to 205",
+      "duration": 0
+    },
+    {
+      "title": "sets the Location header and sets the status to 301",
+      "fullTitle": "JsonResponder #movedPermanently sets the Location header and sets the status to 301",
+      "duration": 0
+    },
+    {
+      "title": "sets the Allow header and sets the status to 200",
+      "fullTitle": "JsonResponder #OPTIONS sets the Allow header and sets the status to 200",
+      "duration": 0
+    },
+    {
+      "title": "sets the Location header and sets the status to 301",
+      "fullTitle": "JsonResponder #redirect sets the Location header and sets the status to 301",
+      "duration": 0
+    },
+    {
+      "title": "sets the Location header and sets the status to 201",
+      "fullTitle": "JsonResponder #created sets the Location header and sets the status to 201",
+      "duration": 0
+    },
+    {
+      "title": "should return a json object when given one",
+      "fullTitle": "HyperJsonCollection #toObject should return a json object when given one",
+      "duration": 0
+    },
+    {
+      "title": "should return a json collection when given an array",
+      "fullTitle": "HyperJsonCollection #toObject should return a json collection when given an array",
+      "duration": 0
+    },
+    {
+      "title": "should return a json collection indexed by a particular property when given an array and property name",
+      "fullTitle": "HyperJsonCollection #toObject should return a json collection indexed by a particular property when given an array and property name",
+      "duration": 1
+    },
+    {
+      "title": "should allow a cb to be specified for an array collection",
+      "fullTitle": "HyperJsonCollection #linkEach should allow a cb to be specified for an array collection",
+      "duration": 1
+    },
+    {
+      "title": "should allow a cb to be specified for an array collection",
+      "fullTitle": "HyperJsonCollection #linkEach should allow a cb to be specified for an array collection",
+      "duration": 0
+    },
+    {
+      "title": "should do nothing if there are no _items",
+      "fullTitle": "HyperJsonCollection #each should do nothing if there are no _items",
+      "duration": 0
+    },
+    {
+      "title": "should decorate each item in _items if its an array",
+      "fullTitle": "HyperJsonCollection #each should decorate each item in _items if its an array",
+      "duration": 0
+    },
+    {
+      "title": "should decorate each item in _items if its an object",
+      "fullTitle": "HyperJsonCollection #each should decorate each item in _items if its an object",
+      "duration": 0
+    },
+    {
+      "title": "sets fetch on wildcard if fetch is defined",
+      "fullTitle": "CRUDCollection sets fetch on wildcard if fetch is defined",
+      "duration": 1
+    },
+    {
+      "title": "throws an exception if there's no list() or collectionGET() passed in the options param",
+      "fullTitle": "CRUDCollection throws an exception if there's no list() or collectionGET() passed in the options param",
+      "duration": 0
+    },
+    {
+      "title": "collection GET outputs a create link",
+      "fullTitle": "CRUDCollection when schema is set collection GET outputs a create link",
+      "duration": 1
+    },
+    {
+      "title": "collection GET outputs a create link with no query string even if self has one",
+      "fullTitle": "CRUDCollection when schema is set collection GET outputs a create link with no query string even if self has one",
+      "duration": 0
+    },
+    {
+      "title": "creates self links in all items",
+      "fullTitle": "CRUDCollection collection.GET creates self links in all items",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if options has no destroy()",
+      "fullTitle": "CRUDCollection wildcard.DELETE doesn't exist if options has no destroy()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.destroy()",
+      "fullTitle": "CRUDCollection wildcard.DELETE calls options.destroy()",
+      "duration": 1
+    },
+    {
+      "title": "calls options.destroy() and its callback if specified",
+      "fullTitle": "CRUDCollection wildcard.DELETE calls options.destroy() and its callback if specified",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if options has no update() or upsert()",
+      "fullTitle": "CRUDCollection wildcard.PUT doesn't exist if options has no update() or upsert()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.upsert() if it exists",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.upsert() if it exists",
+      "duration": 0
+    },
+    {
+      "title": "calls options.upsert() with its callback if it exists",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.upsert() with its callback if it exists",
+      "duration": 1
+    },
+    {
+      "title": "calls options.update()",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.update()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.update() and its callback if specified",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.update() and its callback if specified",
+      "duration": 0
+    },
+    {
+      "title": "is defined when collectionGET is defined",
+      "fullTitle": "CRUDCollection handler.GET is defined when collectionGET is defined",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if there's no fetch() or memberGET",
+      "fullTitle": "CRUDCollection wildcard.GET doesn't exist if there's no fetch() or memberGET",
+      "duration": 0
+    },
+    {
+      "title": "does not output an update link if there's no update()",
+      "fullTitle": "CRUDCollection wildcard.GET does not output an update link if there's no update()",
+      "duration": 1
+    },
+    {
+      "title": "outputs a representation of a resource when fetch is defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs a representation of a resource when fetch is defined",
+      "duration": 0
+    },
+    {
+      "title": "outputs without an update link if update() is not defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs without an update link if update() is not defined",
+      "duration": 0
+    },
+    {
+      "title": "outputs with an update link if update() is defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs with an update link if update() is defined",
+      "duration": 0
+    },
+    {
+      "title": "outputs with a delete link if destroy() is defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs with a delete link if destroy() is defined",
+      "duration": 1
+    },
+    {
+      "title": "is defined when memberGET is defined",
+      "fullTitle": "CRUDCollection wildcard.GET is defined when memberGET is defined",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if options has no create()",
+      "fullTitle": "CRUDCollection handler.POST doesn't exist if options has no create()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.create()",
+      "fullTitle": "CRUDCollection handler.POST calls options.create()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.create() and its callback if specified",
+      "fullTitle": "CRUDCollection handler.POST calls options.create() and its callback if specified",
+      "duration": 0
+    },
+    {
+      "title": "sets onJson on the object",
+      "fullTitle": "onJsonHelper sets onJson on the object",
+      "duration": 0
+    },
+    {
+      "title": "throws an error when called with 2+ params",
+      "fullTitle": "onJsonHelper throws an error when called with 2+ params",
+      "duration": 0
+    },
+    {
+      "title": "sets the error param when there's an error",
+      "fullTitle": "onJsonHelper sets the error param when there's an error",
+      "duration": 0
+    },
+    {
+      "title": "sets an obj param when successful",
+      "fullTitle": "onJsonHelper sets an obj param when successful",
+      "duration": 0
+    },
+    {
+      "title": "responds with an error if json doesn't parse",
+      "fullTitle": "onJsonHelper responds with an error if json doesn't parse",
+      "duration": 0
+    },
+    {
+      "title": "responds with an error if input incorrectly has additional properties",
+      "fullTitle": "onJsonHelper responds with an error if input incorrectly has additional properties",
+      "duration": 19
+    },
+    {
+      "title": "throws errors when input doesn't match schema",
+      "fullTitle": "onJsonHelper throws errors when input doesn't match schema",
+      "duration": 16
+    }
+  ],
+  "failures": [],
+  "passes": [
+    {
+      "title": "does nothing if the handler has no basicAuthenticate method",
+      "fullTitle": "BasicAuthenticateHelper does nothing if the handler has no basicAuthenticate method",
+      "duration": 1
+    },
+    {
+      "title": "runs the object's basicAuthenticate method if it has one",
+      "fullTitle": "BasicAuthenticateHelper runs the object's basicAuthenticate method if it has one",
+      "duration": 1
+    },
+    {
+      "title": "sets authenticated on the object",
+      "fullTitle": "BasicAuthenticateHelper sets authenticated on the object",
+      "duration": 1
+    },
+    {
+      "title": "sets returns 401 when the scheme is not basic",
+      "fullTitle": "BasicAuthenticateHelper sets returns 401 when the scheme is not basic",
+      "duration": 0
+    },
+    {
+      "title": "responds with an unauthenticated status if Authorization header isn't there",
+      "fullTitle": "BasicAuthenticateHelper responds with an unauthenticated status if Authorization header isn't there",
+      "duration": 1
+    },
+    {
+      "title": "responds with an unauthenticated status if the err is true",
+      "fullTitle": "BasicAuthenticateHelper responds with an unauthenticated status if the err is true",
+      "duration": 0
+    },
+    {
+      "title": "responds with an internalServerError if the err is non-true/non-falsey",
+      "fullTitle": "BasicAuthenticateHelper responds with an internalServerError if the err is non-true/non-falsey",
+      "duration": 0
+    },
+    {
+      "title": "does nothing if the handler has no fetch method",
+      "fullTitle": "FetchHelper does nothing if the handler has no fetch method",
+      "duration": 1
+    },
+    {
+      "title": "runs the object's fetch method if it has one",
+      "fullTitle": "FetchHelper runs the object's fetch method if it has one",
+      "duration": 0
+    },
+    {
+      "title": "sets fetched on the object",
+      "fullTitle": "FetchHelper sets fetched on the object",
+      "duration": 0
+    },
+    {
+      "title": "does nothing if the method is PUT AND handler.fetchOnPUT is false",
+      "fullTitle": "FetchHelper does nothing if the method is PUT AND handler.fetchOnPUT is false",
+      "duration": 0
+    },
+    {
+      "title": "responds with a notFound status if the err is true",
+      "fullTitle": "FetchHelper responds with a notFound status if the err is true",
+      "duration": 1
+    },
+    {
+      "title": "responds with an internalServerError if the err is non-true/non-falsey",
+      "fullTitle": "FetchHelper responds with an internalServerError if the err is non-true/non-falsey",
+      "duration": 0
+    },
+    {
+      "title": "does nothing if the handler has no authenticate method",
+      "fullTitle": "AuthenticateHelper does nothing if the handler has no authenticate method",
+      "duration": 0
+    },
+    {
+      "title": "runs the object's authenticate method if it has one",
+      "fullTitle": "AuthenticateHelper runs the object's authenticate method if it has one",
+      "duration": 0
+    },
+    {
+      "title": "sets authenticated on the object",
+      "fullTitle": "AuthenticateHelper sets authenticated on the object",
+      "duration": 0
+    },
+    {
+      "title": "responds with an unauthenticated status if the err is true",
+      "fullTitle": "AuthenticateHelper responds with an unauthenticated status if the err is true",
+      "duration": 1
+    },
+    {
+      "title": "responds with an internalServerError if the err is non-true/non-falsey",
+      "fullTitle": "AuthenticateHelper responds with an internalServerError if the err is non-true/non-falsey",
+      "duration": 0
+    },
+    {
+      "title": "sets onBody on the object",
+      "fullTitle": "onBodyHelper sets onBody on the object",
+      "duration": 1
+    },
+    {
+      "title": "sets the error param when there's an error",
+      "fullTitle": "onBodyHelper sets the error param when there's an error",
+      "duration": 0
+    },
+    {
+      "title": "sets a body param when successful",
+      "fullTitle": "onBodyHelper sets a body param when successful",
+      "duration": 0
+    },
+    {
+      "title": "fakes a 200 response",
+      "fullTitle": "ContextFaker fakes a 200 response",
+      "duration": 1
+    },
+    {
+      "title": "can fake a call to req.uri.parent()",
+      "fullTitle": "ContextFaker can fake a call to req.uri.parent()",
+      "duration": 1
+    },
+    {
+      "title": "fakes a 200 response with an asynch call",
+      "fullTitle": "ContextFaker fakes a 200 response with an asynch call",
+      "duration": 21
+    },
+    {
+      "title": "fakes a json POST",
+      "fullTitle": "ContextFaker fakes a json POST",
+      "duration": 1
+    },
+    {
+      "title": "fakes header setting",
+      "fullTitle": "ContextFaker fakes header setting",
+      "duration": 0
+    },
+    {
+      "title": "fakes headers setting",
+      "fullTitle": "ContextFaker fakes headers setting",
+      "duration": 0
+    },
+    {
+      "title": "fakes a 200 request to a module that implements fetch()",
+      "fullTitle": "ContextFaker fakes a 200 request to a module that implements fetch()",
+      "duration": 1
+    },
+    {
+      "title": "fakes a 404 request to a module that implements fetch()",
+      "fullTitle": "ContextFaker fakes a 404 request to a module that implements fetch()",
+      "duration": 0
+    },
+    {
+      "title": "fakes a 500 request to a module that implements fetch()",
+      "fullTitle": "ContextFaker fakes a 500 request to a module that implements fetch()",
+      "duration": 0
+    },
+    {
+      "title": "should return a json string",
+      "fullTitle": "HyperJson #toString should return a json string",
+      "duration": 0
+    },
+    {
+      "title": "should return a json object when given one",
+      "fullTitle": "HyperJson #toObject should return a json object when given one",
+      "duration": 1
+    },
+    {
+      "title": "should add a property to a json object that doesn't have it",
+      "fullTitle": "HyperJson #property should add a property to a json object that doesn't have it",
+      "duration": 0
+    },
+    {
+      "title": "should add a link to a json object that has no links",
+      "fullTitle": "HyperJson #link should add a link to a json object that has no links",
+      "duration": 0
+    },
+    {
+      "title": "should add a link to a json object that has a link",
+      "fullTitle": "HyperJson #link should add a link to a json object that has a link",
+      "duration": 0
+    },
+    {
+      "title": "should error if its options array has anything other than method, schema, type",
+      "fullTitle": "HyperJson #link should error if its options array has anything other than method, schema, type",
+      "duration": 0
+    },
+    {
+      "title": "should add a link with type, method and schema options",
+      "fullTitle": "HyperJson #link should add a link with type, method and schema options",
+      "duration": 0
+    },
+    {
+      "title": "has default error handlers for 404s",
+      "fullTitle": "Percolator has default error handlers for 404s",
+      "duration": 48
+    },
+    {
+      "title": "has default error handlers for 405s",
+      "fullTitle": "Percolator has default error handlers for 405s",
+      "duration": 8
+    },
+    {
+      "title": "has default error handlers for 501s",
+      "fullTitle": "Percolator has default error handlers for 501s",
+      "duration": 4
+    },
+    {
+      "title": "has a default error handler for 414s",
+      "fullTitle": "Percolator has a default error handler for 414s",
+      "duration": 10
+    },
+    {
+      "title": "exposes a before hook for executing logic before requests",
+      "fullTitle": "Percolator exposes a before hook for executing logic before requests",
+      "duration": 3
+    },
+    {
+      "title": "exposes an after hook for executing logic after requests",
+      "fullTitle": "Percolator exposes an after hook for executing logic after requests",
+      "duration": 2
+    },
+    {
+      "title": "can respond to simple requests",
+      "fullTitle": "Percolator can respond to simple requests",
+      "duration": 3
+    },
+    {
+      "title": "can respond to static requests",
+      "fullTitle": "Percolator can respond to static requests",
+      "duration": 19
+    },
+    {
+      "title": "throws an error when staticDir is set, but the dir doesn't exist.",
+      "fullTitle": "Percolator throws an error when staticDir is set, but the dir doesn't exist.",
+      "duration": 1
+    },
+    {
+      "title": "passes options on to the req's 'app' namespace",
+      "fullTitle": "Percolator passes options on to the req's 'app' namespace",
+      "duration": 2
+    },
+    {
+      "title": "adds a router reference to every req",
+      "fullTitle": "Percolator adds a router reference to every req",
+      "duration": 5
+    },
+    {
+      "title": "HEAD for a GET-only resource returns the same headers, blank resource",
+      "fullTitle": "Percolator HEAD for a GET-only resource returns the same headers, blank resource",
+      "duration": 3
+    },
+    {
+      "title": "OPTIONS for a GET-only resource returns, GET, HEAD, OPTIONS",
+      "fullTitle": "Percolator OPTIONS for a GET-only resource returns, GET, HEAD, OPTIONS",
+      "duration": 2
+    },
+    {
+      "title": "can be created",
+      "fullTitle": "Percolator #ctor can be created",
+      "duration": 1
+    },
+    {
+      "title": "can override the default port",
+      "fullTitle": "Percolator #ctor can override the default port",
+      "duration": 3
+    },
+    {
+      "title": "parsed body gets added to the req",
+      "fullTitle": "Percolator when managing a text/plain body parsed body gets added to the req",
+      "duration": 2
+    },
+    {
+      "title": "parsed body gets added to the req",
+      "fullTitle": "Percolator when managing a json body parsed body gets added to the req",
+      "duration": 3
+    },
+    {
+      "title": "responds 415 when Content-Type is unsupported",
+      "fullTitle": "Percolator when managing a json body responds 415 when Content-Type is unsupported",
+      "duration": 3
+    },
+    {
+      "title": "responds 415 when Content-Type is missing on PUT",
+      "fullTitle": "Percolator when managing a json body responds 415 when Content-Type is missing on PUT",
+      "duration": 2
+    },
+    {
+      "title": "responds 400 when Content-Type is json, but body doesn't contain JSON",
+      "fullTitle": "Percolator when managing a json body responds 400 when Content-Type is json, but body doesn't contain JSON",
+      "duration": 4
+    },
+    {
+      "title": "can be constructed",
+      "fullTitle": "StatusManager can be constructed",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 500 when the detail is a simple object",
+      "fullTitle": "JsonResponder #internalServerError sets the status to 500 when the detail is a simple object",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 500 when the detail is a 'circular' object",
+      "fullTitle": "JsonResponder #internalServerError sets the status to 500 when the detail is a 'circular' object",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 400",
+      "fullTitle": "JsonResponder #badRequest sets the status to 400",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 202",
+      "fullTitle": "JsonResponder #accepted sets the status to 202",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 204",
+      "fullTitle": "JsonResponder #noContent sets the status to 204",
+      "duration": 0
+    },
+    {
+      "title": "sets the status to 205",
+      "fullTitle": "JsonResponder #resetContent sets the status to 205",
+      "duration": 0
+    },
+    {
+      "title": "sets the Location header and sets the status to 301",
+      "fullTitle": "JsonResponder #movedPermanently sets the Location header and sets the status to 301",
+      "duration": 0
+    },
+    {
+      "title": "sets the Allow header and sets the status to 200",
+      "fullTitle": "JsonResponder #OPTIONS sets the Allow header and sets the status to 200",
+      "duration": 0
+    },
+    {
+      "title": "sets the Location header and sets the status to 301",
+      "fullTitle": "JsonResponder #redirect sets the Location header and sets the status to 301",
+      "duration": 0
+    },
+    {
+      "title": "sets the Location header and sets the status to 201",
+      "fullTitle": "JsonResponder #created sets the Location header and sets the status to 201",
+      "duration": 0
+    },
+    {
+      "title": "should return a json object when given one",
+      "fullTitle": "HyperJsonCollection #toObject should return a json object when given one",
+      "duration": 0
+    },
+    {
+      "title": "should return a json collection when given an array",
+      "fullTitle": "HyperJsonCollection #toObject should return a json collection when given an array",
+      "duration": 0
+    },
+    {
+      "title": "should return a json collection indexed by a particular property when given an array and property name",
+      "fullTitle": "HyperJsonCollection #toObject should return a json collection indexed by a particular property when given an array and property name",
+      "duration": 1
+    },
+    {
+      "title": "should allow a cb to be specified for an array collection",
+      "fullTitle": "HyperJsonCollection #linkEach should allow a cb to be specified for an array collection",
+      "duration": 1
+    },
+    {
+      "title": "should allow a cb to be specified for an array collection",
+      "fullTitle": "HyperJsonCollection #linkEach should allow a cb to be specified for an array collection",
+      "duration": 0
+    },
+    {
+      "title": "should do nothing if there are no _items",
+      "fullTitle": "HyperJsonCollection #each should do nothing if there are no _items",
+      "duration": 0
+    },
+    {
+      "title": "should decorate each item in _items if its an array",
+      "fullTitle": "HyperJsonCollection #each should decorate each item in _items if its an array",
+      "duration": 0
+    },
+    {
+      "title": "should decorate each item in _items if its an object",
+      "fullTitle": "HyperJsonCollection #each should decorate each item in _items if its an object",
+      "duration": 0
+    },
+    {
+      "title": "sets fetch on wildcard if fetch is defined",
+      "fullTitle": "CRUDCollection sets fetch on wildcard if fetch is defined",
+      "duration": 1
+    },
+    {
+      "title": "throws an exception if there's no list() or collectionGET() passed in the options param",
+      "fullTitle": "CRUDCollection throws an exception if there's no list() or collectionGET() passed in the options param",
+      "duration": 0
+    },
+    {
+      "title": "collection GET outputs a create link",
+      "fullTitle": "CRUDCollection when schema is set collection GET outputs a create link",
+      "duration": 1
+    },
+    {
+      "title": "collection GET outputs a create link with no query string even if self has one",
+      "fullTitle": "CRUDCollection when schema is set collection GET outputs a create link with no query string even if self has one",
+      "duration": 0
+    },
+    {
+      "title": "creates self links in all items",
+      "fullTitle": "CRUDCollection collection.GET creates self links in all items",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if options has no destroy()",
+      "fullTitle": "CRUDCollection wildcard.DELETE doesn't exist if options has no destroy()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.destroy()",
+      "fullTitle": "CRUDCollection wildcard.DELETE calls options.destroy()",
+      "duration": 1
+    },
+    {
+      "title": "calls options.destroy() and its callback if specified",
+      "fullTitle": "CRUDCollection wildcard.DELETE calls options.destroy() and its callback if specified",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if options has no update() or upsert()",
+      "fullTitle": "CRUDCollection wildcard.PUT doesn't exist if options has no update() or upsert()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.upsert() if it exists",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.upsert() if it exists",
+      "duration": 0
+    },
+    {
+      "title": "calls options.upsert() with its callback if it exists",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.upsert() with its callback if it exists",
+      "duration": 1
+    },
+    {
+      "title": "calls options.update()",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.update()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.update() and its callback if specified",
+      "fullTitle": "CRUDCollection wildcard.PUT calls options.update() and its callback if specified",
+      "duration": 0
+    },
+    {
+      "title": "is defined when collectionGET is defined",
+      "fullTitle": "CRUDCollection handler.GET is defined when collectionGET is defined",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if there's no fetch() or memberGET",
+      "fullTitle": "CRUDCollection wildcard.GET doesn't exist if there's no fetch() or memberGET",
+      "duration": 0
+    },
+    {
+      "title": "does not output an update link if there's no update()",
+      "fullTitle": "CRUDCollection wildcard.GET does not output an update link if there's no update()",
+      "duration": 1
+    },
+    {
+      "title": "outputs a representation of a resource when fetch is defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs a representation of a resource when fetch is defined",
+      "duration": 0
+    },
+    {
+      "title": "outputs without an update link if update() is not defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs without an update link if update() is not defined",
+      "duration": 0
+    },
+    {
+      "title": "outputs with an update link if update() is defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs with an update link if update() is defined",
+      "duration": 0
+    },
+    {
+      "title": "outputs with a delete link if destroy() is defined",
+      "fullTitle": "CRUDCollection wildcard.GET outputs with a delete link if destroy() is defined",
+      "duration": 1
+    },
+    {
+      "title": "is defined when memberGET is defined",
+      "fullTitle": "CRUDCollection wildcard.GET is defined when memberGET is defined",
+      "duration": 0
+    },
+    {
+      "title": "doesn't exist if options has no create()",
+      "fullTitle": "CRUDCollection handler.POST doesn't exist if options has no create()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.create()",
+      "fullTitle": "CRUDCollection handler.POST calls options.create()",
+      "duration": 0
+    },
+    {
+      "title": "calls options.create() and its callback if specified",
+      "fullTitle": "CRUDCollection handler.POST calls options.create() and its callback if specified",
+      "duration": 0
+    },
+    {
+      "title": "sets onJson on the object",
+      "fullTitle": "onJsonHelper sets onJson on the object",
+      "duration": 0
+    },
+    {
+      "title": "throws an error when called with 2+ params",
+      "fullTitle": "onJsonHelper throws an error when called with 2+ params",
+      "duration": 0
+    },
+    {
+      "title": "sets the error param when there's an error",
+      "fullTitle": "onJsonHelper sets the error param when there's an error",
+      "duration": 0
+    },
+    {
+      "title": "sets an obj param when successful",
+      "fullTitle": "onJsonHelper sets an obj param when successful",
+      "duration": 0
+    },
+    {
+      "title": "responds with an error if json doesn't parse",
+      "fullTitle": "onJsonHelper responds with an error if json doesn't parse",
+      "duration": 0
+    },
+    {
+      "title": "responds with an error if input incorrectly has additional properties",
+      "fullTitle": "onJsonHelper responds with an error if input incorrectly has additional properties",
+      "duration": 19
+    },
+    {
+      "title": "throws errors when input doesn't match schema",
+      "fullTitle": "onJsonHelper throws errors when input doesn't match schema",
+      "duration": 16
+    }
+  ]
+}make[1]: Leaving directory `/home/cainus/percolator'
