@@ -2,13 +2,16 @@
       "name": "coveralls",
       "description" : "taks json-cov output into stdin and POSTs to coveralls.io",
       "keywords" : ["coverage", "coveralls"], 
-      "version": "1.0.0",
+      "version": "1.1.0",
       "bugs": {
        "url": "https://github.com/cainus/node-coveralls/issues"
       },
       "scripts" : {
         "test" : "make test"
       },
+      "bin" : {
+        "coveralls" : "./bin/coveralls.js"
+      }
       "maintainers": [
         {
           "name": "Gregg Caines",

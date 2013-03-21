@@ -1,6 +1,9 @@
+#!/usr/bin/env node
+
 var http = require('http');
 var request = require('request');
 var FormData = require('form-data');
+var TRAVIS_JOB_ID = process.env.TRAVIS_JOB_ID || 5675956 || 'unknown';
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -18,7 +21,8 @@ process.stdin.on('end', function() {
 // cleans off any leading / trailing non-json garbage
 var trimToJson = function(inJson){
 	inJson = inJson.replace(/^[^\{]*/, '');
-	return inJson.replace(/\}[^\}]*$/, '}');
+	inJson = inJson.replace(/\}[^\}]*$/, '}');
+  return inJson;
 };
 
 var convertCoverageValue = function(val){
@@ -47,6 +51,7 @@ var convertFileObject = function(file){
 var convertJsonCovToCoveralls = function(data){
 	var files = data.files;
 	var postJson = {
+    service_job_id : TRAVIS_JOB_ID,
     service_name : "travis-ci",
 		source_files : []
 	};
@@ -81,26 +86,9 @@ var sendToCoveralls = function(postJson){
     console.log("response body: ", body);
   };
   var url = 'https://coveralls.io/api/v1/jobs';
-  //url = 'http://localhost:9090';
-  
-  //var r = request.post(url, done);
-  var form = new FormData();
-  //r.form();
-
-  form.append('json_file', str);
-  form.submit(url, function(err, res){
-    var body = '';
-
-    res.on('data', function(chunk) {
-      body += chunk;
-    });
-
-    res.on('end', function(chunk) {
-      if (chunk) body += chunk;
-      done(err, res, body);
-    });
-
-
+  //url = 'http://localhost:9090/';
+  request({url : url, method : 'POST', form : { json : str}}, function(err, response, body){
+    console.log(arguments);
   });
 };
 
@@ -108,10 +96,11 @@ var sendToCoveralls = function(postJson){
 var reportToCoveralls = function(inJson){
 	inJson = trimToJson(inJson);
 	var data = JSON.parse(inJson);
+  //data = { files : []};  //TODO remove this
 	console.log("successfully read json from json-cov");
 	postJson = convertJsonCovToCoveralls(data);
-	//console.log(JSON.stringify(postJson));
-	console.log("successfully converted input json to coveralls format");
+	console.log(JSON.stringify(postJson));
+	console.log("successfully converted input json to coveralls format: ", postJson);
   //makeLocalWebServer(function(){
     sendToCoveralls(postJson);
   //});
