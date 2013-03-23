@@ -3,7 +3,7 @@
 var http = require('http');
 var request = require('request');
 var FormData = require('form-data');
-var TRAVIS_JOB_ID = process.env.TRAVIS_JOB_ID || 5675956 || 'unknown';
+var TRAVIS_JOB_ID = process.env.TRAVIS_JOB_ID || 'unknown';
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
