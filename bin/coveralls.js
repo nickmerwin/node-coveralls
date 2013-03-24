@@ -61,34 +61,15 @@ var convertJsonCovToCoveralls = function(data){
 	return postJson;
 };
 
-var makeLocalWebServer = function(cb){
-  var srv = http.createServer(function (req, res) {
-    console.log(req.headers);
-    console.log(req.url);
-    console.log(req.method);
-    req.pipe(process.stdout);
-    req.on('end', function(){
-      res.writeHead(200, {'Content-Type': 'text/plain'});
-      res.end();
-      srv.close();
-    });
-  }).listen(9090, cb);
-
-};
-
 var sendToCoveralls = function(postJson){
   var str = JSON.stringify(postJson);
-  var done = function(error, response, body) {
-    console.log("done");
-    if (error){
-      throw error;
-    }
-    console.log("response body: ", body);
-  };
   var url = 'https://coveralls.io/api/v1/jobs';
-  //url = 'http://localhost:9090/';
   request({url : url, method : 'POST', form : { json : str}}, function(err, response, body){
-    console.log(arguments);
+    if (err){
+      throw err;
+    }
+    console.log(response.statusCode);
+    console.log(body);
   });
 };
 
@@ -96,16 +77,11 @@ var sendToCoveralls = function(postJson){
 var reportToCoveralls = function(inJson){
 	inJson = trimToJson(inJson);
 	var data = JSON.parse(inJson);
-  //data = { files : []};  //TODO remove this
-	console.log("successfully read json from json-cov");
+	console.log("successfully read json from json-cov.");
 	postJson = convertJsonCovToCoveralls(data);
 	console.log(JSON.stringify(postJson));
-	console.log("successfully converted input json to coveralls format: ", postJson);
-  //makeLocalWebServer(function(){
-    sendToCoveralls(postJson);
-  //});
-
-
+	console.log("successfully converted input json to coveralls format.");
+  sendToCoveralls(postJson);
 };
 
 
