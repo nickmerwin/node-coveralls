@@ -6,7 +6,7 @@ Installation: Add the latest version of `coveralls` to your package.json.
 
 This script ( `bin/coveralls.js` ) can take standard input in the JSON format from [mocha](http://visionmedia.github.com/mocha/)'s JSONCov reporter and send it to coveralls.io to report your code coverage there.  It needs to run from [travis-ci](http://about.travis-ci.org/docs/user/languages/javascript-with-nodejs/) to work.
 
-Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/) or [here](http://tjholowaychuk.com/post/18175682663/mocha-test-coverage), but that's also a necessary step. 
+Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/) or [here](http://tjholowaychuk.com/post/18175682663/mocha-test-coverage)), but that's also a necessary step. 
 
 Once your app is instrumented for coverage, and building in travis-ci, you just need to set your mocha reporter to the JSONCov reporter, and pipe the output to `./node_modules/coveralls/bin/coveralls.js`.  
 
