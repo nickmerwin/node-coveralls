@@ -8,11 +8,13 @@ describe("convertLcovToCoveralls", function(){
     var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
     var libpath = __dirname + "/../fixtures/lib";
-    var output = convertLcovToCoveralls(input, libpath);
-    output.source_files[0].name.should.equal("index.js");
-    output.source_files[0].source.split("\n").length.should.equal(225);
-    output.source_files[0].coverage[54].should.equal(0);
-    output.source_files[0].coverage[60].should.equal(0);
+    convertLcovToCoveralls(input, libpath, function(err, output){
+      should.not.exist(err);
+      output.source_files[0].name.should.equal("index.js");
+      output.source_files[0].source.split("\n").length.should.equal(225);
+      output.source_files[0].coverage[54].should.equal(0);
+      output.source_files[0].coverage[60].should.equal(0);
+    });
   });
 
   it ("should work with a relative path as well", function(){
@@ -20,8 +22,10 @@ describe("convertLcovToCoveralls", function(){
     var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
     var libpath = "fixtures/lib";
-    var output = convertLcovToCoveralls(input, libpath);
-    output.source_files[0].name.should.equal("index.js");
-    output.source_files[0].source.split("\n").length.should.equal(225);
+    convertLcovToCoveralls(input, libpath, function(err, output){
+      should.not.exist(err);
+      output.source_files[0].name.should.equal("index.js");
+      output.source_files[0].source.split("\n").length.should.equal(225);
+    });
   });
 });

@@ -19,16 +19,20 @@ var inputToCoveralls = function(input){
 	console.log(input);
 	var libDir = process.argv[2] || '';
 
-	var postData = convertLcovToCoveralls(input, libDir);
-  sendToCoveralls(postData, function(err, response, body){
+	convertLcovToCoveralls(input, libDir, function(err, postData){
     if (err){
       throw err;
     }
-    if (response.statusCode >= 400){
-      throw "Bad response: " + response.statusCode + " " + body;
-    }
-    console.log(response.statusCode);
-    console.log(body);
+    sendToCoveralls(postData, function(err, response, body){
+      if (err){
+        throw err;
+      }
+      if (response.statusCode >= 400){
+        throw "Bad response: " + response.statusCode + " " + body;
+      }
+      console.log(response.statusCode);
+      console.log(body);
+    });
   });
 
 };
