@@ -17,7 +17,9 @@ process.stdin.on('end', function() {
 
 var inputToCoveralls = function(input){
 	console.log(input);
-	var postData = convertLcovToCoveralls(input);
+	var libDir = process.argv[2] || 'lib';
+
+	var postData = convertLcovToCoveralls(input, libDir);
   sendToCoveralls(postData, function(err, response, body){
     if (err){
       throw err;
@@ -30,3 +32,5 @@ var inputToCoveralls = function(input){
   });
 
 };
+
+
