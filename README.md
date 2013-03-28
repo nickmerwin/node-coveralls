@@ -11,5 +11,11 @@ Instrumenting your app for coverage is probably harder than it needs to be (read
 
 Once your app is instrumented for coverage, and building in travis-ci, you just need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
 
-Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs.  Also note that the TRAVIS_JOB_ID is necessary.
+In mocha, if you've got your code instrumented for coverage, the command for a travis build would look something like this:
+```console
+YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+```
+Note: this will only run on travis-ci, where a necessary TRAVIS_JOB_ID environment variable will exist.
+
+Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json's 'scripts' property).
 
