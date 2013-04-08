@@ -1,34 +1,46 @@
 {
-      "name": "coveralls",
-      "description" : "takes json-cov output into stdin and POSTs to coveralls.io",
-      "keywords" : ["coverage", "coveralls"], 
-      "version": "2.0.6",
-      "bugs": {
-       "url": "https://github.com/cainus/node-coveralls/issues"
-      },
-      "scripts" : {
-        "test" : "make test"
-      },
-      "bin" : {
-        "coveralls" : "./bin/coveralls.js"
-      },
-      "maintainers": [
-        {
-          "name": "Gregg Caines",
-          "email": "gregg@caines.ca",
-          "web": "http://caines.ca"
-        } 
-      ],
-      "dependencies": {
-          "request" : "2.16.2",
-          "lcov-parse" : "0.0.4"
-      },
-      "devDependencies" : {
-          "mocha" : "1.8.1",
-          "should" : "1.1.0"
-      },
-      "engines" : {
-                   "node" : ">=0.8.6",
-                   "npm" : "1.1.65"
-                  }
+  "name": "coveralls",
+  "description": "takes json-cov output into stdin and POSTs to coveralls.io",
+  "keywords": [
+    "coverage",
+    "coveralls"
+  ],
+  "version": "2.0.6",
+  "bugs": {
+    "url": "https://github.com/cainus/node-coveralls/issues"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "bin": {
+    "coveralls": "./bin/coveralls.js"
+  },
+  "maintainers": [
+    "Gregg Caines <gregg@caines.ca> (http://caines.ca)"
+  ],
+  "contributors" : [
+    "Alan Gutierrez <alan@prettyrobots.com> (http://www.prettyrobots.com/)"
+  ],
+  "dependencies": {
+    "request": "2.16.2",
+    "lcov-parse": "0.0.4"
+  },
+  "devDependencies": {
+    "mocha": "1.8.1",
+    "should": "1.1.0"
+  },
+  "engines": {
+    "node": ">=0.8.6",
+    "npm": "1.1.65"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cainus/node-coveralls.git"
+  },
+  "author": "Gregg Caines",
+  "license": "BSD"
 }
