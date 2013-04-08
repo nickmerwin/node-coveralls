@@ -21,7 +21,7 @@
       ],
       "dependencies": {
           "request" : "2.16.2",
-          "lcov-parse" : "0.0.3"
+          "lcov-parse" : "0.0.4"
       },
       "devDependencies" : {
           "mocha" : "1.8.1",
