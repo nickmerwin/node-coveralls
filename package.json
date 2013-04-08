@@ -2,7 +2,7 @@
       "name": "coveralls",
       "description" : "takes json-cov output into stdin and POSTs to coveralls.io",
       "keywords" : ["coverage", "coveralls"], 
-      "version": "2.0.5",
+      "version": "2.0.6",
       "bugs": {
        "url": "https://github.com/cainus/node-coveralls/issues"
       },
