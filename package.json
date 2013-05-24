@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "2.0.7",
+  "version": "2.0.8",
   "bugs": {
     "url": "https://github.com/cainus/node-coveralls/issues"
   },
@@ -19,7 +19,9 @@
     "Gregg Caines <gregg@caines.ca> (http://caines.ca)"
   ],
   "contributors" : [
-    "Alan Gutierrez <alan@prettyrobots.com> (http://www.prettyrobots.com/)"
+    "Alan Gutierrez <alan@prettyrobots.com> (http://www.prettyrobots.com/)",
+    "Kir Belevich (https://github.com/svg)",
+    "elliotcable <github@elliottcable.name> (http://elliottcable.name/)"
   ],
   "dependencies": {
     "libyaml": "0.2.2",
