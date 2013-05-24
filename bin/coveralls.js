@@ -4,6 +4,7 @@ var path = require('path');
 var YAML = require('libyaml');
 var sendToCoveralls = require('../lib/sendToCoveralls');
 var convertLcovToCoveralls = require('../lib/convertLcovToCoveralls');
+var repo_token;
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -22,12 +23,16 @@ var inputToCoveralls = function(input){
     console.log(input);
     var libDir = process.argv[2] || '';
     
-    if (process.env['COVERALLS_REPO_TOKEN'] != null) {
-      repo_token = process.env['COVERALLS_REPO_TOKEN'];
+    if (process.env.COVERALLS_REPO_TOKEN) {
+      repo_token = process.env.COVERALLS_REPO_TOKEN;
     } else {
       var yml = path.join(process.cwd(), '.coveralls.yml');
-      if (fs.statSync(yml).isFile()) {
-        repo_token = YAML.readFileSync(yml)[0]['repo_token'];
+      try {
+        if (fs.statSync(yml).isFile()) {
+          repo_token = YAML.readFileSync(yml)[0].repo_token;
+        }
+      } catch(ex){
+        console.log("Repo token could not be determined.  Continuing without it.");
       }
     }
     
