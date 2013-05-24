@@ -22,9 +22,13 @@ var inputToCoveralls = function(input){
     console.log(input);
     var libDir = process.argv[2] || '';
     
-    var yml = path.join(process.cwd(), '.coveralls.yml');
-    if (fs.statSync(yml).isFile()) {
-      repo_token = YAML.readFileSync(yml)[0]['repo_token'];
+    if (process.env['COVERALLS_REPO_TOKEN'] != null) {
+      repo_token = process.env['COVERALLS_REPO_TOKEN'];
+    } else {
+      var yml = path.join(process.cwd(), '.coveralls.yml');
+      if (fs.statSync(yml).isFile()) {
+        repo_token = YAML.readFileSync(yml)[0]['repo_token'];
+      }
     }
     
     convertLcovToCoveralls(input, libDir, repo_token, function(err, postData){

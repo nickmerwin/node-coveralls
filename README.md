@@ -16,7 +16,7 @@ In mocha, if you've got your code instrumented for coverage, the command for a t
 YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 ```
 
-If you're running locally, you must have a `.coveralls.yml` file, as documented in their documentation, with your `repo_token` in it.
+If you're running locally, you must have a `.coveralls.yml` file, as documented in their documentation, with your `repo_token` in it; or, you must provide a `COVERALLS_REPO_TOKEN` environment-variable on the command-line.
 
 Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json's 'scripts' property).
 
