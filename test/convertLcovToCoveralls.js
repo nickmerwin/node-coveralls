@@ -8,7 +8,7 @@ describe("convertLcovToCoveralls", function(){
     var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
     var libpath = __dirname + "/../fixtures/lib";
-    convertLcovToCoveralls(input, libpath, function(err, output){
+    convertLcovToCoveralls(input, libpath, null, function(err, output){
       should.not.exist(err);
       output.source_files[0].name.should.equal("index.js");
       output.source_files[0].source.split("\n").length.should.equal(225);
@@ -22,7 +22,7 @@ describe("convertLcovToCoveralls", function(){
     var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
     var libpath = "fixtures/lib";
-    convertLcovToCoveralls(input, libpath, function(err, output){
+    convertLcovToCoveralls(input, libpath, null, function(err, output){
       should.not.exist(err);
       output.source_files[0].name.should.equal("index.js");
       output.source_files[0].source.split("\n").length.should.equal(225);
