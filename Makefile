@@ -14,7 +14,7 @@ test-cov:	lib-cov
 test-coveralls:lib-cov
 	$(MAKE) test REPORTER=spec
 	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@COVERALLS_COVERAGE=1 $(MAKE) test REPORTERPORTER=mocha-lcov-reporter | ./bin/coveralls.js
+	@COVERALLS_COVERAGE=1 $(MAKE) test REPORTER=mocha-lcov-reporter | ./bin/coveralls.js
 	rm -rf lib-cov
 
 .PHONY: test
