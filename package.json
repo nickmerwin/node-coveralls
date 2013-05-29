@@ -10,7 +10,7 @@
     "url": "https://github.com/cainus/node-coveralls/issues"
   },
   "scripts": {
-    "test": "make test"
+    "test": "make test-coveralls"
   },
   "bin": {
     "coveralls": "./bin/coveralls.js"
@@ -18,7 +18,7 @@
   "maintainers": [
     "Gregg Caines <gregg@caines.ca> (http://caines.ca)"
   ],
-  "contributors" : [
+  "contributors": [
     "Alan Gutierrez <alan@prettyrobots.com> (http://www.prettyrobots.com/)",
     "Kir Belevich (https://github.com/svg)",
     "elliotcable <github@elliottcable.name> (http://elliottcable.name/)"
@@ -29,8 +29,10 @@
     "lcov-parse": "0.0.4"
   },
   "devDependencies": {
+    "mocha-lcov-reporter": "0.0.1",
     "mocha": "1.8.1",
-    "should": "1.1.0"
+    "should": "1.1.0",
+    "jscoverage": "0.3.7"
   },
   "engines": {
     "node": ">=0.8.6",

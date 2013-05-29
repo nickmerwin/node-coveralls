@@ -1,4 +1,4 @@
-var convertLcovToCoveralls = require('../lib/convertLcovToCoveralls');
+var convertLcovToCoveralls = require('../index').convertLcovToCoveralls;
 var should = require('should');
 var fs = require('fs');
 

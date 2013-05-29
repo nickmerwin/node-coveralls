@@ -8,7 +8,13 @@ lib-cov:
 
 test-cov:	lib-cov
 	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@PERCOLATOR_COVERAGE=1 $(MAKE) test REPORTER=html-cov 1> coverage.html
+	@COVERALLS_COVERAGE=1 $(MAKE) test REPORTER=html-cov 1> coverage.html
+	rm -rf lib-cov
+
+test-coveralls:lib-cov
+	$(MAKE) test REPORTER=spec
+	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
+	@COVERALLS_COVERAGE=1 $(MAKE) test REPORTERPORTER=mocha-lcov-reporter | ./bin/coveralls.js
 	rm -rf lib-cov
 
 .PHONY: test
