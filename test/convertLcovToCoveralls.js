@@ -1,6 +1,8 @@
 var convertLcovToCoveralls = require('../index').convertLcovToCoveralls;
 var should = require('should');
 var fs = require('fs');
+var logger = require('../lib/logger');
+logger = require('log-driver')({level : false});
 
 describe("convertLcovToCoveralls", function(){
   it ("should convert a simple lcov file", function(){
