@@ -155,58 +155,6 @@ UrlGrey.prototype.toString = function(){
   return retval;
 };
 
-/*
-UrlGrey.prototype.absolute = function(path){
-  if (path[0] == '/'){
-    path = path.substring(1);
-  }
-  var parsed = nodeUrl.parse(path);
-  if (!!parsed.protocol){  // if it's already absolute, just return it
-    return path;
-  }
-  return this._protocol + "://" + this._host + '/' + path;
-};
-
-// TODO make this interpolate vars into the url.   both sinatra style and url-tempates
-// TODO name this: 
-UrlGrey.prototype.get = function(nameOrPath, varDict){
-  if (!!nameOrPath){
-    if (!!varDict){
-      return this.absolute(this._router.getUrl(nameOrPath, varDict));
-    }
-    return this.absolute(this._router.getUrl(nameOrPath));
-  }
-  return this.url;
-};*/
-
-/*
-// TODO needs to take a template as an input
-UrlGrey.prototype.param = function(key, defaultValue){
-  var value = this.params()[key];
-  if (!!value) { 
-    return value; 
-  }
-  return defaultValue;
-};
-
-// TODO extract params, given a template?
-// TODO needs to take a template as an input
-UrlGrey.prototype.params = function(inUrl){
-  if (!!inUrl){
-    return this._router.pathVariables(inUrl);
-  }
-  if (!!this._params){
-    return this._params;
-  }
-  return this._router.pathVariables(this.url);
-};
-*/
-
-// TODO relative()  // takes an absolutepath and returns a relative one
-// TODO absolute() // takes a relative path and returns an absolute one.
-
-
-
 module.exports = function(url){ return new UrlGrey(url); };
 
 function addPropertyGetterSetter(propertyName, methodName){

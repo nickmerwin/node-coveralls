@@ -26,7 +26,8 @@
   "dependencies": {
     "libyaml": "0.2.2",
     "request": "2.16.2",
-    "lcov-parse": "0.0.4"
+    "lcov-parse": "0.0.4",
+    "log-driver": "1.2.1"
   },
   "devDependencies": {
     "mocha-lcov-reporter": "0.0.1",
