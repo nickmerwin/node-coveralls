@@ -11,7 +11,7 @@ describe("convertLcovToCoveralls", function(){
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       should.not.exist(err);
       output.source_files[0].name.should.equal("index.js");
-      output.source_files[0].source.split("\n").length.should.equal(225);
+      output.source_files[0].source.split("\n").length.should.equal(173);
       output.source_files[0].coverage[54].should.equal(0);
       output.source_files[0].coverage[60].should.equal(0);
     });
@@ -25,7 +25,7 @@ describe("convertLcovToCoveralls", function(){
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       should.not.exist(err);
       output.source_files[0].name.should.equal("index.js");
-      output.source_files[0].source.split("\n").length.should.equal(225);
+      output.source_files[0].source.split("\n").length.should.equal(173);
     });
   });
 });
