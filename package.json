@@ -10,7 +10,7 @@
     "url": "https://github.com/cainus/node-coveralls/issues"
   },
   "scripts": {
-    "test": "make test-coveralls"
+    "test": "make test"
   },
   "bin": {
     "coveralls": "./bin/coveralls.js"
