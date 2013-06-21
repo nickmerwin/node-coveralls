@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "2.0.13",
+  "version": "2.0.14",
   "bugs": {
     "url": "https://github.com/cainus/node-coveralls/issues"
   },
@@ -22,6 +22,7 @@
     "Alan Gutierrez <alan@prettyrobots.com> (http://www.prettyrobots.com/)",
     "Kir Belevich (https://github.com/svg)",
     "elliotcable <github@elliottcable.name> (http://elliottcable.name/)",
+    "Slotos <slotos@gmail.com> (http://slotos.net)",
     "Arpad Borsos <arpad.borsos@googlemail.com> (http://swatinem.de/)"
   ],
   "dependencies": {
