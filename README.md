@@ -19,7 +19,15 @@ npm install mocha-lcov-reporter --save
 
 This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://visionmedia.github.com/mocha/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
 
-Once your app is instrumented for coverage, and building, you just need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
+Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
+
+This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond that, but if 
+you're using a different build system, there are a few environment variables that are necessary:
+* COVERALLS_SERVICE_NAME  (the name of your build system)
+* COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)
+
+There are optional environment variables for other build systems as well:
+* COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
 
 ###[Blanket.js](https://github.com/alex-seville/blanket)
 - Install [blanket.js](http://blanketjs.org/)
