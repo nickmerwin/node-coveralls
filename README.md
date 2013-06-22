@@ -28,6 +28,8 @@ you're using a different build system, there are a few environment variables tha
 
 There are optional environment variables for other build systems as well:
 * COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
+* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your 
+build system's date/time if you don't set it.)
 
 ###[Blanket.js](https://github.com/alex-seville/blanket)
 - Install [blanket.js](http://blanketjs.org/)
