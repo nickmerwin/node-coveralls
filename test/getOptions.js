@@ -19,9 +19,14 @@ describe("getOptions", function(){
     process.env.COVERALLS_SERVICE_JOB_ID = "SERVICE_JOB_ID";
     getOptions().service_job_id.should.equal("SERVICE_JOB_ID");
   });
-  it ("should set git if it exists", function(){
-    process.env.COVERALLS_GIT = "qwer";
-    getOptions().git.should.equal("qwer");
+  it ("should set git hash if it exists", function(){
+    process.env.COVERALLS_GIT_COMMIT = "e3e3e3e3e3e3e3e3e";
+    getOptions().git.head.id.should.equal("e3e3e3e3e3e3e3e3e");
+  });
+  it ("should set git hash if it exists", function(){
+    process.env.COVERALLS_GIT_COMMIT = "e3e3e3e3e3e3e3e3e";
+    process.env.COVERALLS_GIT_BRANCH = "master";
+    getOptions().git.branch.should.equal("master");
   });
   it ("should set repo_token if it exists", function(){
     process.env.COVERALLS_REPO_TOKEN = "REPO_TOKEN";
@@ -36,6 +41,23 @@ describe("getOptions", function(){
     process.env.TRAVIS_JOB_ID = "1234";
     getOptions().service_name.should.equal("travis-ci");
     getOptions().service_job_id.should.equal("1234");
+  });
+  it ("should set service_name and service_job_id if it's running on jenkins", function(){
+    process.env.JENKINS_URL = "something";
+    process.env.BUILD_ID = "1234";
+    process.env.GIT_COMMIT = "a12s2d3df4f435g45g45g67h5g6";
+    process.env.GIT_BRANCH = "master";
+    var options = getOptions();
+    options.service_name.should.equal("jenkins");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'a12s2d3df4f435g45g45g67h5g6',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'master' });
   });
 
 });
