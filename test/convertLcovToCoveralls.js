@@ -1,4 +1,5 @@
 var convertLcovToCoveralls = require('../index').convertLcovToCoveralls;
+var getOptions = require('../index').getOptions;
 var should = require('should');
 var fs = require('fs');
 var logger = require('../lib/logger');
@@ -19,6 +20,24 @@ describe("convertLcovToCoveralls", function(){
     });
   });
 
+  it ("should pass on all appropriate parameters from the environment", function(){
+    process.env.TRAVIS_JOB_ID = -1;
+    process.env.COVERALLS_GIT = "GIT_HASH";
+    process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
+    process.env.COVERALLS_SERVICE_JOB_ID = "SERVICE_JOB_ID";
+    process.env.COVERALLS_REPO_TOKEN = "REPO_TOKEN";
+    
+    var options = getOptions();
+    var path = __dirname + "/../fixtures/onefile.lcov";
+    var input = fs.readFileSync(path, "utf8");
+    var libpath = "fixtures/lib";
+    options.filepath = libpath;
+    convertLcovToCoveralls(input, options, function(err, output){
+      should.not.exist(err);
+      console.log(output);
+      //output.git.should.equal("GIT_HASH");
+    });
+  });
   it ("should work with a relative path as well", function(){
     process.env.TRAVIS_JOB_ID = -1;
     var path = __dirname + "/../fixtures/onefile.lcov";
