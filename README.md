@@ -51,10 +51,10 @@ YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | .
 ```
 Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json's 'scripts' property).
 
-##[Istanbul](https://github.com/gotwarlost/istanbul)
+### [Istanbul](https://github.com/gotwarlost/istanbul)
 TODO
 
-## [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
+### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
 Depend on nodeunit, jscoverage and coveralls:
 
