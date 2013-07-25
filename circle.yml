@@ -1,3 +1,0 @@
-test:
-  post:
-    - cat test/coverage/coverage.lcov | COVERALLS_REPO_TOKEN=your_token node_modules/.bin/coveralls -v
