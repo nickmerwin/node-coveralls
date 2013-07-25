@@ -8,7 +8,7 @@ describe("getOptions", function(){
   it ("should get a filepath if there is one", function(){
     process.argv[2] = "somepath";
     getOptions().filepath.should.equal("somepath");
-  
+
   });
   it ("should get a filepath if there is one, even in verbose mode", function(){
     process.argv[2] = "--verbose";
@@ -59,5 +59,21 @@ describe("getOptions", function(){
                                  message: 'Unknown Commit Message' },
                               branch: 'master' });
   });
-
+  it ("should set service_name and service_job_id if it's running on circleci", function(){
+    process.env.CIRCLECI = true;
+    process.env.CIRCLE_BRANCH = "master";
+    process.env.CIRCLE_BUILD_NUM = "1234";
+    process.env.CIRCLE_SHA1 = "e3e3e3e3e3e3e3e3e";
+    var options = getOptions();
+    options.service_name.should.equal("circleci");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'master' });
+    });
 });
