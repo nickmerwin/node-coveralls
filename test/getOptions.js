@@ -57,7 +57,8 @@ describe("getOptions", function(){
                                  committer_name: 'Unknown Committer',
                                  committer_email: '',
                                  message: 'Unknown Commit Message' },
-                              branch: 'master' });
+                              branch: 'master',
+                              remotes: [] });
   });
   it ("should set service_name and service_job_id if it's running on circleci", function(){
     process.env.CIRCLECI = true;
@@ -74,6 +75,7 @@ describe("getOptions", function(){
                                  committer_name: 'Unknown Committer',
                                  committer_email: '',
                                  message: 'Unknown Commit Message' },
-                              branch: 'master' });
+                              branch: 'master',
+                              remotes: [] });
     });
 });

@@ -29,7 +29,8 @@
     "yaml": "0.2.3",
     "request": "2.16.2",
     "lcov-parse": "0.0.4",
-    "log-driver": "1.2.1"
+    "log-driver": "1.2.1",
+    "exec-sync": "~0.1.6"
   },
   "devDependencies": {
     "sinon-restore": "1.0.0",
