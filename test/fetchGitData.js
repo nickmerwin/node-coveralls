@@ -1,5 +1,6 @@
 var should = require('should');
 var git = require('../lib/fetchGitData');
+var getOptions = require('../index').getOptions;
 
 describe("fetchGitData", function(){
   beforeEach(function(){
@@ -144,11 +145,9 @@ describe("fetchGitData", function(){
     });
   });
   it("should execute git commands when a valid commit hash is given", function() {
-    var options = git({
-      "head": {
-        "id": "5eaec7e76af0743f9764e617472ef434f283a195"
-      }
-    });
+    process.env.COVERALLS_GIT_COMMIT = "5eaec7e76af0743f9764e617472ef434f283a195";
+    process.env.COVERALLS_GIT_BRANCH = "master";
+    var options = getOptions().git;
     options.head.should.eql({
       "id": "5eaec7e76af0743f9764e617472ef434f283a195",
       "author_name": "cainus",
@@ -161,31 +160,5 @@ describe("fetchGitData", function(){
     options.should.have.property("remotes");
     options.remotes.should.be.instanceof(Array);
     options.remotes.length.should.be.above(0);
-  });
-  it("should combine passed remotes with git remotes when a valid commit hash is given", function() {
-    var options = git({
-      "head": {
-        "id": "5eaec7e76af0743f9764e617472ef434f283a195"
-      },
-      "remotes": [
-        {
-          "name": "test",
-          "url": "https://my.test.url"
-        }
-      ]
-    });
-    options.head.should.eql({
-      "id": "5eaec7e76af0743f9764e617472ef434f283a195",
-      "author_name": "cainus",
-      "author_email": "gregg@caines.ca",
-      "committer_name": "cainus",
-      "committer_email": "gregg@caines.ca",
-      "message": "first commit"
-    });
-    options.branch.should.equal("master");
-    options.remotes.should.includeEql({
-      "name": "test",
-      "url": "https://my.test.url"
-    });
   });
 });
