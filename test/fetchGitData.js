@@ -77,7 +77,73 @@ describe("fetchGitData", function(){
       ]
     });
   });
-  it("execute git commands when a valid commit hash is given", function() {
+  it("should convert git.branch to a string", function() {
+    var objectToString = git({
+      "head": {
+        "id": "COMMIT_HASH"
+      },
+      "branch": {
+        "covert": "to a string"
+      }
+    });
+    var arrayToString = git({
+      "head": {
+        "id": "COMMIT_HASH"
+      },
+      "branch": ["convert", "to", "a", "string"]
+    });
+    objectToString.branch.should.be.a("string");
+    arrayToString.branch.should.be.a("string");
+  });
+  it("should convert git.remotes to an array", function() {
+    var stringToArray = git({
+      "head": {
+        "id": "COMMIT_HASH"
+      },
+      "remotes": "convert from string to an array"
+    });
+    var objectToArray = git({
+      "head": {
+        "id": "COMMIT_HASH"
+      },
+      "remotes": {
+        "convert": "from object to an array"
+      }
+    });
+    stringToArray.remotes.should.be.instanceof(Array);
+    objectToArray.remotes.should.be.instanceof(Array);
+  });
+  it("should save passed remotes", function() {
+    var options = git({
+      "head": {
+        "id": "COMMIT_HASH"
+      },
+      "remotes": [
+        {
+          "name": "test",
+          "url": "https://my.test.url"
+        }
+      ]
+    });
+    options.should.eql({
+      "head": {
+        "id": "COMMIT_HASH",
+        "author_name": "Unknown Author",
+        "author_email": "",
+        "committer_name": "Unknown Committer",
+        "committer_email": "",
+        "message": "Unknown Commit Message"
+      },
+      "branch": "",
+      "remotes": [
+        {
+          "name": "test",
+          "url": "https://my.test.url"
+        }
+      ]
+    });
+  });
+  it("should execute git commands when a valid commit hash is given", function() {
     var options = git({
       "head": {
         "id": "5eaec7e76af0743f9764e617472ef434f283a195"
@@ -95,5 +161,31 @@ describe("fetchGitData", function(){
     options.should.have.property("remotes");
     options.remotes.should.be.instanceof(Array);
     options.remotes.length.should.be.above(0);
+  });
+  it("should combine passed remotes with git remotes when a valid commit hash is given", function() {
+    var options = git({
+      "head": {
+        "id": "5eaec7e76af0743f9764e617472ef434f283a195"
+      },
+      "remotes": [
+        {
+          "name": "test",
+          "url": "https://my.test.url"
+        }
+      ]
+    });
+    options.head.should.eql({
+      "id": "5eaec7e76af0743f9764e617472ef434f283a195",
+      "author_name": "cainus",
+      "author_email": "gregg@caines.ca",
+      "committer_name": "cainus",
+      "committer_email": "gregg@caines.ca",
+      "message": "first commit"
+    });
+    options.branch.should.equal("master");
+    options.remotes.should.includeEql({
+      "name": "test",
+      "url": "https://my.test.url"
+    });
   });
 });
