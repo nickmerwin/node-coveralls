@@ -2,23 +2,18 @@ REPORTER = spec
 test:
 	$(MAKE) lint
 	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@NODE_ENV=test ./node_modules/.bin/mocha -b --reporter $(REPORTER)
+	@NODE_ENV=test ./node_modules/.bin/mocha -b --require blanket --reporter $(REPORTER)
 
 lint:
 	./node_modules/.bin/jshint ./lib ./test ./index.js
 
-lib-cov:
-	./node_modules/jscoverage/bin/jscoverage lib lib-cov
-
-test-cov:	lib-cov
-	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@COVERALLS_COVERAGE=1 $(MAKE) test REPORTER=html-cov 1> coverage.html
-	rm -rf lib-cov
-
-test-coveralls:lib-cov
+test-cov:
 	$(MAKE) test REPORTER=spec
-	echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@COVERALLS_COVERAGE=1 $(MAKE) test REPORTER=mocha-lcov-reporter | ./bin/coveralls.js --verbose
+	$(MAKE) test REPORTER=html-cov 1> coverage.html
+
+test-coveralls:
+	$(MAKE) test REPORTER=spec
+	$(MAKE) test REPORTER=mocha-lcov-reporter | ./bin/coveralls.js --verbose
 	rm -rf lib-cov
 
 .PHONY: test
