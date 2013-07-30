@@ -144,21 +144,20 @@ describe("fetchGitData", function(){
       ]
     });
   });
-  xit("should execute git commands when a valid commit hash is given", function() {
-    process.env.COVERALLS_GIT_COMMIT = "5eaec7e76af0743f9764e617472ef434f283a195";
+  it("should execute git commands when a valid commit hash is given", function() {
+    process.env.COVERALLS_GIT_COMMIT = "HEAD";
     process.env.COVERALLS_GIT_BRANCH = "master";
     var options = getOptions().git;
-    options.head.should.eql({
-      "id": "5eaec7e76af0743f9764e617472ef434f283a195",
-      "author_name": "cainus",
-      "author_email": "gregg@caines.ca",
-      "committer_name": "cainus",
-      "committer_email": "gregg@caines.ca",
-      "message": "first commit"
-    });
+    options.head.should.be.a("object");
+    options.head.author_name.should.not.equal("Unknown Author");
+    options.head.committer_name.should.not.equal("Unknown Committer");
+    options.head.message.should.not.equal("Unknown Commit Message");
     options.branch.should.equal("master");
     options.should.have.property("remotes");
     options.remotes.should.be.instanceof(Array);
     options.remotes.length.should.be.above(0);
+  });
+  it("should join passed remotes when a valid commit hash is given", function() {
+
   });
 });
