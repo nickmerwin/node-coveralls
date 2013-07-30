@@ -144,7 +144,7 @@ describe("fetchGitData", function(){
       ]
     });
   });
-  it("should execute git commands when a valid commit hash is given", function() {
+  xit("should execute git commands when a valid commit hash is given", function() {
     process.env.COVERALLS_GIT_COMMIT = "5eaec7e76af0743f9764e617472ef434f283a195";
     process.env.COVERALLS_GIT_BRANCH = "master";
     var options = getOptions().git;
