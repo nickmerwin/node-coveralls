@@ -1,6 +1,7 @@
 #node-coveralls
 [![Build Status](https://travis-ci.org/cainus/node-coveralls.png?branch=master)](https://travis-ci.org/cainus/node-coveralls)
 [![Coverage Status](https://coveralls.io/repos/cainus/node-coveralls/badge.png?branch=master)](https://coveralls.io/r/cainus/node-coveralls?branch=master)
+[![Codeship Build Status](https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status)](https://www.codeship.io/projects/5622)
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
 
