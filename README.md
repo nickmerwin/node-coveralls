@@ -54,7 +54,7 @@ Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Ma
 
 ### [Istanbul](https://github.com/gotwarlost/istanbul)
 ```sh
-istanbul cover ./node_modules/mocha/bin/mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 ```
 
 ### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
