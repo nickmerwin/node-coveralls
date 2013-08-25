@@ -9,8 +9,8 @@ describe("handleInput", function(){
         sinon.restoreAll();
       });
   it ("throws an error when there's an error sending", function(done){
-    sinon.stub(index, 'getOptions', function(){
-      return {}; 
+    sinon.stub(index, 'getOptions', function(cb){
+      return cb(null, {}); 
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       try {
@@ -25,8 +25,8 @@ describe("handleInput", function(){
 		index.handleInput(input);
   });
   it ("throws an error when there's a bad status code", function(done){
-    sinon.stub(index, 'getOptions', function(){
-      return {}; 
+    sinon.stub(index, 'getOptions', function(cb){
+      return cb(null, {}); 
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       try {
@@ -41,8 +41,8 @@ describe("handleInput", function(){
 		index.handleInput(input);
   });
   it ("completes successfully when there are now errors", function(done){
-    sinon.stub(index, 'getOptions', function(){
-      return {}; 
+    sinon.stub(index, 'getOptions', function(cb){
+      return cb(null, {}); 
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb(null, {statusCode : 200}, "body");
