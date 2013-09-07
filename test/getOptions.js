@@ -1,7 +1,7 @@
 var should = require('should');
-var getOptions = require('../index').getOptions;
-var getBaseOptions = require('../lib/getOptions').getBaseOptions;
-
+var index = require('../index');
+var getOptions = index.getOptions;
+var getBaseOptions = index.getBaseOptions;
 
 describe("getBaseOptions", function(){
   beforeEach(function(){
