@@ -16,8 +16,23 @@ describe("getBaseOptions", function(){
   it ("should set git branch if it exists", function(done){
     testGitBranch(getBaseOptions, done);
   });
+  it ("should detect current git hash if not passed in", function(done) {
+    testGitHashDetection(getBaseOptions, done);
+  });
+  it ("should detect current git branch if not passed in", function(done) {
+    testGitBranchDetection(getBaseOptions, done);
+  });
+  it ("should detect detached git head if no hash passed in", function(done) {
+    testGitDetachedHeadDetection(getBaseOptions, done);
+  });
+  it ("should fail local Git detection if no .git directory", function(done) {
+    testNoLocalGit(getBaseOptions, done);
+  });
   it ("should set repo_token if it exists", function(done){
     testRepoToken(getBaseOptions, done);
+  });
+  it ("should detect repo_token if not passed in", function(done){
+    testRepoTokenDetection(getBaseOptions, done);
   });
   it ("should set service_name if it exists", function(done){
     testServiceName(getBaseOptions, done);
@@ -31,11 +46,20 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on circleci", function(done){
     testCircleCi(getBaseOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on codeship", function(done){
+    testCodeship(getBaseOptions, done);
+  });
 });
 
 describe("getOptions", function(){
   beforeEach(function(){
     process.env = {};
+  });
+  it ("should require a callback", function(done) {
+    (function() {
+      getOptions();
+    }).should.throw();
+    done();
   });
   it ("should get a filepath if there is one", function(done){
     process.argv[2] = "somepath";
@@ -62,8 +86,23 @@ describe("getOptions", function(){
   it ("should set git branch if it exists", function(done){
     testGitBranch(getOptions, done);
   });
+  it ("should detect current git hash if not passed in", function(done) {
+    testGitHashDetection(getOptions, done);
+  });
+  it ("should detect current git branch if not passed in", function(done) {
+    testGitBranchDetection(getOptions, done);
+  });
+  it ("should detect detached git head if no hash passed in", function(done) {
+    testGitDetachedHeadDetection(getOptions, done);
+  });
+  it ("should fail local Git detection if no .git directory", function(done) {
+    testNoLocalGit(getOptions, done);
+  });
   it ("should set repo_token if it exists", function(done){
     testRepoToken(getOptions, done);
+  });
+  it ("should detect repo_token if not passed in", function(done){
+    testRepoTokenDetection(getOptions, done);
   });
   it ("should set service_name if it exists", function(done){
     testServiceName(getOptions, done);
@@ -76,6 +115,9 @@ describe("getOptions", function(){
   });
   it ("should set service_name and service_job_id if it's running on circleci", function(done){
     testCircleCi(getOptions, done);
+  });
+  it ("should set service_name and service_job_id if it's running on codeship", function(done){
+    testCodeship(getOptions, done);
   });
 });
 
@@ -95,6 +137,24 @@ var testGitHash = function(sut, done){
   });
 };
 
+var testGitDetachedHeadDetection = function(sut, done){
+  var localGit = ensureLocalGitContext({ detached: true });
+  sut(function(err, options) {
+    options.git.head.id.should.equal(localGit.id);
+    localGit.wrapUp();
+    done();
+  });
+};
+
+var testGitHashDetection = function(sut, done){
+  var localGit = ensureLocalGitContext();
+  sut(function(err, options) {
+    options.git.head.id.should.equal(localGit.id);
+    localGit.wrapUp();
+    done();
+  });
+};
+
 var testGitBranch = function(sut, done){
   process.env.COVERALLS_GIT_COMMIT = "e3e3e3e3e3e3e3e3e";
   process.env.COVERALLS_GIT_BRANCH = "master";
@@ -104,10 +164,50 @@ var testGitBranch = function(sut, done){
   });
 };
 
+var testGitBranchDetection = function(sut, done){
+  var localGit = ensureLocalGitContext();
+  sut(function(err, options) {
+    options.git.branch.should.equal(localGit.branch);
+    localGit.wrapUp();
+    done();
+  });
+};
+
+var testNoLocalGit = function(sut, done){
+  var localGit = ensureLocalGitContext({ noGit: true });
+  sut(function(err, options) {
+    options.should.not.have.property('git');
+    localGit.wrapUp();
+    done();
+  });
+};
+
 var testRepoToken = function(sut, done){
   process.env.COVERALLS_REPO_TOKEN = "REPO_TOKEN";
   sut(function(err, options){
     options.repo_token.should.equal("REPO_TOKEN");
+    done();
+  });
+};
+
+var testRepoTokenDetection = function(sut, done) {
+  var fs = require('fs');
+  var path = require('path');
+
+  var file = path.join(process.cwd(), '.coveralls.yml'), token, synthetic = false;
+  if (fs.exists(file)) {
+    var yaml = require('yaml');
+    /* jshint evil:true */
+    token = yaml.eval(fs.readFileSync(yml, 'utf8')).repo_token;
+  } else {
+    token = 'REPO_TOKEN';
+    fs.writeFileSync(file, 'repo_token: ' + token, { encoding: 'utf-8' });
+    synthetic = true;
+  }
+  sut(function(err, options) {
+    options.repo_token.should.equal(token);
+    if (synthetic)
+      fs.unlink(file);
     done();
   });
 };
@@ -171,3 +271,90 @@ var testCircleCi = function(sut, done){
     done();
   });
 };
+
+var testCodeship = function(sut, done) {
+  process.env.CI_NAME = 'codeship';
+  process.env.CI_BUILD_NUMBER = '1234';
+  process.env.CI_COMMIT_ID = "e3e3e3e3e3e3e3e3e";
+  process.env.CI_COMMIT_BRANCH = "e3e3e3e3e3e3e3e3e";
+  sut(function(err, options){
+    options.service_name.should.equal("codeship");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'master',
+                              remotes: [] });
+    done();
+  });
+};
+
+function ensureLocalGitContext(options) {
+  var path = require('path');
+  var fs = require('fs');
+
+  var baseDir = process.cwd(), dir = baseDir, gitDir;
+  while ('/' !== dir) {
+    gitDir = path.join(dir, '.git');
+    if (fs.existsSync(path.join(gitDir, 'HEAD')))
+      break;
+
+    dir = path.dirname(dir);
+  }
+
+  options = options || {};
+  var synthetic = '/' === dir;
+  var gitHead, branch, id, wrapUp = function() {};
+
+  if (synthetic) {
+    branch = 'synthetic';
+    id = '424242424242424242';
+    gitHead = path.join('.git', 'HEAD');
+    var gitBranch = path.join('.git', 'refs', 'heads', branch);
+    fs.mkdirSync('.git');
+    if (options.detached) {
+      fs.writeFileSync(gitHead, id, { encoding: 'utf-8' });
+    } else {
+      fs.mkdirSync(path.join('.git', 'refs'));
+      fs.mkdirSync(path.join('.git', 'refs', 'heads'));
+      fs.writeFileSync(gitHead, "ref: refs/heads/" + branch, { encoding: 'utf-8' });
+      fs.writeFileSync(gitBranch, id, { encoding: 'utf-8' });
+    }
+    wrapUp = function() {
+      fs.unlinkSync(gitHead);
+      if (!options.detached) {
+        fs.unlinkSync(gitBranch);
+        fs.rmdirSync(path.join('.git', 'refs', 'heads'));
+        fs.rmdirSync(path.join('.git', 'refs'));
+      }
+      fs.rmdirSync('.git');
+    };
+  } else if (options.noGit) {
+    fs.renameSync(gitDir, gitDir + '.bak');
+    wrapUp = function() {
+      fs.renameSync(gitDir + '.bak', gitDir);
+    };
+  } else if (options.detached) {
+    gitHead = path.join(gitDir, 'HEAD');
+    var content = fs.readFileSync(gitHead, 'utf-8').trim();
+    var b = content.match(/^ref: refs\/heads\/(\S+)$/)[1];
+    if (!b) {
+      id = b;
+    } else {
+      id = fs.readFileSync(path.join(gitDir, 'refs', 'heads', b), 'utf-8').trim();
+      fs.writeFileSync(gitHead, id, 'utf-8');
+      wrapUp = function() {
+        fs.writeFileSync(gitHead, content, 'utf-8');
+      };
+    }
+  } else {
+    branch = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf-8').trim().match(/^ref: refs\/heads\/(\S+)$/)[1];
+    id = fs.readFileSync(path.join(gitDir, 'refs', 'heads', branch), 'utf-8').trim();
+  }
+
+  return { id: id, branch: branch, wrapUp: wrapUp };
+}
