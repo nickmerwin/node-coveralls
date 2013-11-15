@@ -308,7 +308,7 @@ function ensureLocalGitContext(options) {
 
   options = options || {};
   var synthetic = '/' === dir;
-  var gitHead, branch, id, wrapUp = function() {};
+  var gitHead, content, branch, id, wrapUp = function() {};
 
   if (synthetic) {
     branch = 'synthetic';
@@ -340,8 +340,8 @@ function ensureLocalGitContext(options) {
     };
   } else if (options.detached) {
     gitHead = path.join(gitDir, 'HEAD');
-    var content = fs.readFileSync(gitHead, 'utf-8').trim();
-    var b = content.match(/^ref: refs\/heads\/(\S+)$/)[1];
+    ontent = fs.readFileSync(gitHead, 'utf-8').trim();
+    var b = (content.match(/^ref: refs\/heads\/(\S+)$/) || [])[1];
     if (!b) {
       id = b;
     } else {
@@ -352,8 +352,9 @@ function ensureLocalGitContext(options) {
       };
     }
   } else {
-    branch = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf-8').trim().match(/^ref: refs\/heads\/(\S+)$/)[1];
-    id = fs.readFileSync(path.join(gitDir, 'refs', 'heads', branch), 'utf-8').trim();
+    content = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf-8').trim();
+    branch = (content.match(/^ref: refs\/heads\/(\S+)$/) || [])[1];
+    id = branch ? fs.readFileSync(path.join(gitDir, 'refs', 'heads', branch), 'utf-8').trim() : content;
   }
 
   return { id: id, branch: branch, wrapUp: wrapUp };
