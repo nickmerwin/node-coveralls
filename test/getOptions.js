@@ -343,7 +343,7 @@ function ensureLocalGitContext(options) {
     };
   } else if (options.detached) {
     gitHead = path.join(gitDir, 'HEAD');
-    ontent = fs.readFileSync(gitHead, 'utf-8').trim();
+    content = fs.readFileSync(gitHead, 'utf-8').trim();
     var b = (content.match(/^ref: refs\/heads\/(\S+)$/) || [])[1];
     if (!b) {
       id = b;
