@@ -204,7 +204,7 @@ var testRepoTokenDetection = function(sut, done) {
     token = yaml.eval(fs.readFileSync(yml, 'utf8')).repo_token;
   } else {
     token = 'REPO_TOKEN';
-    fs.writeFileSync(file, 'repo_token: ' + token, { encoding: 'utf8' });
+    fs.writeFileSync(file, 'repo_token: ' + token);
     synthetic = true;
   }
   sut(function(err, options) {
