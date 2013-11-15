@@ -204,7 +204,7 @@ var testRepoTokenDetection = function(sut, done) {
     token = yaml.eval(fs.readFileSync(yml, 'utf8')).repo_token;
   } else {
     token = 'REPO_TOKEN';
-    fs.writeFileSync(file, 'repo_token: ' + token, { encoding: 'utf-8' });
+    fs.writeFileSync(file, 'repo_token: ' + token, { encoding: 'utf8' });
     synthetic = true;
   }
   sut(function(err, options) {
@@ -320,12 +320,12 @@ function ensureLocalGitContext(options) {
     var gitBranch = path.join('.git', 'refs', 'heads', branch);
     fs.mkdirSync('.git');
     if (options.detached) {
-      fs.writeFileSync(gitHead, id, { encoding: 'utf-8' });
+      fs.writeFileSync(gitHead, id, { encoding: 'utf8' });
     } else {
       fs.mkdirSync(path.join('.git', 'refs'));
       fs.mkdirSync(path.join('.git', 'refs', 'heads'));
-      fs.writeFileSync(gitHead, "ref: refs/heads/" + branch, { encoding: 'utf-8' });
-      fs.writeFileSync(gitBranch, id, { encoding: 'utf-8' });
+      fs.writeFileSync(gitHead, "ref: refs/heads/" + branch, { encoding: 'utf8' });
+      fs.writeFileSync(gitBranch, id, { encoding: 'utf8' });
     }
     wrapUp = function() {
       fs.unlinkSync(gitHead);
@@ -343,21 +343,21 @@ function ensureLocalGitContext(options) {
     };
   } else if (options.detached) {
     gitHead = path.join(gitDir, 'HEAD');
-    content = fs.readFileSync(gitHead, 'utf-8').trim();
+    content = fs.readFileSync(gitHead, 'utf8').trim();
     var b = (content.match(/^ref: refs\/heads\/(\S+)$/) || [])[1];
     if (!b) {
       id = content;
     } else {
-      id = fs.readFileSync(path.join(gitDir, 'refs', 'heads', b), 'utf-8').trim();
-      fs.writeFileSync(gitHead, id, 'utf-8');
+      id = fs.readFileSync(path.join(gitDir, 'refs', 'heads', b), 'utf8').trim();
+      fs.writeFileSync(gitHead, id, 'utf8');
       wrapUp = function() {
-        fs.writeFileSync(gitHead, content, 'utf-8');
+        fs.writeFileSync(gitHead, content, 'utf8');
       };
     }
   } else {
-    content = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf-8').trim();
+    content = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
     branch = (content.match(/^ref: refs\/heads\/(\S+)$/) || [])[1];
-    id = branch ? fs.readFileSync(path.join(gitDir, 'refs', 'heads', branch), 'utf-8').trim() : content;
+    id = branch ? fs.readFileSync(path.join(gitDir, 'refs', 'heads', branch), 'utf8').trim() : content;
   }
 
   return { id: id, branch: branch, wrapUp: wrapUp };
