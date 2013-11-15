@@ -167,7 +167,10 @@ var testGitBranch = function(sut, done){
 var testGitBranchDetection = function(sut, done){
   var localGit = ensureLocalGitContext();
   sut(function(err, options) {
-    options.git.branch.should.equal(localGit.branch);
+    if (localGit.branch)
+      options.git.branch.should.equal(localGit.branch);
+    else
+      options.git.should.not.have.property('branch');
     localGit.wrapUp();
     done();
   });
