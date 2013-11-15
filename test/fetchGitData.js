@@ -9,6 +9,12 @@ describe("fetchGitData", function(){
   it("should throw an error when no data is passed", function() {
     fetchGitData.should.throw(/fetchGitData requires a callback/);
   });
+  it('should throw an error when no git context is provided', function(done) {
+    fetchGitData(undefined, function(err){
+      err.should.match(/No options passed/);
+      done();
+    });
+  });
   it("should throw an error if no head is provided", function(done) {
     fetchGitData({
     }, function(err){
