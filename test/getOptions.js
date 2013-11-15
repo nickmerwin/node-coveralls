@@ -279,7 +279,7 @@ var testCodeship = function(sut, done) {
   process.env.CI_NAME = 'codeship';
   process.env.CI_BUILD_NUMBER = '1234';
   process.env.CI_COMMIT_ID = "e3e3e3e3e3e3e3e3e";
-  process.env.CI_COMMIT_BRANCH = "e3e3e3e3e3e3e3e3e";
+  process.env.CI_BRANCH = "master";
   sut(function(err, options){
     options.service_name.should.equal("codeship");
     options.service_job_id.should.equal("1234");
@@ -346,7 +346,7 @@ function ensureLocalGitContext(options) {
     content = fs.readFileSync(gitHead, 'utf-8').trim();
     var b = (content.match(/^ref: refs\/heads\/(\S+)$/) || [])[1];
     if (!b) {
-      id = b;
+      id = content;
     } else {
       id = fs.readFileSync(path.join(gitDir, 'refs', 'heads', b), 'utf-8').trim();
       fs.writeFileSync(gitHead, id, 'utf-8');
