@@ -2,21 +2,19 @@ REPORTER = spec
 test:
 	@$(MAKE) lint
 	@echo TRAVIS_JOB_ID $(TRAVIS_JOB_ID)
-	@$(MAKE) core_test
-
-core_test:
-	@NODE_ENV=test ./node_modules/.bin/mocha -b --require blanket --reporter $(REPORTER)
+	@NODE_ENV=test ./node_modules/.bin/mocha -b --reporter $(REPORTER)
 
 lint:
 	./node_modules/.bin/jshint ./lib ./test ./index.js
 
 test-cov:
-	$(MAKE) test REPORTER=spec
-	$(MAKE) core_test REPORTER=html-cov > coverage.html
+	$(MAKE) lint
+	@NODE_ENV=test ./node_modules/.bin/istanbul cover \
+	./node_modules/mocha/bin/_mocha -- -R spec
 
 test-coveralls:
-	$(MAKE) test REPORTER=spec
-	$(MAKE) core_test REPORTER=mocha-lcov-reporter | ./bin/coveralls.js --verbose
-	rm -rf lib-cov
+	@NODE_ENV=test ./node_modules/.bin/istanbul cover \
+	./node_modules/mocha/bin/_mocha -- \
+	REPORTER=mocha-lcov-reporter | ./bin/coveralls.js --verbose
 
 .PHONY: test
