@@ -86,6 +86,16 @@ npm run coveralls
 
 For detailed instructions on requiring instrumented code, running on Travis and submitting to coveralls [see this guide](https://github.com/alanshaw/nodeunit-lcov-coveralls-example).
 
+### [Poncho](https://github.com/deepsweet/poncho)
+Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomjs), [Mocha](https://github.com/visionmedia/mocha) and [Blanket](https://github.com/alex-seville/blanket):
+- [Configure](http://visionmedia.github.io/mocha/#browser-support) Mocha for browser
+- [Mark](https://github.com/deepsweet/poncho#usage) target script(s) with `data-cover` html-attribute
+- Run your tests with a command like this:
+
+```sh
+./node_modules/.bin/poncho -R lcov test/test.html | ./node_modules/coveralls/bin/coveralls.js
+```
+
 ## Running locally
 
 If you're running locally, you must have a `.coveralls.yml` file, as documented in [their documentation](https://coveralls.io/docs/ruby), with your `repo_token` in it; or, you must provide a `COVERALLS_REPO_TOKEN` environment-variable on the command-line.
