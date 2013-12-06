@@ -8,4 +8,25 @@ describe("logger", function(){
     var logger = require('../index').logger();
     logger.level.should.equal('debug');
   });
+
+  it ("should log at debug level when NODE_COVERALLS_DEBUG is set in env", function(){
+    process.argv = [];
+    process.env.NODE_COVERALLS_DEBUG = 1;
+    var logger = require('../index').logger();
+    logger.level.should.equal('debug');
+  });
+
+  it ("should log at debug level when NODE_COVERALLS_DEBUG is set in env as a string", function(){
+    process.argv = [];
+    process.env.NODE_COVERALLS_DEBUG = '1';
+    var logger = require('../index').logger();
+    logger.level.should.equal('debug');
+  });
+
+  it ("should log at warn level when NODE_COVERALLS_DEBUG not set and no --verbose", function(){
+    process.argv = [];
+    process.env.NODE_COVERALLS_DEBUG = 0;
+    var logger = require('../index').logger();
+    logger.level.should.equal('warn');
+  });
 });
