@@ -8,48 +8,71 @@ describe("handleInput", function(){
    afterEach(function() {
         sinon.restoreAll();
       });
-  it ("throws an error when there's an error sending", function(done){
+  it ("returns an error when there's an error getting options", function(done){
+    sinon.stub(index, 'getOptions', function(cb){
+      return cb("some error", {}); 
+    });
+    var path = __dirname + "/../fixtures/onefile.lcov";
+    var input = fs.readFileSync(path, "utf8");
+    index.handleInput(input, function(err){
+      err.should.equal("some error");
+      done();
+    });
+  });
+  it ("returns an error when there's an error converting", function(done){
+    sinon.stub(index, 'getOptions', function(cb){
+      return cb(null, {}); 
+    });
+    sinon.stub(index, 'convertLcovToCoveralls', function(input, options, cb){
+      cb("some error");
+    });
+    var path = __dirname + "/../fixtures/onefile.lcov";
+    var input = fs.readFileSync(path, "utf8");
+    index.handleInput(input, function(err){
+      err.should.equal("some error");
+      done();
+    });
+  });
+  it ("returns an error when there's an error sending", function(done){
     sinon.stub(index, 'getOptions', function(cb){
       return cb(null, {}); 
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
-      try {
-        cb("some error");
-        should.fail("expected exception was not raised");
-      } catch (ex) {
-        done();
-      }
+      cb("some error");
     });
-		var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
-		index.handleInput(input);
+    index.handleInput(input, function(err){
+      err.should.equal("some error");
+      done();
+    });
   });
-  it ("throws an error when there's a bad status code", function(done){
+  it ("returns an error when there's a bad status code", function(done){
     sinon.stub(index, 'getOptions', function(cb){
       return cb(null, {}); 
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
-      try {
-        cb(null, {statusCode : 500}, "body");
-        should.fail("expected exception was not raised");
-      } catch (ex) {
-        done();
-      }
+      cb(null, {statusCode : 500}, "body");
     });
-		var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
-		index.handleInput(input);
+    index.handleInput(input, function(err){
+      err.should.equal("Bad response: 500 body");
+      done();
+    });
   });
-  it ("completes successfully when there are now errors", function(done){
+  it ("completes successfully when there are no errors", function(done){
     sinon.stub(index, 'getOptions', function(cb){
       return cb(null, {}); 
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb(null, {statusCode : 200}, "body");
+    });
+    var path = __dirname + "/../fixtures/onefile.lcov";
+    var input = fs.readFileSync(path, "utf8");
+    index.handleInput(input, function(err){
+      (err === null).should.equal(true);
       done();
     });
-		var path = __dirname + "/../fixtures/onefile.lcov";
-    var input = fs.readFileSync(path, "utf8");
-		index.handleInput(input);
   });
 });
