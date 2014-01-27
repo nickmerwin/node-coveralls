@@ -13,6 +13,10 @@ process.stdin.on('data', function(chunk) {
 });
 
 process.stdin.on('end', function() {
-    handleInput(input);
+    handleInput(input, function(err) {
+      if (err) {
+        throw err;
+      }
+    });
 });
 
