@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "2.6.1",
+  "version": "2.7.0",
   "bugs": {
     "url": "https://github.com/cainus/node-coveralls/issues"
   },
