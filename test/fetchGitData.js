@@ -3,9 +3,6 @@ var fetchGitData = require('../lib/fetchGitData');
 var getOptions = require('../index').getOptions;
 
 describe("fetchGitData", function(){
-  beforeEach(function(){
-    process.env = {};
-  });
   it("should throw an error when no data is passed", function() {
     fetchGitData.should.throw(/fetchGitData requires a callback/);
   });
