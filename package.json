@@ -27,7 +27,7 @@
     "Arpad Borsos <arpad.borsos@googlemail.com> (http://swatinem.de/)"
   ],
   "dependencies": {
-    "yaml": "0.2.3",
+    "js-yaml": "3.0.1",
     "request": "2.16.2",
     "lcov-parse": "0.0.6",
     "log-driver": "1.2.1"
