@@ -197,17 +197,25 @@ var testRepoTokenDetection = function(sut, done) {
   var fs = require('fs');
   var path = require('path');
 
-  var file = path.join(process.cwd(), '.coveralls.yml'), token, synthetic = false;
+  var file = path.join(process.cwd(), '.coveralls.yml'), token, service_name, synthetic = false;
   if (fs.exists(file)) {
     var yaml = require('js-yaml');
-    token = yaml.saveLoad(fs.readFileSync(yml, 'utf8')).repo_token;
+    var coveralls_yml_doc = yaml.safeLoad(fs.readFileSync(yml, 'utf8'));
+    token = coveralls_yml_doc.repo_token;
+    if(coveralls_yml_doc.service_name) {
+      service_name = coveralls_yml_doc.service_name;
+    }
   } else {
     token = 'REPO_TOKEN';
-    fs.writeFileSync(file, 'repo_token: ' + token);
+    service_name = 'travis-pro';
+    fs.writeFileSync(file, 'repo_token: ' + token+'\nservice_name: ' + service_name);
     synthetic = true;
   }
   sut(function(err, options) {
     options.repo_token.should.equal(token);
+    if(service_name) {
+      options.service_name.should.equal(service_name);
+    }
     if (synthetic)
       fs.unlink(file);
     done();
