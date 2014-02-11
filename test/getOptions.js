@@ -301,7 +301,7 @@ function ensureLocalGitContext(options) {
   var fs = require('fs');
 
   var baseDir = process.cwd(), dir = baseDir, gitDir;
-  while ('/' !== dir) {
+  while (path.resolve('/') !== dir) {
     gitDir = path.join(dir, '.git');
     var existsSync = fs.existsSync || path.existsSync;
     if (existsSync(path.join(gitDir, 'HEAD')))
@@ -311,7 +311,7 @@ function ensureLocalGitContext(options) {
   }
 
   options = options || {};
-  var synthetic = '/' === dir;
+  var synthetic = path.resolve('/') === dir;
   var gitHead, content, branch, id, wrapUp = function() {};
 
   if (synthetic) {

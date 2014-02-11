@@ -29,7 +29,7 @@
   "dependencies": {
     "yaml": "0.2.3",
     "request": "2.16.2",
-    "lcov-parse": "0.0.4",
+    "lcov-parse": "0.0.6",
     "log-driver": "1.2.1"
   },
   "devDependencies": {
