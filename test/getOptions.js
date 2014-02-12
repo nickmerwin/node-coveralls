@@ -5,7 +5,7 @@ var getBaseOptions = index.getBaseOptions;
 
 describe("getBaseOptions", function(){
   beforeEach(function(){
-    process.env = {};
+    process.env = {PATH: process.env.PATH};
   });
   it ("should set service_job_id if it exists", function(done){
     testServiceJobId(getBaseOptions, done);
@@ -53,7 +53,7 @@ describe("getBaseOptions", function(){
 
 describe("getOptions", function(){
   beforeEach(function(){
-    process.env = {};
+    process.env = {PATH: process.env.PATH};
   });
   it ("should require a callback", function(done) {
     (function() {
