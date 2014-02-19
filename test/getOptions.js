@@ -49,6 +49,9 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on codeship", function(done){
     testCodeship(getBaseOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on drone", function(done){
+    testDrone(getBaseOptions, done);
+  });  
 });
 
 describe("getOptions", function(){
@@ -119,6 +122,9 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on codeship", function(done){
     testCodeship(getOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on drone", function(done){
+    testDrone(getBaseOptions, done);
+  });  
 });
 
 var testServiceJobId = function(sut, done){
@@ -289,6 +295,27 @@ var testCodeship = function(sut, done) {
   process.env.CI_BRANCH = "master";
   sut(function(err, options){
     options.service_name.should.equal("codeship");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'master',
+                              remotes: [] });
+    done();
+  });
+};
+
+var testDrone = function(sut, done) {
+  process.env.DRONE = true;
+  process.env.DRONE_BUILD_NUMBER = '1234';
+  process.env.DRONE_COMMIT = "e3e3e3e3e3e3e3e3e";
+  process.env.DRONE_BRANCH = "master";
+  sut(function(err, options){
+    options.service_name.should.equal("drone");
     options.service_job_id.should.equal("1234");
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
