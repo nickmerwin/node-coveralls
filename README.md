@@ -5,7 +5,7 @@
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
 
-Supported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circle-ci](https://circleci.com/), [jenkins](http://jenkins-ci.org/), [drone](https://drone.io/)
+Supported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circle-ci](https://circleci.com/), [jenkins](http://jenkins-ci.org/)
 
 ##Installation: 
 Add the latest version of `coveralls` to your package.json:
