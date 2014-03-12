@@ -34,6 +34,8 @@ There are optional environment variables for other build systems as well:
 * COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your 
 build system's date/time if you don't set it.)
 
+Note: Be patient, it can take up to a day for coverage statistics to start showing correctly on coveralls.io.
+
 ### [Mocha](http://visionmedia.github.io/mocha/) + [Blanket.js](https://github.com/alex-seville/blanket)
 - Install [blanket.js](http://blanketjs.org/)
 - Configure blanket according to [docs](https://github.com/alex-seville/blanket/blob/master/docs/getting_started_node.md).
