@@ -3,13 +3,14 @@ var getOptions = require('../index').getOptions;
 var should = require('should');
 var fs = require('fs');
 var logger = require('../lib/logger');
+var path = require('path');
 logger = require('log-driver')({level : false});
 
 describe("convertLcovToCoveralls", function(){
   it ("should convert a simple lcov file", function(done){
     process.env.TRAVIS_JOB_ID = -1;
-    var path = __dirname + "/../fixtures/onefile.lcov";
-    var input = fs.readFileSync(path, "utf8");
+    var lcovpath = __dirname + "/../fixtures/onefile.lcov";
+    var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = __dirname + "/../fixtures/lib";
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       should.not.exist(err);
@@ -30,8 +31,8 @@ describe("convertLcovToCoveralls", function(){
     process.env.COVERALLS_REPO_TOKEN = "REPO_TOKEN";
     
     getOptions(function(err, options){
-      var path = __dirname + "/../fixtures/onefile.lcov";
-      var input = fs.readFileSync(path, "utf8");
+      var lcovpath = __dirname + "/../fixtures/onefile.lcov";
+      var input = fs.readFileSync(lcovpath, "utf8");
       var libpath = "fixtures/lib";
       options.filepath = libpath;
       convertLcovToCoveralls(input, options, function(err, output){
@@ -43,13 +44,38 @@ describe("convertLcovToCoveralls", function(){
   });
   it ("should work with a relative path as well", function(done){
     process.env.TRAVIS_JOB_ID = -1;
-    var path = __dirname + "/../fixtures/onefile.lcov";
-    var input = fs.readFileSync(path, "utf8");
+    var lcovpath = __dirname + "/../fixtures/onefile.lcov";
+    var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "fixtures/lib";
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       should.not.exist(err);
       output.source_files[0].name.should.equal("index.js");
       output.source_files[0].source.split("\n").length.should.equal(173);
+      done();
+    });
+  });
+
+  it ("should convert absolute input paths to relative", function(done){
+    process.env.TRAVIS_JOB_ID = -1;
+    var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
+    var input = fs.readFileSync(lcovpath, "utf8");
+    var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
+    var sourcepath = path.resolve(libpath, "svgo/config.js");
+
+    var originalReadFileSync = fs.readFileSync;
+    fs.readFileSync = function(filepath) {
+      if (filepath === sourcepath) {
+        return '';
+      }
+
+      return originalReadFileSync.apply(fs, arguments);
+    }
+
+    convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
+      fs.readFileSync = originalReadFileSync;
+
+      should.not.exist(err);
+      output.source_files[0].name.should.equal(path.join("svgo", "config.js"));
       done();
     });
   });
