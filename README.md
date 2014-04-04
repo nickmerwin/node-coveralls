@@ -1,9 +1,6 @@
 #node-coveralls
-[![Build Status](https://travis-ci.org/cainus/node-coveralls.png?branch=master)](https://travis-ci.org/cainus/node-coveralls)
-[![Coverage Status](https://coveralls.io/repos/cainus/node-coveralls/badge.png?branch=master)](https://coveralls.io/r/cainus/node-coveralls?branch=master)
-[![Codeship Build Status](https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status)](https://www.codeship.io/projects/5622)
-[![Build
-Status](https://drone.io/github.com/cainus/node-coveralls/status.png)](https://drone.io/github.com/cainus/node-coveralls/latest)
+
+[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url] [![Build Status][drone-image]][drone-url]
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
 
@@ -104,4 +101,14 @@ If you're running locally, you must have a `.coveralls.yml` file, as documented 
 
 If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COMMIT` environment-variable to the commit hash you wish to reference. If you don't want to use a hash, you can set it to `HEAD` to supply coveralls with the latest commit data. This requires git to be installed and executable on the current PATH.
 
+[travis-image]: https://travis-ci.org/cainus/node-coveralls.png?branch=master
+[travis-url]: https://travis-ci.org/cainus/node-coveralls
 
+[codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status
+[codeship-url]: https://www.codeship.io/projects/5622
+
+[coveralls-image]: https://coveralls.io/repos/cainus/node-coveralls/badge.png?branch=master
+[coveralls-url]: https://coveralls.io/r/cainus/node-coveralls?branch=master
+
+[drone-image]: https://drone.io/github.com/cainus/node-coveralls/status.png
+[drone-url]: https://drone.io/github.com/cainus/node-coveralls/latest
