@@ -30,7 +30,7 @@
     "js-yaml": "3.0.1",
     "request": "2.16.2",
     "lcov-parse": "0.0.6",
-    "log-driver": "1.2.1"
+    "log-driver": "1.2.4"
   },
   "devDependencies": {
     "sinon-restore": "1.0.0",
