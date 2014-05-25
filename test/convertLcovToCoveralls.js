@@ -69,7 +69,7 @@ describe("convertLcovToCoveralls", function(){
       }
 
       return originalReadFileSync.apply(fs, arguments);
-    }
+    };
 
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       fs.readFileSync = originalReadFileSync;
