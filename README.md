@@ -112,3 +112,12 @@ If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COM
 
 [drone-image]: https://drone.io/github.com/cainus/node-coveralls/status.png
 [drone-url]: https://drone.io/github.com/cainus/node-coveralls/latest
+
+## Contributing
+
+I generally don't accept pull requests that are untested, or break the build, because I'd like to keep the quality high (this is a coverage tool afterall!).
+
+I also don't care for "soft-versioning" or "optimistic versioning" (dependencies that have ^, x, > in them, or anything other than numbers and dots).  There have been too many problems with bad semantic versioning in dependencies, and I'd rather have a solid library than a bleeding edge one.
+
+
+
