@@ -23,14 +23,16 @@ This script ( `bin/coveralls.js` ) can take standard input from any tool that em
 
 Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
 
-This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond that, but if 
-you're using a different build system, there are a few environment variables that are necessary:
-* COVERALLS_SERVICE_NAME  (the name of your build system)
-* COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)
+This library currently has some build-in ci [intergrations](https://github.com/cainus/node-coveralls/blob/master/lib/getOptions.js#L7).
+All you need to do is provide a coveralls `repo_token`:
+- COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)
+
+If you're using a different build system, add it as environment variables:
+- COVERALLS_SERVICE_NAME  (the name of your build system)
 
 There are optional environment variables for other build systems as well:
-* COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
-* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your 
+- COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
+- COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your
 build system's date/time if you don't set it.)
 
 ### [Mocha](http://visionmedia.github.io/mocha/) + [Blanket.js](https://github.com/alex-seville/blanket)
