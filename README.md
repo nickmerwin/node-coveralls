@@ -1,6 +1,6 @@
 #node-coveralls
 
-[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url] [![Build Status][drone-image]][drone-url]
+[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url]
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
 
@@ -109,9 +109,6 @@ If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COM
 
 [coveralls-image]: https://img.shields.io/coveralls/cainus/node-coveralls.svg?branch=master
 [coveralls-url]: https://coveralls.io/r/cainus/node-coveralls?branch=master
-
-[drone-image]: https://drone.io/github.com/cainus/node-coveralls/status.png
-[drone-url]: https://drone.io/github.com/cainus/node-coveralls/latest
 
 ## Contributing
 
