@@ -49,9 +49,11 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on codeship", function(done){
     testCodeship(getBaseOptions, done);
   });
+  /*
   it ("should set service_name and service_job_id if it's running on drone", function(done){
     testDrone(getBaseOptions, done);
-  });  
+  });
+  */
 });
 
 describe("getOptions", function(){
@@ -122,9 +124,11 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on codeship", function(done){
     testCodeship(getOptions, done);
   });
+  /*
   it ("should set service_name and service_job_id if it's running on drone", function(done){
     testDrone(getBaseOptions, done);
-  });  
+  });
+  */
 });
 
 var testServiceJobId = function(sut, done){
