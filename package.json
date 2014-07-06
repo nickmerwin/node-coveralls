@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "js-yaml": "3.0.1",
-    "request": "2.16.2",
+    "request": "2.32.x",
     "lcov-parse": "0.0.6",
     "log-driver": "1.2.4"
   },
