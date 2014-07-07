@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "2.11.0",
+  "version": "2.11.1",
   "bugs": {
     "url": "https://github.com/cainus/node-coveralls/issues"
   },
@@ -28,9 +28,9 @@
   ],
   "dependencies": {
     "js-yaml": "3.0.1",
-    "request": "2.16.2",
     "lcov-parse": "0.0.6",
-    "log-driver": "1.2.4"
+    "log-driver": "1.2.4",
+    "request": "2.36.0"
   },
   "devDependencies": {
     "sinon-restore": "1.0.0",
