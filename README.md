@@ -45,7 +45,7 @@ NODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha \
 ```
 ### [Mocha](http://visionmedia.github.io/mocha/) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
-Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/) or [here](http://tjholowaychuk.com/post/18175682663/mocha-test-coverage)), but that's also a necessary step. 
+Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that's also a necessary step. 
 
 In mocha, if you've got your code instrumented for coverage, the command for a travis build would look something like this:
 ```sh
