@@ -107,7 +107,7 @@ If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COM
 [codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status
 [codeship-url]: https://www.codeship.io/projects/5622
 
-[coveralls-image]: https://img.shields.io/coveralls/cainus/node-coveralls.svg?branch=master
+[coveralls-image]: https://img.shields.io/coveralls/cainus/node-coveralls/master.svg
 [coveralls-url]: https://coveralls.io/r/cainus/node-coveralls?branch=master
 
 ## Contributing
