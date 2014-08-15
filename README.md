@@ -55,13 +55,13 @@ Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Ma
 
 ### [Istanbul](https://github.com/gotwarlost/istanbul)
 
---With Mocha:--
+**With Mocha:**
 
 ```sh
 istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 ```
 
---With Jasmine:--
+**With Jasmine:**
 
 ```sh
 istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
