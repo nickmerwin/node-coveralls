@@ -106,7 +106,7 @@ Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomj
 
 ### [Lab](https://github.com/hapijs/lab)
 ```sh
-lab -r lcov | ./node_modules/coveralls/bin/coveralls.js
+lab -r lcov | ./node_modules/.bin/coveralls
 ```
 
 
