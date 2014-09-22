@@ -104,6 +104,12 @@ Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomj
 ./node_modules/.bin/poncho -R lcov test/test.html | ./node_modules/coveralls/bin/coveralls.js
 ```
 
+### [Lab](https://github.com/hapijs/lab)
+```sh
+lab -r lcov | ./node_modules/.bin/coveralls
+```
+
+
 ## Running locally
 
 If you're running locally, you must have a `.coveralls.yml` file, as documented in [their documentation](https://coveralls.io/docs/ruby), with your `repo_token` in it; or, you must provide a `COVERALLS_REPO_TOKEN` environment-variable on the command-line.
