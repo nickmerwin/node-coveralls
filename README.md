@@ -109,6 +109,13 @@ Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomj
 lab -r lcov | ./node_modules/.bin/coveralls
 ```
 
+### Command Line Parameters
+Usage: coveralls.js [-v] filepath
+
+#### Optional arguments:
+
+-v, --verbose
+filepath - optionally defines the base filepath of your source files.
 
 ## Running locally
 
