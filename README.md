@@ -115,6 +115,7 @@ Usage: coveralls.js [-v] filepath
 #### Optional arguments:
 
 -v, --verbose
+
 filepath - optionally defines the base filepath of your source files.
 
 ## Running locally
