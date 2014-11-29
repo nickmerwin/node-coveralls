@@ -54,6 +54,9 @@ describe("getBaseOptions", function(){
     testDrone(getBaseOptions, done);
   });
   */
+  it ("should set service_name and service_job_id if it's running on wercker", function(done){
+    testWercker(getBaseOptions, done);
+  });
 });
 
 describe("getOptions", function(){
@@ -129,6 +132,9 @@ describe("getOptions", function(){
     testDrone(getBaseOptions, done);
   });
   */
+  it ("should set service_name and service_job_id if it's running on wercker", function(done){
+    testWercker(getOptions, done);
+  });
 });
 
 var testServiceJobId = function(sut, done){
@@ -320,6 +326,27 @@ var testDrone = function(sut, done) {
   process.env.DRONE_BRANCH = "master";
   sut(function(err, options){
     options.service_name.should.equal("drone");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'master',
+                              remotes: [] });
+    done();
+  });
+};
+
+var testWercker = function(sut, done) {
+  process.env.WERCKER = true;
+  process.env.WERCKER_BUILD_ID = '1234';
+  process.env.WERCKER_GIT_COMMIT = "e3e3e3e3e3e3e3e3e";
+  process.env.WERCKER_GIT_BRANCH = "master";
+  sut(function(err, options){
+    options.service_name.should.equal("wercker");
     options.service_job_id.should.equal("1234");
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
