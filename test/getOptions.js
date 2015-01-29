@@ -135,6 +135,14 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on wercker", function(done){
     testWercker(getOptions, done);
   });
+  it ("should override set options with user options", function(done){
+    var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
+    process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
+    getOptions(function(err, options){
+      options.service_name.should.equal("OVERRIDDEN_SERVICE_NAME");
+      done();
+    }, userOptions);
+  });
 });
 
 var testServiceJobId = function(sut, done){
