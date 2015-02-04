@@ -1,6 +1,7 @@
 var should = require('should');
 var request = require('request');
 var sinon = require('sinon-restore');
+var stream = require('stream');
 var index = require('../index');
 logger = require('log-driver')({level : false});
 
@@ -27,7 +28,7 @@ describe("sendToCoveralls", function(){
     });
 
     var obj = {"some":"obj"};
-	index.sendToCoveralls(obj, function(err, response, body){
+    index.sendToCoveralls(obj, function(err, response, body){
       err.should.equal('err');
       response.should.equal('response');
       body.should.equal('body');
@@ -44,11 +45,31 @@ describe("sendToCoveralls", function(){
     });
 
     var obj = {"some":"obj"};
-	index.sendToCoveralls(obj, function(err, response, body){
+    index.sendToCoveralls(obj, function(err, response, body){
       err.should.equal('err');
       response.should.equal('response');
       body.should.equal('body');
       done();
+    });
+  });
+  it ("writes output to stdout when --write is passed", function(done) {
+    var obj = {"some":"obj"};
+    
+    // set up mock process.stdout.write temporarily
+    var origStdoutWrite = process.stdout.write;
+    process.stdout.write = function(string) {
+      if (string == JSON.stringify(obj)) {
+        process.stdout.write = origStdoutWrite;
+        return done();
+      }
+      
+      origStdoutWrite.apply(this, arguments);
+    };
+    
+    process.argv[2] = '--write';
+    
+    index.sendToCoveralls(obj, function(err, response, body) {
+      response.statusCode.should.equal(200);
     });
   });
 });
