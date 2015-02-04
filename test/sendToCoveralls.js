@@ -1,7 +1,6 @@
 var should = require('should');
 var request = require('request');
 var sinon = require('sinon-restore');
-var stream = require('stream');
 var index = require('../index');
 logger = require('log-driver')({level : false});
 
