@@ -19,7 +19,7 @@ npm install mocha-lcov-reporter --save
 
 ##Usage:
 
-This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://visionmedia.github.com/mocha/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
+This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
 
 Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
 
@@ -33,7 +33,7 @@ There are optional environment variables for other build systems as well:
 * COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your 
 build system's date/time if you don't set it.)
 
-### [Mocha](http://visionmedia.github.io/mocha/) + [Blanket.js](https://github.com/alex-seville/blanket)
+### [Mocha](http://mochajs.org/) + [Blanket.js](https://github.com/alex-seville/blanket)
 - Install [blanket.js](http://blanketjs.org/)
 - Configure blanket according to [docs](https://github.com/alex-seville/blanket/blob/master/docs/getting_started_node.md).
 - Run your tests with a command like this:
@@ -43,7 +43,7 @@ NODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha \
   --require blanket \
   --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
 ```
-### [Mocha](http://visionmedia.github.io/mocha/) + [JSCoverage](https://github.com/fishbar/jscoverage)
+### [Mocha](http://mochajs.org/) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
 Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that's also a necessary step. 
 
@@ -95,7 +95,7 @@ npm run coveralls
 For detailed instructions on requiring instrumented code, running on Travis and submitting to coveralls [see this guide](https://github.com/alanshaw/nodeunit-lcov-coveralls-example).
 
 ### [Poncho](https://github.com/deepsweet/poncho)
-Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomjs), [Mocha](https://github.com/visionmedia/mocha) and [Blanket](https://github.com/alex-seville/blanket):
+Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomjs), [Mocha](http://mochajs.org/) and [Blanket](https://github.com/alex-seville/blanket):
 - [Configure](http://visionmedia.github.io/mocha/#browser-support) Mocha for browser
 - [Mark](https://github.com/deepsweet/poncho#usage) target script(s) with `data-cover` html-attribute
 - Run your tests with a command like this:
