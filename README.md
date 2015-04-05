@@ -23,8 +23,7 @@ This script ( `bin/coveralls.js` ) can take standard input from any tool that em
 
 Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
 
-This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond that, but if 
-you're using a different build system, there are a few environment variables that are necessary:
+This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you're using a different build system, there are a few environment variables that are necessary:
 * COVERALLS_SERVICE_NAME  (the name of your build system)
 * COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)
 
