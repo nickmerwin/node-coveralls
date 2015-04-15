@@ -27,6 +27,7 @@ describe("sendToCoveralls", function(){
     });
 
     var obj = {"some":"obj"};
+    
     index.sendToCoveralls(obj, function(err, response, body){
       err.should.equal('err');
       response.should.equal('response');
@@ -51,7 +52,7 @@ describe("sendToCoveralls", function(){
       done();
     });
   });
-  it ("writes output to stdout when --write is passed", function(done) {
+  it ("writes output to stdout when --stdout is passed", function(done) {
     var obj = {"some":"obj"};
     
     // set up mock process.stdout.write temporarily
@@ -65,7 +66,7 @@ describe("sendToCoveralls", function(){
       origStdoutWrite.apply(this, arguments);
     };
     
-    process.argv[2] = '--write';
+    index.options.stdout = true;
     
     index.sendToCoveralls(obj, function(err, response, body) {
       response.statusCode.should.equal(200);
