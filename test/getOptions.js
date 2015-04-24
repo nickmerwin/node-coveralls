@@ -286,7 +286,7 @@ var testCircleCi = function(sut, done){
   sut(function(err, options){
     options.service_name.should.equal("circleci");
     options.service_job_id.should.equal("1234");
-    options.service_pull_request.should.equal('http://github.com/node-coveralls/pull/3');
+    options.service_pull_request.should.equal('3');
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
