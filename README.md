@@ -9,12 +9,12 @@ Supported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://
 ##Installation: 
 Add the latest version of `coveralls` to your package.json:
 ``` 
-npm install coveralls --save 
+npm install coveralls --save-dev 
 ```
 
 If you're using mocha, add `mocha-lcov-reporter` to your package.json:
 ``` 
-npm install mocha-lcov-reporter --save 
+npm install mocha-lcov-reporter --save-dev 
 ```
 
 ##Usage:
