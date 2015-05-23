@@ -110,17 +110,17 @@ lab -r lcov | ./node_modules/.bin/coveralls
 
 ### [nyc](https://github.com/bcoe/nyc)
 
-works with almost any testing framework, simply execute
-`npm test` with the `nyc` bin, followed by running its reporter:
+works with almost any testing framework. Simply execute
+`npm test` with the `nyc` bin followed by running its reporter:
 
 ```
 nyc npm test && nyc report --reporter=text-lcov | coveralls
 ```
 
-### [tap](https://github.com/isaacs/node-tap)
+### [TAP](https://github.com/isaacs/node-tap)
 
 Simply run your tap tests with the `COVERALLS_REPO_TOKEN` environment
-variable set, and tap will automatically use `nyc` to report
+variable set and tap will automatically use `nyc` to report
 coverage to coveralls.
 
 ## Running locally
