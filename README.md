@@ -115,8 +115,8 @@ If you're running locally, you must have a `.coveralls.yml` file, as documented 
 
 If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COMMIT` environment-variable to the commit hash you wish to reference. If you don't want to use a hash, you can set it to `HEAD` to supply coveralls with the latest commit data. This requires git to be installed and executable on the current PATH.
 
-[travis-image]: https://travis-ci.org/cainus/node-coveralls.svg?branch=master
-[travis-url]: https://travis-ci.org/cainus/node-coveralls
+[travis-image]: https://travis-ci.org/nickmerwin/node-coveralls.svg?branch=master
+[travis-url]: https://travis-ci.org/nickmerwin/node-coveralls
 
 [codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status
 [codeship-url]: https://www.codeship.io/projects/5622
