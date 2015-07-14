@@ -115,6 +115,9 @@ describe("getOptions", function(){
   it ("should set service_name if it exists", function(done){
     testServiceName(getOptions, done);
   });
+  it("should set service_pull_request if it exists", function(done){
+    testServicePullRequest(getOptions, done);
+  });
   it ("should set service_name and service_job_id if it's running on travis-ci", function(done){
     testTravisCi(getOptions, done);
   });
@@ -242,6 +245,14 @@ var testServiceName = function(sut, done){
   process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
   sut(function(err, options){
     options.service_name.should.equal("SERVICE_NAME");
+    done();
+  });
+};
+
+var testServicePullRequest = function(sut, done){
+  process.env.CI_PULL_REQUEST = "https://github.com/fake/fake/pulls/123";
+  sut(function(err, options){
+    options.service_pull_request.should.equal("123");
     done();
   });
 };
