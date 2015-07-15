@@ -6,15 +6,15 @@
 
 Supported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circle-ci](https://circleci.com/), [jenkins](http://jenkins-ci.org/)
 
-##Installation: 
+##Installation:
 Add the latest version of `coveralls` to your package.json:
-``` 
-npm install coveralls --save 
+```
+npm install coveralls --save
 ```
 
 If you're using mocha, add `mocha-lcov-reporter` to your package.json:
-``` 
-npm install mocha-lcov-reporter --save 
+```
+npm install mocha-lcov-reporter --save
 ```
 
 ##Usage:
@@ -29,7 +29,7 @@ This library currently supports [travis-ci](https://travis-ci.org/) with no extr
 
 There are optional environment variables for other build systems as well:
 * COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
-* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your 
+* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your
 build system's date/time if you don't set it.)
 
 ### [Mocha](http://mochajs.org/) + [Blanket.js](https://github.com/alex-seville/blanket)
@@ -44,7 +44,7 @@ NODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha \
 ```
 ### [Mocha](http://mochajs.org/) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
-Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that's also a necessary step. 
+Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that's also a necessary step.
 
 In mocha, if you've got your code instrumented for coverage, the command for a travis build would look something like this:
 ```sh
@@ -115,20 +115,17 @@ If you're running locally, you must have a `.coveralls.yml` file, as documented 
 
 If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COMMIT` environment-variable to the commit hash you wish to reference. If you don't want to use a hash, you can set it to `HEAD` to supply coveralls with the latest commit data. This requires git to be installed and executable on the current PATH.
 
-[travis-image]: https://travis-ci.org/cainus/node-coveralls.svg?branch=master
-[travis-url]: https://travis-ci.org/cainus/node-coveralls
+[travis-image]: https://travis-ci.org/nickmerwin/node-coveralls.svg?branch=master
+[travis-url]: https://travis-ci.org/nickmerwin/node-coveralls
 
 [codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status
 [codeship-url]: https://www.codeship.io/projects/5622
 
-[coveralls-image]: https://img.shields.io/coveralls/cainus/node-coveralls/master.svg
-[coveralls-url]: https://coveralls.io/r/cainus/node-coveralls?branch=master
+[coveralls-image]: https://coveralls.io/repos/nickmerwin/node-coveralls/badge.svg?branch=master&service=github
+[coveralls-url]: https://coveralls.io/github/nickmerwin/node-coveralls?branch=master
 
 ## Contributing
 
 I generally don't accept pull requests that are untested, or break the build, because I'd like to keep the quality high (this is a coverage tool afterall!).
 
 I also don't care for "soft-versioning" or "optimistic versioning" (dependencies that have ^, x, > in them, or anything other than numbers and dots).  There have been too many problems with bad semantic versioning in dependencies, and I'd rather have a solid library than a bleeding edge one.
-
-
-
