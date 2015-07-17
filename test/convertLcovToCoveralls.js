@@ -29,6 +29,7 @@ describe("convertLcovToCoveralls", function(){
     process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
     process.env.COVERALLS_SERVICE_JOB_ID = "SERVICE_JOB_ID";
     process.env.COVERALLS_REPO_TOKEN = "REPO_TOKEN";
+    process.env.CI_PULL_REQUEST = "https://github.com/fake/fake/pulls/123";
     
     getOptions(function(err, options){
       var lcovpath = __dirname + "/../fixtures/onefile.lcov";
@@ -37,6 +38,7 @@ describe("convertLcovToCoveralls", function(){
       options.filepath = libpath;
       convertLcovToCoveralls(input, options, function(err, output){
         should.not.exist(err);
+        output.service_pull_request.should.equal("123");
         //output.git.should.equal("GIT_HASH");
         done();
       });
