@@ -7,7 +7,7 @@
   ],
   "version": "2.11.3",
   "bugs": {
-    "url": "https://github.com/cainus/node-coveralls/issues"
+    "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
   "scripts": {
     "test": "make test"
@@ -51,7 +51,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cainus/node-coveralls.git"
+    "url": "git://github.com/nickmerwin/node-coveralls.git"
   },
   "author": "Gregg Caines",
   "license": "BSD"
