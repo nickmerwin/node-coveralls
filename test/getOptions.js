@@ -70,7 +70,7 @@ describe("getOptions", function(){
     done();
   });
   it ("should get a filepath if there is one", function(done){
-    process.argv[2] = "somepath";
+    index.options._ = ["somepath"];
     getOptions(function(err, options){
       options.filepath.should.equal("somepath");
       done();
@@ -78,8 +78,8 @@ describe("getOptions", function(){
 
   });
   it ("should get a filepath if there is one, even in verbose mode", function(done){
-    process.argv[2] = "--verbose";
-    process.argv[3] = "somepath";
+    index.options.verbose = "true";
+    index.options._ = ["somepath"];
     getOptions(function(err, options){
       options.filepath.should.equal("somepath");
       done();
