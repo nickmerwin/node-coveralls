@@ -54,5 +54,5 @@
     "url": "git://github.com/nickmerwin/node-coveralls.git"
   },
   "author": "Gregg Caines",
-  "license": "BSD"
+  "license": "BSD-2-Clause"
 }
