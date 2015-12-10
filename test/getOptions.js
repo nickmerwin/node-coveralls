@@ -301,9 +301,11 @@ var testCircleCi = function(sut, done){
   process.env.CIRCLE_BRANCH = "master";
   process.env.CIRCLE_BUILD_NUM = "1234";
   process.env.CIRCLE_SHA1 = "e3e3e3e3e3e3e3e3e";
+  process.env.CI_PULL_REQUEST = 'http://github.com/node-coveralls/pull/3';
   sut(function(err, options){
     options.service_name.should.equal("circleci");
     options.service_job_id.should.equal("1234");
+    options.service_pull_request.should.equal('3');
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
