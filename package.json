@@ -5,9 +5,9 @@
     "coverage",
     "coveralls"
   ],
-  "version": "2.11.2",
+  "version": "2.11.4",
   "bugs": {
-    "url": "https://github.com/cainus/node-coveralls/issues"
+    "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
   "scripts": {
     "test": "make test"
@@ -16,9 +16,11 @@
     "coveralls": "./bin/coveralls.js"
   },
   "maintainers": [
-    "Gregg Caines <gregg@caines.ca> (http://caines.ca)"
+    "Nick Merwin <nick@coveralls.io> (https://coveralls.io)"
   ],
   "contributors": [
+    "Gregg Caines <gregg@caines.ca> (http://caines.ca)",
+    "Joshua Ma <github@joshma.com> (http://joshma.com)",
     "Alan Gutierrez <alan@prettyrobots.com> (http://www.prettyrobots.com/)",
     "Kir Belevich (https://github.com/svg)",
     "elliotcable <github@elliottcable.name> (http://elliottcable.name/)",
@@ -30,7 +32,7 @@
     "js-yaml": "3.0.1",
     "lcov-parse": "0.0.6",
     "log-driver": "1.2.4",
-    "request": "2.40.0"
+    "request": "2.67.0"
   },
   "devDependencies": {
     "sinon-restore": "1.0.0",
@@ -49,7 +51,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cainus/node-coveralls.git"
+    "url": "git://github.com/nickmerwin/node-coveralls.git"
   },
   "author": "Gregg Caines",
   "license": "BSD"
