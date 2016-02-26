@@ -112,6 +112,9 @@ describe("getOptions", function(){
   it ("should detect repo_token if not passed in", function(done){
     testRepoTokenDetection(getOptions, done);
   });
+  it ("should set paralell if env var set", function(done){
+    testParallel(getOptions, done);
+  });
   it ("should set service_name if it exists", function(done){
     testServiceName(getOptions, done);
   });
@@ -219,6 +222,14 @@ var testRepoToken = function(sut, done){
   process.env.COVERALLS_REPO_TOKEN = "REPO_TOKEN";
   sut(function(err, options){
     options.repo_token.should.equal("REPO_TOKEN");
+    done();
+  });
+};
+
+var testParallel = function(sut, done){
+  process.env.COVERALLS_PARALLEL = "true";
+  sut(function(err, options){
+    options.parallel.should.equal(true);
     done();
   });
 };
