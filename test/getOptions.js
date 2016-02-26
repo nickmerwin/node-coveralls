@@ -138,6 +138,9 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on wercker", function(done){
     testWercker(getOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on Gitlab", function(done){
+    testGitlab(getOptions, done);
+  });
   it ("should override set options with user options", function(done){
     var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
     process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
@@ -377,6 +380,28 @@ var testWercker = function(sut, done) {
                                  committer_email: '',
                                  message: 'Unknown Commit Message' },
                               branch: 'master',
+                              remotes: [] });
+    done();
+  });
+};
+
+var testGitlab = function(sut, done) {
+  process.env.GITLAB_CI = true;
+  process.env.CI_BUILD_NAME = 'spec:one';
+  process.env.CI_BUILD_ID = "1234";
+  process.env.CI_BUILD_REF = "e3e3e3e3e3e3e3e3e";
+  process.env.CI_BUILD_REF_NAME = "feature";
+  sut(function(err, options){
+    options.service_name.should.equal("gitlab-ci");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'feature',
                               remotes: [] });
     done();
   });
