@@ -1,0 +1,136 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@2.12.1
+3 info using node@v0.12.7
+4 verbose node symlink /usr/local/bin/node
+5 verbose publish [ '.' ]
+6 silly cache add args [ '.', null ]
+7 verbose cache add spec .
+8 silly cache add parsed spec { raw: '.',
+8 silly cache add   scope: null,
+8 silly cache add   name: null,
+8 silly cache add   rawSpec: '.',
+8 silly cache add   spec: '/Users/nickmerwin/www/node-coveralls',
+8 silly cache add   type: 'directory' }
+9 verbose addLocalDirectory /Users/nickmerwin/.npm/coveralls/2.11.7/package.tgz not in flight; packing
+10 verbose tar pack [ '/Users/nickmerwin/.npm/coveralls/2.11.7/package.tgz',
+10 verbose tar pack   '/Users/nickmerwin/www/node-coveralls' ]
+11 verbose tarball /Users/nickmerwin/.npm/coveralls/2.11.7/package.tgz
+12 verbose folder /Users/nickmerwin/www/node-coveralls
+13 info prepublish coveralls@2.11.7
+14 verbose addLocalTarball adding from inside cache /Users/nickmerwin/.npm/coveralls/2.11.7/package.tgz
+15 silly cache afterAdd coveralls@2.11.7
+16 verbose afterAdd /Users/nickmerwin/.npm/coveralls/2.11.7/package/package.json not in flight; writing
+17 verbose afterAdd /Users/nickmerwin/.npm/coveralls/2.11.7/package/package.json written
+18 silly publish { name: 'coveralls',
+18 silly publish   description: 'takes json-cov output into stdin and POSTs to coveralls.io',
+18 silly publish   keywords: [ 'coverage', 'coveralls' ],
+18 silly publish   version: '2.11.7',
+18 silly publish   bugs: { url: 'https://github.com/nickmerwin/node-coveralls/issues' },
+18 silly publish   scripts: { test: 'make test' },
+18 silly publish   bin: { coveralls: './bin/coveralls.js' },
+18 silly publish   maintainers:
+18 silly publish    [ { name: 'Nick Merwin',
+18 silly publish        email: 'nick@coveralls.io',
+18 silly publish        url: 'https://coveralls.io' } ],
+18 silly publish   contributors:
+18 silly publish    [ { name: 'Gregg Caines',
+18 silly publish        email: 'gregg@caines.ca',
+18 silly publish        url: 'http://caines.ca' },
+18 silly publish      { name: 'Joshua Ma',
+18 silly publish        email: 'github@joshma.com',
+18 silly publish        url: 'http://joshma.com' },
+18 silly publish      { name: 'Alan Gutierrez',
+18 silly publish        email: 'alan@prettyrobots.com',
+18 silly publish        url: 'http://www.prettyrobots.com/' },
+18 silly publish      { name: 'Kir Belevich', url: 'https://github.com/svg' },
+18 silly publish      { name: 'elliotcable',
+18 silly publish        email: 'github@elliottcable.name',
+18 silly publish        url: 'http://elliottcable.name/' },
+18 silly publish      { name: 'Slotos',
+18 silly publish        email: 'slotos@gmail.com',
+18 silly publish        url: 'http://slotos.net' },
+18 silly publish      { name: 'mattjmorrison',
+18 silly publish        email: 'mattjmorrison@mattjmorrison.com',
+18 silly publish        url: 'http://mattjmorrison.com' },
+18 silly publish      { name: 'Arpad Borsos',
+18 silly publish        email: 'arpad.borsos@googlemail.com',
+18 silly publish        url: 'http://swatinem.de/' } ],
+18 silly publish   dependencies:
+18 silly publish    { 'js-yaml': '3.0.1',
+18 silly publish      'lcov-parse': '0.0.6',
+18 silly publish      'log-driver': '1.2.4',
+18 silly publish      request: '2.67.0',
+18 silly publish      minimist: '1.2.0' },
+18 silly publish   devDependencies:
+18 silly publish    { 'sinon-restore': '1.0.0',
+18 silly publish      'mocha-lcov-reporter': '0.0.1',
+18 silly publish      mocha: '1.8.1',
+18 silly publish      should: '1.1.0',
+18 silly publish      istanbul: '0.2.10',
+18 silly publish      jshint: '2.1.3' },
+18 silly publish   engines: { node: '>=0.8.6' },
+18 silly publish   main: 'index.js',
+18 silly publish   directories: { test: 'test' },
+18 silly publish   repository:
+18 silly publish    { type: 'git',
+18 silly publish      url: 'git://github.com/nickmerwin/node-coveralls.git' },
+18 silly publish   author: { name: 'Gregg Caines' },
+18 silly publish   license: 'BSD-2-Clause',
+18 silly publish   readme: '#node-coveralls\n\n[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url]\n\n[Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.\n\nSupported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circleci](https://circleci.com/), [jenkins](http://jenkins-ci.org/), [Gitlab CI](http://gitlab.com/)\n\n##Installation:\nAdd the latest version of `coveralls` to your package.json:\n```\nnpm install coveralls --save-dev\n```\n\nIf you\'re using mocha, add `mocha-lcov-reporter` to your package.json:\n```\nnpm install mocha-lcov-reporter --save-dev\n```\n\n##Usage:\n\nThis script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)\'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.\n\nOnce your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.\n\nThis library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you\'re using a different build system, there are a few environment variables that are necessary:\n* COVERALLS_SERVICE_NAME  (the name of your build system)\n* COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)\n\nThere are optional environment variables for other build systems as well:\n* COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)\n* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your\nbuild system\'s date/time if you don\'t set it.)\n* COVERALLS_PARALLEL (more info here: https://coveralls.zendesk.com/hc/en-us/articles/203484329)\n\n### [Mocha](http://mochajs.org/) + [Blanket.js](https://github.com/alex-seville/blanket)\n- Install [blanket.js](http://blanketjs.org/)\n- Configure blanket according to [docs](https://github.com/alex-seville/blanket/blob/master/docs/getting_started_node.md).\n- Run your tests with a command like this:\n\n```sh\nNODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha \\\n  --require blanket \\\n  --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js\n```\n### [Mocha](http://mochajs.org/) + [JSCoverage](https://github.com/fishbar/jscoverage)\n\nInstrumenting your app for coverage is probably harder than it needs to be (read [here](http://www.seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that\'s also a necessary step.\n\nIn mocha, if you\'ve got your code instrumented for coverage, the command for a travis build would look something like this:\n```sh\nYOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js\n```\nCheck out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json\'s \'scripts\' property).\n\n### [Istanbul](https://github.com/gotwarlost/istanbul)\n\n**With Mocha:**\n\n```sh\nistanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\n```\n\n**With Jasmine:**\n\n```sh\nistanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage\n```\n\n### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)\n\nDepend on nodeunit, jscoverage and coveralls:\n\n```sh\nnpm install nodeunit jscoverage coveralls --save-dev\n```\n\nAdd a coveralls script to "scripts" in your `package.json`:\n\n```javascript\n"scripts": {\n  "test": "nodeunit test",\n  "coveralls": "jscoverage lib && YOURPACKAGE_COVERAGE=1 nodeunit --reporter=lcov test | coveralls"\n}\n```\n\nEnsure your app requires instrumented code when `process.env.YOURPACKAGE_COVERAGE` variable is defined.\n\nRun your tests with a command like this:\n\n```sh\nnpm run coveralls\n```\n\nFor detailed instructions on requiring instrumented code, running on Travis and submitting to coveralls [see this guide](https://github.com/alanshaw/nodeunit-lcov-coveralls-example).\n\n### [Poncho](https://github.com/deepsweet/poncho)\nClient-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomjs), [Mocha](http://mochajs.org/) and [Blanket](https://github.com/alex-seville/blanket):\n- [Configure](http://visionmedia.github.io/mocha/#browser-support) Mocha for browser\n- [Mark](https://github.com/deepsweet/poncho#usage) target script(s) with `data-cover` html-attribute\n- Run your tests with a command like this:\n\n```sh\n./node_modules/.bin/poncho -R lcov test/test.html | ./node_modules/coveralls/bin/coveralls.js\n```\n\n### [Lab](https://github.com/hapijs/lab)\n```sh\nlab -r lcov | ./node_modules/.bin/coveralls\n```\n\n### [nyc](https://github.com/bcoe/nyc)\n\nworks with almost any testing framework. Simply execute\n`npm test` with the `nyc` bin followed by running its reporter:\n\n```\nnyc npm test && nyc report --reporter=text-lcov | coveralls\n```\n\n### [TAP](https://github.com/isaacs/node-tap)\n\nSimply run your tap tests with the `COVERALLS_REPO_TOKEN` environment\nvariable set and tap will automatically use `nyc` to report\ncoverage to coveralls.\n\n### Command Line Parameters\nUsage: coveralls.js [-v] filepath\n\n#### Optional arguments:\n\n-v, --verbose\n\nfilepath - optionally defines the base filepath of your source files.\n\n## Running locally\n\nIf you\'re running locally, you must have a `.coveralls.yml` file, as documented in [their documentation](https://coveralls.io/docs/ruby), with your `repo_token` in it; or, you must provide a `COVERALLS_REPO_TOKEN` environment-variable on the command-line.\n\nIf you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COMMIT` environment-variable to the commit hash you wish to reference. If you don\'t want to use a hash, you can set it to `HEAD` to supply coveralls with the latest commit data. This requires git to be installed and executable on the current PATH.\n\n[travis-image]: https://travis-ci.org/nickmerwin/node-coveralls.svg?branch=master\n[travis-url]: https://travis-ci.org/nickmerwin/node-coveralls\n\n[codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status\n[codeship-url]: https://www.codeship.io/projects/5622\n\n[coveralls-image]: https://coveralls.io/repos/nickmerwin/node-coveralls/badge.svg?branch=master&service=github\n[coveralls-url]: https://coveralls.io/github/nickmerwin/node-coveralls?branch=master\n\n## Contributing\n\nI generally don\'t accept pull requests that are untested, or break the build, because I\'d like to keep the quality high (this is a coverage tool afterall!).\n\nI also don\'t care for "soft-versioning" or "optimistic versioning" (dependencies that have ^, x, > in them, or anything other than numbers and dots).  There have been too many problems with bad semantic versioning in dependencies, and I\'d rather have a solid library than a bleeding edge one.\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: '94ccb0e434c0fd029714793f11da336832489d9d',
+18 silly publish   homepage: 'https://github.com/nickmerwin/node-coveralls#readme',
+18 silly publish   _id: 'coveralls@2.11.7',
+18 silly publish   _shasum: '0d78a398b306722b7522eff6b1cb8ec31b948e8b',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name coveralls
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry http://registry.npmjs.org/
+23 silly mapToRegistry uri http://registry.npmjs.org/coveralls
+24 verbose publish registryBase http://registry.npmjs.org/
+25 silly publish uploading /Users/nickmerwin/.npm/coveralls/2.11.7/package.tgz
+26 verbose request uri http://registry.npmjs.org/coveralls
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 11:21:19
+29 verbose request using bearer token for auth
+30 verbose request id 7bc04fe25a5b0548
+31 http request PUT http://registry.npmjs.org/coveralls
+32 http 403 http://registry.npmjs.org/coveralls
+33 verbose headers { 'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=300',
+33 verbose headers   'content-length': '96',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   date: 'Fri, 26 Feb 2016 19:21:19 GMT',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   connection: 'keep-alive',
+33 verbose headers   'x-served-by': 'cache-lax1431-LAX',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1456514478.804087,VS0,VE216' }
+34 verbose request invalidating /Users/nickmerwin/.npm/registry.npmjs.org/coveralls on PUT
+35 error publish Failed PUT 403
+36 verbose stack Error: "You cannot publish over the previously published version 2.11.7." : coveralls
+36 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:247:14)
+36 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:170:14)
+36 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:197:22)
+36 verbose stack     at Request.emit (events.js:110:17)
+36 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1050:14)
+36 verbose stack     at Request.emit (events.js:129:20)
+36 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:996:12)
+36 verbose stack     at IncomingMessage.emit (events.js:129:20)
+36 verbose stack     at _stream_readable.js:908:16
+36 verbose stack     at process._tickCallback (node.js:355:11)
+37 verbose statusCode 403
+38 verbose pkgid coveralls
+39 verbose cwd /Users/nickmerwin/www/node-coveralls
+40 error Darwin 15.3.0
+41 error argv "node" "/usr/local/bin/npm" "publish"
+42 error node v0.12.7
+43 error npm  v2.12.1
+44 error code E403
+45 error "You cannot publish over the previously published version 2.11.7." : coveralls
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
