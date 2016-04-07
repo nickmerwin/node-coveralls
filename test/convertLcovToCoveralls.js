@@ -75,12 +75,46 @@ describe("convertLcovToCoveralls", function(){
       return originalReadFileSync.apply(fs, arguments);
     };
 
+    var originalExistsSync = fs.existsSync;
+    fs.existsSync = function () { return true; };
+
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       fs.readFileSync = originalReadFileSync;
+      fs.existsSync = originalExistsSync;
 
       should.not.exist(err);
       output.source_files[0].name.should.equal(path.join("svgo", "config.js"));
       done();
     });
   });
+
+  it ("should ignore files that do not exists", function(done){
+    process.env.TRAVIS_JOB_ID = -1;
+    var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
+    var input = fs.readFileSync(lcovpath, "utf8");
+    var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
+    var sourcepath = path.resolve(libpath, "svgo/config.js");
+
+    var originalReadFileSync = fs.readFileSync;
+    fs.readFileSync = function(filepath) {
+      if (filepath === sourcepath) {
+        return '';
+      }
+
+      return originalReadFileSync.apply(fs, arguments);
+    };
+
+    var originalExistsSync = fs.existsSync;
+    fs.existsSync = function () { return false; };
+
+    convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
+      fs.readFileSync = originalReadFileSync;
+      fs.existsSync = originalExistsSync;
+
+      should.not.exist(err);
+      output.source_files.should.be.empty;
+      done();
+    });
+  });
+
 });
