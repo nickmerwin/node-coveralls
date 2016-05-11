@@ -203,7 +203,7 @@ var testGitBranchDetection = function(sut, done){
     if (localGit.branch)
       options.git.branch.should.equal(localGit.branch);
     else
-      options.git.should.not.have.property('branch');
+      options.git.should.not.have.key('branch');
     localGit.wrapUp();
     done();
   });

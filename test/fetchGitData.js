@@ -98,14 +98,14 @@ describe("fetchGitData", function(){
         "covert": "to a string"
       }
     }, function(err, str){
-      str.branch.should.be.a("string");
+      str.branch.should.be.String();
       fetchGitData({
         "head": {
           "id": "COMMIT_HASH"
         },
         "branch": ["convert", "to", "a", "string"]
       }, function(err, str){
-        str.branch.should.be.a("string");
+        str.branch.should.be.String();
         done();
       });
     });
@@ -168,11 +168,11 @@ describe("fetchGitData", function(){
     process.env.COVERALLS_GIT_BRANCH = "master";
     getOptions(function(err, options){
       options = options.git;
-      options.head.should.be.a("object");
+      options.head.should.be.Object();
       options.head.author_name.should.not.equal("Unknown Author");
       options.head.committer_name.should.not.equal("Unknown Committer");
       options.head.message.should.not.equal("Unknown Commit Message");
-      options.branch.should.be.a("string");
+      options.branch.should.be.String();
       options.should.have.property("remotes");
       options.remotes.should.be.instanceof(Array);
       options.remotes.length.should.be.above(0);

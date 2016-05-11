@@ -1,6 +1,7 @@
 #node-coveralls
 
 [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url]
+[![Known Vulnerabilities](https://snyk.io/test/github/nickmerwin/node-coveralls/badge.svg)](https://snyk.io/test/github/nickmerwin/node-coveralls)
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
 
