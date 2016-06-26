@@ -338,6 +338,9 @@ var testCodeship = function(sut, done) {
   process.env.CI_BUILD_NUMBER = '1234';
   process.env.CI_COMMIT_ID = "e3e3e3e3e3e3e3e3e";
   process.env.CI_BRANCH = "master";
+  process.env.CI_COMMITTER_NAME = "John Doe";
+  process.env.CI_COMMITTER_EMAIL = "jd@example.com";
+  process.env.CI_COMMIT_MESSAGE = "adadadadadadadadadad";
   sut(function(err, options){
     options.service_name.should.equal("codeship");
     options.service_job_id.should.equal("1234");
@@ -345,9 +348,9 @@ var testCodeship = function(sut, done) {
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
                                  author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
+                                 committer_name: 'John Doe',
+                                 committer_email: 'jd@example.com',
+                                 message: 'adadadadadadadadadad' },
                               branch: 'master',
                               remotes: [] });
     done();
