@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "2.11.10",
+  "version": "2.11.11",
   "bugs": {
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
