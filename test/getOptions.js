@@ -418,6 +418,26 @@ var testGitlab = function(sut, done) {
   });
 };
 
+var testGitlab = function(sut, done) {
+  process.env.CI_NAME = 'surf';
+  process.env.SURF_SHA1 = "e3e3e3e3e3e3e3e3e";
+  process.env.SURF_REF = "feature";
+  sut(function(err, options){
+    options.service_name.should.equal("surf");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'feature',
+                              remotes: [] });
+    done();
+  });
+};
+
+
 function ensureLocalGitContext(options) {
   var path = require('path');
   var fs = require('fs');
