@@ -144,6 +144,9 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on Gitlab", function(done){
     testGitlab(getOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running via Surf", function(done){
+    testSurf(getOptions, done);
+  });
   it ("should override set options with user options", function(done){
     var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
     process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
@@ -418,7 +421,7 @@ var testGitlab = function(sut, done) {
   });
 };
 
-var testGitlab = function(sut, done) {
+var testSurf = function(sut, done) {
   process.env.CI_NAME = 'surf';
   process.env.SURF_SHA1 = "e3e3e3e3e3e3e3e3e";
   process.env.SURF_REF = "feature";
