@@ -112,7 +112,7 @@ describe("convertLcovToCoveralls", function(){
       fs.existsSync = originalExistsSync;
 
       should.not.exist(err);
-      output.source_files.should.be.empty;
+      output.source_files.should.be.empty();
       done();
     });
   });
