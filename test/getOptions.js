@@ -144,6 +144,9 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on Gitlab", function(done){
     testGitlab(getOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running via Surf", function(done){
+    testSurf(getOptions, done);
+  });
   it ("should override set options with user options", function(done){
     var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
     process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
@@ -203,7 +206,7 @@ var testGitBranchDetection = function(sut, done){
     if (localGit.branch)
       options.git.branch.should.equal(localGit.branch);
     else
-      options.git.should.not.have.property('branch');
+      options.git.should.not.have.key('branch');
     localGit.wrapUp();
     done();
   });
@@ -338,6 +341,9 @@ var testCodeship = function(sut, done) {
   process.env.CI_BUILD_NUMBER = '1234';
   process.env.CI_COMMIT_ID = "e3e3e3e3e3e3e3e3e";
   process.env.CI_BRANCH = "master";
+  process.env.CI_COMMITTER_NAME = "John Doe";
+  process.env.CI_COMMITTER_EMAIL = "jd@example.com";
+  process.env.CI_COMMIT_MESSAGE = "adadadadadadadadadad";
   sut(function(err, options){
     options.service_name.should.equal("codeship");
     options.service_job_id.should.equal("1234");
@@ -345,9 +351,9 @@ var testCodeship = function(sut, done) {
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
                                  author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
+                                 committer_name: 'John Doe',
+                                 committer_email: 'jd@example.com',
+                                 message: 'adadadadadadadadadad' },
                               branch: 'master',
                               remotes: [] });
     done();
@@ -417,6 +423,26 @@ var testGitlab = function(sut, done) {
     done();
   });
 };
+
+var testSurf = function(sut, done) {
+  process.env.CI_NAME = 'surf';
+  process.env.SURF_SHA1 = "e3e3e3e3e3e3e3e3e";
+  process.env.SURF_REF = "feature";
+  sut(function(err, options){
+    options.service_name.should.equal("surf");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'feature',
+                              remotes: [] });
+    done();
+  });
+};
+
 
 function ensureLocalGitContext(options) {
   var path = require('path');
