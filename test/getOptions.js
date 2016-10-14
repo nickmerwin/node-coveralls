@@ -285,9 +285,11 @@ var testServicePullRequest = function(sut, done){
 var testTravisCi = function(sut, done){
   process.env.TRAVIS = "TRUE";
   process.env.TRAVIS_JOB_ID = "1234";
+  process.env.TRAVIS_PULL_REQUEST = "123";
   sut(function(err, options){
     options.service_name.should.equal("travis-ci");
     options.service_job_id.should.equal("1234");
+    options.service_pull_request.should.equal("123");
     done();
   });
 };
