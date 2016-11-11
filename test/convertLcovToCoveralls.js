@@ -134,17 +134,16 @@ describe("convertLcovToCoveralls", function(){
     };
 
     var originalExistsSync = fs.existsSync;
-    fs.existsSync = function () { return false; };
+    fs.existsSync = function () { return true; };
 
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       fs.readFileSync = originalReadFileSync;
       fs.existsSync = originalExistsSync;
 
       should.not.exist(err);
-      output.source_files.should.be.empty();
+      output.source_files[0].name.should.equal(path.join("svgo", "config.js"));
       done();
     });
-
   });
 
 });
