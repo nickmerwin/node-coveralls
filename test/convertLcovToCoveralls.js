@@ -8,7 +8,7 @@ logger = require('log-driver')({level : false});
 
 describe("convertLcovToCoveralls", function(){
   it ("should convert a simple lcov file", function(done){
-    process.env.TRAVIS_JOB_ID = -1;
+    process.env.TRAVIS = false;
     var lcovpath = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = __dirname + "/../fixtures/lib";
@@ -23,7 +23,7 @@ describe("convertLcovToCoveralls", function(){
   });
 
   it ("should pass on all appropriate parameters from the environment", function(done){
-    process.env.TRAVIS_JOB_ID = -1;
+    process.env.TRAVIS = false;
     process.env.COVERALLS_GIT_COMMIT = "GIT_HASH";
     process.env.COVERALLS_GIT_BRANCH = "master";
     process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
@@ -47,7 +47,7 @@ describe("convertLcovToCoveralls", function(){
     });
   });
   it ("should work with a relative path as well", function(done){
-    process.env.TRAVIS_JOB_ID = -1;
+    process.env.TRAVIS = false;
     var lcovpath = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "fixtures/lib";
@@ -60,7 +60,7 @@ describe("convertLcovToCoveralls", function(){
   });
 
   it ("should convert absolute input paths to relative", function(done){
-    process.env.TRAVIS_JOB_ID = -1;
+    process.env.TRAVIS = false;
     var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
@@ -89,7 +89,7 @@ describe("convertLcovToCoveralls", function(){
   });
 
   it ("should ignore files that do not exists", function(done){
-    process.env.TRAVIS_JOB_ID = -1;
+    process.env.TRAVIS = false;
     var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
