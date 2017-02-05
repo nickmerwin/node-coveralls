@@ -37,13 +37,13 @@
     "request": "2.79.0"
   },
   "devDependencies": {
-    "istanbul": "0.4.4",
+    "istanbul": "0.4.5",
     "jshint": "2.9.3",
-    "mocha": "2.5.3",
+    "mocha": "3.2.0",
     "mocha-lcov-reporter": "1.2.0",
     "should": "9.0.2",
     "sinon-restore": "1.0.1",
-    "snyk": "1.17.0"
+    "snyk": "1.23.3"
   },
   "engines": {
     "node": ">=0.8.6"
