@@ -1,6 +1,6 @@
 #node-coveralls
 
-[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Codeship Build Status][codeship-image]][codeship-url]
+[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
 [![Known Vulnerabilities](https://snyk.io/test/github/nickmerwin/node-coveralls/badge.svg)](https://snyk.io/test/github/nickmerwin/node-coveralls)
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
@@ -142,9 +142,6 @@ If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COM
 
 [travis-image]: https://travis-ci.org/nickmerwin/node-coveralls.svg?branch=master
 [travis-url]: https://travis-ci.org/nickmerwin/node-coveralls
-
-[codeship-image]: https://www.codeship.io/projects/de6fb440-dea9-0130-e7d9-122ca7ee39d3/status
-[codeship-url]: https://www.codeship.io/projects/5622
 
 [coveralls-image]: https://coveralls.io/repos/nickmerwin/node-coveralls/badge.svg?branch=master&service=github
 [coveralls-url]: https://coveralls.io/github/nickmerwin/node-coveralls?branch=master
