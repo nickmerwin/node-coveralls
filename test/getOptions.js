@@ -49,11 +49,9 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on codeship", function(done){
     testCodeship(getBaseOptions, done);
   });
-  /*
   it ("should set service_name and service_job_id if it's running on drone", function(done){
     testDrone(getBaseOptions, done);
   });
-  */
   it ("should set service_name and service_job_id if it's running on wercker", function(done){
     testWercker(getBaseOptions, done);
   });
@@ -133,11 +131,9 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running on codeship", function(done){
     testCodeship(getOptions, done);
   });
-  /*
   it ("should set service_name and service_job_id if it's running on drone", function(done){
     testDrone(getBaseOptions, done);
   });
-  */
   it ("should set service_name and service_job_id if it's running on wercker", function(done){
     testWercker(getOptions, done);
   });
@@ -285,9 +281,11 @@ var testServicePullRequest = function(sut, done){
 var testTravisCi = function(sut, done){
   process.env.TRAVIS = "TRUE";
   process.env.TRAVIS_JOB_ID = "1234";
+  process.env.TRAVIS_PULL_REQUEST = "123";
   sut(function(err, options){
     options.service_name.should.equal("travis-ci");
     options.service_job_id.should.equal("1234");
+    options.service_pull_request.should.equal("123");
     done();
   });
 };
@@ -365,6 +363,11 @@ var testDrone = function(sut, done) {
   process.env.DRONE_BUILD_NUMBER = '1234';
   process.env.DRONE_COMMIT = "e3e3e3e3e3e3e3e3e";
   process.env.DRONE_BRANCH = "master";
+  process.env.DRONE_PULL_REQUEST = '3';
+  process.env.DRONE_COMMIT_AUTHOR = 'john doe';
+  process.env.DRONE_COMMIT_AUTHOR_EMAIL = 'john@doe.com';
+  process.env.DRONE_COMMIT_MESSAGE = 'msgmsgmsg';
+
   sut(function(err, options){
     options.service_name.should.equal("drone");
     options.service_job_id.should.equal("1234");
@@ -372,9 +375,9 @@ var testDrone = function(sut, done) {
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
                                  author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
+                                 committer_name: 'john doe',
+                                 committer_email: 'john@doe.com',
+                                 message: 'msgmsgmsg' },
                               branch: 'master',
                               remotes: [] });
     done();
