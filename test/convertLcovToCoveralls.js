@@ -88,6 +88,35 @@ describe("convertLcovToCoveralls", function(){
     });
   });
 
+  it ("should handle branch coverage data", function(done){
+    process.env.TRAVIS_JOB_ID = -1;
+    var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
+    var input = fs.readFileSync(lcovpath, "utf8");
+    var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
+    var sourcepath = path.resolve(libpath, "svgo/config.js");
+
+    var originalReadFileSync = fs.readFileSync;
+    fs.readFileSync = function(filepath) {
+      if (filepath === sourcepath) {
+        return '';
+      }
+
+      return originalReadFileSync.apply(fs, arguments);
+    };
+
+    var originalExistsSync = fs.existsSync;
+    fs.existsSync = function () { return true; };
+
+    convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
+      fs.readFileSync = originalReadFileSync;
+      fs.existsSync = originalExistsSync;
+      
+      should.not.exist(err);
+      output.source_files[0].branches.slice(0,8).should.eql([18,1,0,85,18,1,1,2]);
+      done();
+    });
+  });
+
   it ("should ignore files that do not exists", function(done){
     delete process.env.TRAVIS;
     var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
