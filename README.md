@@ -1,4 +1,4 @@
-#node-coveralls
+# node-coveralls
 
 [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
 [![Known Vulnerabilities](https://snyk.io/test/github/nickmerwin/node-coveralls/badge.svg)](https://snyk.io/test/github/nickmerwin/node-coveralls)
@@ -7,7 +7,7 @@
 
 Supported CI services:  [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circleci](https://circleci.com/), [jenkins](http://jenkins-ci.org/), [Gitlab CI](http://gitlab.com/)
 
-##Installation:
+## Installation:
 Add the latest version of `coveralls` to your package.json:
 ```
 npm install coveralls --save-dev
@@ -18,7 +18,7 @@ If you're using mocha, add `mocha-lcov-reporter` to your package.json:
 npm install mocha-lcov-reporter --save-dev
 ```
 
-##Usage:
+## Usage:
 
 This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
 
