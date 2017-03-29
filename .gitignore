@@ -3,3 +3,6 @@ coverage/
 lib-cov/
 coverage.json
 npm-debug.log
+
+# Webstorm IDE
+.idea
