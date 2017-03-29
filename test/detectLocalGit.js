@@ -1,5 +1,5 @@
 var should = require('should');
-var fs = require('fs-extra');
+var fs = require('fs');
 var path = require('path');
 
 var detectLocalGit = require('../lib/detectLocalGit');
@@ -21,8 +21,6 @@ describe("detectLocalGit", function() {
     });
 
     it('should get commit hash from packed-refs when refs/heads/master does not exist', function() {
-
-        console.log('dir: ' + process.cwd());
         var results = detectLocalGit();
         should.exist(results);
         (results).should.deepEqual({
@@ -54,10 +52,26 @@ function _makeTempGitDir() {
 }
 
 function _cleanTempGitDir() {
+    _deleteFolderRecursive(TEMP_GIT_DIR);
+}
 
-    if (!TEMP_GIT_DIR.match('node-coveralls/test')) {
-        throw new Error('Tried to clean a temp git directory that did not match path: node-coveralls/test');
-    }
+function _deleteFolderRecursive(dir) {
 
-    fs.removeSync(TEMP_GIT_DIR);
+  if (!dir.match('node-coveralls/test')) {
+    throw new Error('Tried to clean a temp git directory that did not match path: node-coveralls/test');
+  }
+
+  if(fs.existsSync(dir)) {
+
+    fs.readdirSync(dir).forEach(function(file,index){
+      var curPath = path.join(dir, file);
+      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+        _deleteFolderRecursive(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+
+    fs.rmdirSync(dir);
+  }
 }
