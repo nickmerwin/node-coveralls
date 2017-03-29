@@ -20,7 +20,7 @@ describe("detectLocalGit", function() {
         process.chdir(ORIGINAL_CWD);
     });
 
-    it('should ...', function() {
+    it('should get commit hash from packed-refs when refs/heads/master does not exist', function() {
 
         console.log('dir: ' + process.cwd());
         var results = detectLocalGit();
@@ -41,23 +41,22 @@ function _makeTempGitDir() {
 
     fs.mkdirSync(dir);
 
-    const HEAD = path.join(dir, 'HEAD');
-    const packedRefs = path.join(dir, 'packed-refs');
+    var HEAD = path.join(dir, 'HEAD');
+    var packedRefs = path.join(dir, 'packed-refs');
 
     fs.writeFileSync(HEAD, 'ref: refs/heads/master');
-    fs.writeFileSync(packedRefs, "\
-# pack-refs with: peeled fully-peeled\
-0000000000000000000000000000000000000000 refs/heads/other/ref\n\
-0000000000000000ffffffffffffffffffffffff refs/heads/master\n\
-ffffffffffffffffffffffffffffffffffffffff refs/remotes/origin/other\n\
-");
+    fs.writeFileSync(packedRefs, "" +
+"# pack-refs with: peeled fully-peeled\n" +
+"0000000000000000000000000000000000000000 refs/heads/other/ref\n" +
+"0000000000000000ffffffffffffffffffffffff refs/heads/master\n" +
+"ffffffffffffffffffffffffffffffffffffffff refs/remotes/origin/other\n");
 
 }
 
 function _cleanTempGitDir() {
 
     if (!TEMP_GIT_DIR.match('node-coveralls/test')) {
-        throw new Error('Tried to clean a temp git directory that did not match path: node-coveralls/test')
+        throw new Error('Tried to clean a temp git directory that did not match path: node-coveralls/test');
     }
 
     fs.removeSync(TEMP_GIT_DIR);
