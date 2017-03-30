@@ -1,22 +1,18 @@
 #!/usr/bin/env node
-var handleInput = require('../lib/handleInput');
-var logger = require('../lib/logger');
 
+var spawn = require('child_process').spawn;
+var join = require('path').join;
 
-process.stdin.resume();
-process.stdin.setEncoding('utf8');
+process.stdin.pause();
 
-var input = '';
-
-process.stdin.on('data', function(chunk) {
-    input += chunk;
+spawn(join(__dirname, '../lib/consumer.js'), {
+  maxBuffer: Infinity,
+  stdio: 'inherit',
+}, (err, stdout, stderr) => {
+  if(err) {
+    console.error(err);
+  } else {
+    console.log(stdout);
+    console.log(stderr);
+  }
 });
-
-process.stdin.on('end', function() {
-    handleInput(input, function(err) {
-      if (err) {
-        throw err;
-      }
-    });
-});
-
