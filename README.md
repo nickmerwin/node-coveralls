@@ -110,6 +110,23 @@ Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomj
 lab -r lcov | ./node_modules/.bin/coveralls
 ```
 
+### [AVA](https://github.com/sindresorhus/ava)
+```sh
+npm i -D nyc coveralls
+```
+
+package.json:
+```javascript
+"scripts": {
+  “test”: “nyc --reporter=lcov --reporter=text ava test/*.js”
+}
+```
+
+travis.yml:
+```yml
+after_script:
+  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls'
+```
 ### [nyc](https://github.com/bcoe/nyc)
 
 works with almost any testing framework. Simply execute
