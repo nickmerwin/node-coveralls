@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "istanbul": "0.4.5",
-    "jshint": "2.9.3",
+    "jshint": "2.9.4",
     "mocha": "3.2.0",
     "mocha-lcov-reporter": "1.2.0",
     "should": "9.0.2",
