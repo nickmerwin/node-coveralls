@@ -97,7 +97,7 @@ For detailed instructions on requiring instrumented code, running on Travis and 
 
 ### [Poncho](https://github.com/deepsweet/poncho)
 Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomjs), [Mocha](http://mochajs.org/) and [Blanket](https://github.com/alex-seville/blanket):
-- [Configure](http://visionmedia.github.io/mocha/#browser-support) Mocha for browser
+- [Configure](http://mochajs.org/#running-mocha-in-the-browser) Mocha for browser
 - [Mark](https://github.com/deepsweet/poncho#usage) target script(s) with `data-cover` html-attribute
 - Run your tests with a command like this:
 
