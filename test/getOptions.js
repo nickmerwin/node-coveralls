@@ -257,8 +257,7 @@ var testRepoTokenDetection = function(sut, done) {
       options.service_name.should.equal(service_name);
     }
     if (synthetic)
-      fs.unlink(file);
-    done();
+      fs.unlink(file, done);
   });
 };
 
