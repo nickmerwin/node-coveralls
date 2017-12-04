@@ -457,15 +457,18 @@ var testBuildkite = function(sut, done) {
   process.env.BUILDKITE_BUILD_NUMBER = "1234";
   process.env.BUILDKITE_COMMIT = "e3e3e3e3e3e3e3e3e";
   process.env.BUILDKITE_BRANCH = "feature";
+  process.env.BUILDKITE_BUILD_CREATOR = 'john doe';
+  process.env.BUILDKITE_BUILD_CREATOR_EMAIL = 'john@doe.com';
+  process.env.BUILDKITE_MESSAGE = 'msgmsgmsg';
   sut(function(err, options){
     options.service_name.should.equal("buildkite");
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
                                  author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
+                                 committer_name: 'john doe',
+                                 committer_email: 'john@doe.com',
+                                 message: 'msgmsgmsg' },
                               branch: 'feature',
                               remotes: [] });
     done();
