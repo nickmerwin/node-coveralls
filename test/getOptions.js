@@ -55,6 +55,9 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on wercker", function(done){
     testWercker(getBaseOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on Buildkite", function(done){
+    testBuildkite(getBaseOptions, done);
+  });
 });
 
 describe("getOptions", function(){
@@ -142,6 +145,9 @@ describe("getOptions", function(){
   });
   it ("should set service_name and service_job_id if it's running via Surf", function(done){
     testSurf(getOptions, done);
+  });
+  it ("should set service_name and service_job_id if it's running via Buildkite", function(done){
+    testBuildkite(getOptions, done);
   });
   it ("should override set options with user options", function(done){
     var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
@@ -433,6 +439,26 @@ var testSurf = function(sut, done) {
   process.env.SURF_REF = "feature";
   sut(function(err, options){
     options.service_name.should.equal("surf");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'feature',
+                              remotes: [] });
+    done();
+  });
+};
+
+var testBuildkite = function(sut, done) {
+  process.env.BUILDKITE = true;
+  process.env.BUILDKITE_BUILD_NUMBER = "1234";
+  process.env.BUILDKITE_COMMIT = "e3e3e3e3e3e3e3e3e";
+  process.env.BUILDKITE_BRANCH = "feature";
+  sut(function(err, options){
+    options.service_name.should.equal("buildkite");
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
