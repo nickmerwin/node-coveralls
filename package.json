@@ -34,7 +34,7 @@
     "lcov-parse": "^0.0.10",
     "log-driver": "^1.2.5",
     "minimist": "^1.2.0",
-    "request": "^2.79.0"
+    "request": "^2.85.0"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
