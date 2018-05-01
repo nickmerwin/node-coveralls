@@ -36,8 +36,8 @@ build system's date/time if you don't set it.)
 ### [Jest](https://facebook.github.io/jest/)
 - Install [jest](https://facebook.github.io/jest/docs/en/getting-started.html)
 - Use the following to run tests and push files to coveralls: 
-```
-jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+```sh
+jest --coverage --coverageReporters=text-lcov | coveralls
 ```
 Check out an example [here](https://github.com/Ethan-Arrowood/harperdb-connect/blob/master/.travis.yml) which makes use of Travis-CI build stages
 
