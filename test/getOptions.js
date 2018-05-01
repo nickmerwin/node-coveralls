@@ -149,6 +149,9 @@ describe("getOptions", function(){
   it ("should set service_name and service_job_id if it's running via Buildkite", function(done){
     testBuildkite(getOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running via Semaphore", function(done){
+    testSemaphore(getOptions, done);
+  });
   it ("should override set options with user options", function(done){
     var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
     process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
@@ -244,7 +247,7 @@ var testRepoTokenDetection = function(sut, done) {
   var path = require('path');
 
   var file = path.join(process.cwd(), '.coveralls.yml'), token, service_name, synthetic = false;
-  if (fs.exists(file)) {
+  if (fs.existsSync(file)) {
     var yaml = require('js-yaml');
     var coveralls_yml_doc = yaml.safeLoad(fs.readFileSync(yml, 'utf8'));
     token = coveralls_yml_doc.repo_token;
@@ -263,8 +266,7 @@ var testRepoTokenDetection = function(sut, done) {
       options.service_name.should.equal(service_name);
     }
     if (synthetic)
-      fs.unlink(file);
-    done();
+      fs.unlink(file, done);
   });
 };
 
@@ -470,6 +472,29 @@ var testBuildkite = function(sut, done) {
                                  committer_email: 'john@doe.com',
                                  message: 'msgmsgmsg' },
                               branch: 'feature',
+                              remotes: [] });
+    done();
+  });
+};
+
+    
+var testSemaphore = function(sut, done) {
+  process.env.SEMAPHORE = true;
+  process.env.SEMAPHORE_BUILD_NUMBER = '1234';
+  process.env.REVISION = "e3e3e3e3e3e3e3e3e";
+  process.env.BRANCH_NAME = "master";
+
+  sut(function(err, options){
+    options.service_name.should.equal("semaphore");
+    options.service_job_id.should.equal("1234");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'master',
                               remotes: [] });
     done();
   });
