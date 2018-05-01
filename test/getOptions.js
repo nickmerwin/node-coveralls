@@ -55,6 +55,9 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on wercker", function(done){
     testWercker(getBaseOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on Buildkite", function(done){
+    testBuildkite(getBaseOptions, done);
+  });
 });
 
 describe("getOptions", function(){
@@ -142,6 +145,9 @@ describe("getOptions", function(){
   });
   it ("should set service_name and service_job_id if it's running via Surf", function(done){
     testSurf(getOptions, done);
+  });
+  it ("should set service_name and service_job_id if it's running via Buildkite", function(done){
+    testBuildkite(getOptions, done);
   });
   it ("should set service_name and service_job_id if it's running via Semaphore", function(done){
     testSemaphore(getOptions, done);
@@ -448,6 +454,30 @@ var testSurf = function(sut, done) {
   });
 };
 
+var testBuildkite = function(sut, done) {
+  process.env.BUILDKITE = true;
+  process.env.BUILDKITE_BUILD_NUMBER = "1234";
+  process.env.BUILDKITE_COMMIT = "e3e3e3e3e3e3e3e3e";
+  process.env.BUILDKITE_BRANCH = "feature";
+  process.env.BUILDKITE_BUILD_CREATOR = 'john doe';
+  process.env.BUILDKITE_BUILD_CREATOR_EMAIL = 'john@doe.com';
+  process.env.BUILDKITE_MESSAGE = 'msgmsgmsg';
+  sut(function(err, options){
+    options.service_name.should.equal("buildkite");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'john doe',
+                                 committer_email: 'john@doe.com',
+                                 message: 'msgmsgmsg' },
+                              branch: 'feature',
+                              remotes: [] });
+    done();
+  });
+};
+
+    
 var testSemaphore = function(sut, done) {
   process.env.SEMAPHORE = true;
   process.env.SEMAPHORE_BUILD_NUMBER = '1234';
