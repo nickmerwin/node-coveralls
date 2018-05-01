@@ -241,7 +241,7 @@ var testRepoTokenDetection = function(sut, done) {
   var path = require('path');
 
   var file = path.join(process.cwd(), '.coveralls.yml'), token, service_name, synthetic = false;
-  if (fs.exists(file)) {
+  if (fs.existsSync(file)) {
     var yaml = require('js-yaml');
     var coveralls_yml_doc = yaml.safeLoad(fs.readFileSync(yml, 'utf8'));
     token = coveralls_yml_doc.repo_token;
