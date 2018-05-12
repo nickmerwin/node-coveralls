@@ -13,7 +13,7 @@ Add the latest version of `coveralls` to your package.json:
 npm install coveralls --save-dev
 ```
 
-If you're using mocha, add `mocha-lcov-reporter` to your package.json:
+If you're using mocha with a coverage tool other than `istanbul/nyc`, add `mocha-lcov-reporter` to your package.json:
 ```
 npm install mocha-lcov-reporter --save-dev
 ```
@@ -61,19 +61,47 @@ YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | .
 ```
 Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json's 'scripts' property).
 
-### [Istanbul](https://github.com/gotwarlost/istanbul)
+### [Istanbul](https://istanbul.js.org)
+
+The latest command line tool of Istanbul, `nyc`, simplifies the integration with coveralls. It can produce lcov
+output by itself. `mocha-lcov-reporter` is not needed when using `nyc`
+
+The following instructions are based on the user contributed documentation on Istanbul:
+[Using Istanbul With Mocha](https://istanbul.js.org/docs/tutorials/mocha)
+
+- Install [Istanbul](https://istanbul.js.org)
+- Add the following to your `.travis.yml`
+
+```yaml
+after_success: npm run coverage
+```
+
+- Then update the `scripts` section of your `package.json` to be similar to the following:
 
 **With Mocha:**
 
-```sh
-istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+```json
+{
+  "script": {
+     "test": "nyc --reporter=html --reporter=text mocha",
+     "coverage": "nyc report --reporter=text-lcov | coveralls"
+  }
+}
 ```
 
 **With Jasmine:**
 
-```sh
-istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+_(Not tested)_
+
+```json
+{
+  "script": {
+     "test": "nyc --reporter=html --reporter=text jasmine",
+     "coverage": "nyc report --reporter=text-lcov | coveralls"
+  }
+}
 ```
+
 
 ### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
