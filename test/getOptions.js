@@ -242,6 +242,14 @@ var testParallel = function(sut, done){
   });
 };
 
+var testFlagName = function(sut, done){
+  process.env.COVERALLS_FLAG_NAME = 'test flag';
+
+  sut(function(err, options){
+    options.flag_name.should.equal('test flag');
+  });
+};
+
 var testRepoTokenDetection = function(sut, done) {
   var fs = require('fs');
   var path = require('path');
