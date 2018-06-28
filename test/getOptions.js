@@ -116,6 +116,9 @@ describe("getOptions", function(){
   it ("should set paralell if env var set", function(done){
     testParallel(getOptions, done);
   });
+  it ("should set flag_name if it exists", function(done) {
+    testFlagName(getOptions, done);
+  });
   it ("should set service_name if it exists", function(done){
     testServiceName(getOptions, done);
   });
@@ -247,6 +250,7 @@ var testFlagName = function(sut, done){
 
   sut(function(err, options){
     options.flag_name.should.equal('test flag');
+    done();
   });
 };
 
