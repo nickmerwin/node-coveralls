@@ -41,6 +41,23 @@ jest --coverage --coverageReporters=text-lcov | coveralls
 ```
 Check out an example [here](https://github.com/Ethan-Arrowood/harperdb-connect/blob/master/.travis.yml) which makes use of Travis-CI build stages
 
+### [Create React App](https://github.com/facebook/create-react-app)
+This uses Jest by default for tests (so it comes pre-installed), but the commands are a bit different in this environment:
+- `npm test -- --coverage --coverageReporters=text-lcov > lcov.info` this produces the file to send to coveralls.js
+- `node ./node_modules/coveralls/bin/coveralls.js < lcov.info` this actually pushes the results to Coveralls
+
+It needs to be done this way because the first command is a streaming operation, and coveralls.js does not appear to be designed to be used in this way. You must push all the results at once to Coveralls after they're generated in order for it to work
+
+#### Note regarding AppVeyor
+Don't forget to have your environment variables setup in your appveyor.yml file like this:
+```yaml
+environment:
+  COVERALLS_SERVICE_NAME: appveyor
+  COVERALLS_REPO_TOKEN:
+    secure: WhateverWasGeneratedWhenUsingTheEncryptDataToolInAppVeyor
+```
+Remember that the repo token above comes from your Coveralls.io account under the repo you've configured to be monitored there. Also, the above two commands should be run in your `test_script` or `after_test` sections of your appveyor.yml file
+
 ### [Mocha](http://mochajs.org/) + [Blanket.js](https://github.com/alex-seville/blanket)
 - Install [blanket.js](http://blanketjs.org/)
 - Configure blanket according to [docs](https://github.com/alex-seville/blanket/blob/master/docs/getting_started_node.md).
