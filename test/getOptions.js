@@ -37,8 +37,13 @@ describe("getBaseOptions", function(){
   it ("should set service_name if it exists", function(done){
     testServiceName(getBaseOptions, done);
   });
-  it ("should set service_name and service_job_id if it's running on travis-ci", function(done){
-    testTravisCi(getBaseOptions, done);
+  describe("TravisCI", function(){
+    it ("should set service_name and service_job_id", function(done){
+      testTravisCi(getBaseOptions, done);
+    });
+    it ("should set service_number if it's running in parallel", function(done){
+      testTravisCiParallel(getBaseOptions, done);
+    });  
   });
   it ("should set service_name and service_job_id if it's running on jenkins", function(done){
     testJenkins(getBaseOptions, done);
@@ -115,6 +120,9 @@ describe("getOptions", function(){
   });
   it ("should set paralell if env var set", function(done){
     testParallel(getOptions, done);
+  });
+  it ("should default service_number to git commit SHA when parllel is set", function(done){
+    testServiceNumDefault(getOptions, done);
   });
   it ("should set flag_name if it exists", function(done) {
     testFlagName(getOptions, done);
@@ -245,6 +253,19 @@ var testParallel = function(sut, done){
   });
 };
 
+var testServiceNumDefault = function(sut, done){
+  process.env.COVERALLS_PARALLEL = true;
+  process.env.COVERALLS_GIT_COMMIT = "a12s2d3df4f435g45g45g67h5g6";
+  sut(function(err, options) {
+    options.service_number.should.equal("a12s2d3df4f435g45g45g67h5g6");
+  });
+  process.env.COVERALLS_SERVICE_NUMBER = "coveralls-service-number";
+  sut(function(err, options) {
+    options.service_number.should.equal("coveralls-service-number");
+    done();
+  });
+};
+
 var testFlagName = function(sut, done){
   process.env.COVERALLS_FLAG_NAME = 'test flag';
 
@@ -310,6 +331,18 @@ var testTravisCi = function(sut, done){
   });
 };
 
+var testTravisCiParallel = function(sut, done){
+  process.env.COVERALLS_PARALLEL = true;
+  process.env.TRAVIS = "TRUE";
+  process.env.TRAVIS_JOB_ID = "1234";
+  process.env.TRAVIS_PULL_REQUEST = "123";
+  process.env.TRAVIS_BUILD_ID = "travis-build-id";
+  sut(function(err, options){
+    options.service_number.should.equal("travis-build-id");
+    done();
+  });
+};
+
 var testJenkins = function(sut, done){
   process.env.JENKINS_URL = "something";
   process.env.BUILD_ID = "1234";
@@ -336,9 +369,11 @@ var testCircleCi = function(sut, done){
   process.env.CIRCLE_BRANCH = "master";
   process.env.CIRCLE_BUILD_NUM = "1234";
   process.env.CIRCLE_SHA1 = "e3e3e3e3e3e3e3e3e";
+  process.env.CIRCLE_WORKFLOW_ID = "1D314B9B-1FCD-4AE0-A80E-1E672378ED1F";
   process.env.CI_PULL_REQUEST = 'http://github.com/node-coveralls/pull/3';
   sut(function(err, options){
     options.service_name.should.equal("circleci");
+    options.service_number.should.equal("1D314B9B-1FCD-4AE0-A80E-1E672378ED1F");
     options.service_job_id.should.equal("1234");
     options.service_pull_request.should.equal('3');
     options.git.should.eql({ head:
