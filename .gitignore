@@ -6,3 +6,6 @@ npm-debug.log
 
 # Webstorm IDE
 .idea
+
+# Visual Studio Code
+.vscode
