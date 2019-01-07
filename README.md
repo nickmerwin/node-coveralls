@@ -8,6 +8,8 @@
 Supported CI services: [travis-ci](https://travis-ci.org/), [codeship](https://www.codeship.io/), [circleci](https://circleci.com/), [jenkins](http://jenkins-ci.org/), [Gitlab CI](http://gitlab.com/), [AppVeyor](http://appveyor.com/), [Buildkite](https://buildkite.com/)
 
 ## Installation:
+(this can be used directly via npx, without needing to install: `npx coveralls`)
+
 Add the latest version of `coveralls` to your package.json:
 ```
 npm install coveralls --save-dev
@@ -20,19 +22,28 @@ npm install mocha-lcov-reporter --save-dev
 
 ## Usage:
 
-This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
+This script can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
 
-Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
+Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `npx coveralls`.  In order to communicate coverage results on your behalf, node-coveralls needs to know the secret coveralls repo token for your Coveralls.io repo.  You will, therefore, need to set COVERALLS_REPO_TOKEN in the environment: 
+```sh
+COVERALLS_REPO_TOKEN=****** npx coveralls
+```
 
-This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you're using a different build system, there are a few environment variables that are necessary:
-* COVERALLS_SERVICE_NAME  (the name of your build system)
-* COVERALLS_REPO_TOKEN (the secret repo token from coveralls.io)
+### Optional Settings
+There are optional environment variables for controlling information sent to Coveralls.  Many of these are set automatically, but can be overridden:
+* COVERALLS_PARALLEL: indicates that multiple coverage reports will be submitted to Coveralls (more info here: https://github.com/nickmerwin/node-coveralls/issues/134)
+* COVERALLS_SERVICE_NAME:  the name of your build system
+* COVERALLS_SERVICE_NUMBER: (used in conjunction with COVERALLS_PARALLEL) a unique ID used to combine coverage from several jobs into a single coverage report
+* COVERALLS_SERVICE_JOB_ID: (an id that uniquely identifies the build job)
+* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your build system's date/time if you don't set it.)
 
-There are optional environment variables for other build systems as well:
-* COVERALLS_SERVICE_JOB_ID  (an id that uniquely identifies the build job)
-* COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your
-build system's date/time if you don't set it.)
-* COVERALLS_PARALLEL (more info here: https://coveralls.zendesk.com/hc/en-us/articles/203484329)
+### Testing in Parallel
+If running parallel testing suites or builds that generate separate coverage reports for a single version of your codebase, `node-coveralls` needs to indicate to Coveralls that you are submitting multiple coverage reports for the same version of the code.  In order to do that, you must set `COVERALLS_PARALLEL=true` in the environment for `node-coveralls`.  It may also be nececssary for you to set `COVERALLS_SERVICE_NUMBER` if you aren't using `git` or are using multiple different CI services to test a single codebase in parallel.  COVERALLS_SERVICE_NUMBER is used by Coveralls to tie together multiple reports into a global view of test coverage on a particular code branch/revision.
+
+Once all coverage reports have been submitted to Coveralls, it is necessary to signal Coveralls using the [Parallel Builds webhook](https://docs.coveralls.io/parallel-build-webhook).
+
+## Generating Coverage Information
+
 ### [Jest](https://facebook.github.io/jest/)
 - Install [jest](https://facebook.github.io/jest/docs/en/getting-started.html)
 - Use the following to run tests and push files to coveralls: 
