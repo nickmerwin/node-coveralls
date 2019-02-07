@@ -122,6 +122,9 @@ describe("getOptions", function(){
   it ("should set service_name if it exists", function(done){
     testServiceName(getOptions, done);
   });
+  it ("should set service_number if it exists", function(done) {
+    testServiceNumber(getOptions, done);
+  });
   it("should set service_pull_request if it exists", function(done){
     testServicePullRequest(getOptions, done);
   });
@@ -286,6 +289,14 @@ var testServiceName = function(sut, done){
   process.env.COVERALLS_SERVICE_NAME = "SERVICE_NAME";
   sut(function(err, options){
     options.service_name.should.equal("SERVICE_NAME");
+    done();
+  });
+};
+
+var testServiceNumber = function(sut, done){
+  process.env.COVERALLS_SERVICE_NUMBER = "SERVICE_NUMBER";
+  sut(function(err, options){
+    options.service_number.should.equal("SERVICE_NUMBER");
     done();
   });
 };
