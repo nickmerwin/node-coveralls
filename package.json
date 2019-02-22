@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "3.0.2",
+  "version": "3.0.3",
   "bugs": {
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
@@ -35,16 +35,16 @@
     "lcov-parse": "^0.0.10",
     "log-driver": "^1.2.7",
     "minimist": "^1.2.0",
-    "request": "^2.85.0"
+    "request": "^2.86.0"
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
-    "jshint": "2.9.3",
-    "mocha": "^3.2.0",
+    "jshint": "^2.10.1",
+    "mocha": "^6.0.1",
     "mocha-lcov-reporter": "^1.2.0",
     "should": "^9.0.2",
     "sinon-restore": "^1.0.1",
-    "snyk": "^1.78.0"
+    "snyk": "^1.134.2"
   },
   "engines": {
     "node": ">=4.0.0"
