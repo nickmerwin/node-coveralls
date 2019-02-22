@@ -3,7 +3,5 @@ node_js:
   - "node"
   - "8"
   - "6"
-  - "5"
-  - "4"
 script: make test-coveralls
 sudo: false
