@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "growl": "~> 1.10.0",
-    "js-yaml": "^3.11.0",
+    "js-yaml": "^3.13.1",
     "lcov-parse": "^0.0.10",
     "log-driver": "^1.2.7",
     "minimist": "^1.2.0",
