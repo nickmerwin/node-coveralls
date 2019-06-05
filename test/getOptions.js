@@ -58,6 +58,9 @@ describe("getBaseOptions", function(){
   it ("should set service_name and service_job_id if it's running on Buildkite", function(done){
     testBuildkite(getBaseOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on Azure Pipelines", function(done){
+    testAzurePipelines(getBaseOptions, done);
+  });
 });
 
 describe("getOptions", function(){
@@ -154,6 +157,9 @@ describe("getOptions", function(){
   });
   it ("should set service_name and service_job_id if it's running via Semaphore", function(done){
     testSemaphore(getOptions, done);
+  });
+  it ("should set service_name and service_job_id if it's running via Azure Pipelines", function(done){
+    testAzurePipelines(getOptions, done);
   });
   it ("should override set options with user options", function(done){
     var userOptions = {service_name: 'OVERRIDDEN_SERVICE_NAME'};
@@ -508,6 +514,32 @@ var testSemaphore = function(sut, done) {
                                  message: 'Unknown Commit Message' },
                               branch: 'master',
                               remotes: [] });
+    done();
+  });
+};
+
+var testAzurePipelines = function(sut, done){
+  process.env.TF_BUILD = "true";
+  process.env.BUILD_SOURCEBRANCHNAME = "hotfix";
+  process.env.BUILD_SOURCEVERSION = "e3e3e3e3e3e3e3e3e";
+  process.env.BUILD_BUILDID = "1234";
+  process.env.SYSTEM_PULLREQUEST_PULLREQUESTNUMBER = "123";
+
+  sut(function(err, options){
+    options.service_name.should.equal("Azure Pipelines");
+    options.service_job_id.should.equal("1234");
+    options.service_pull_request.should.equal("123");
+
+    options.git.should.eql({ head:
+      { id: 'e3e3e3e3e3e3e3e3e',
+        author_name: 'Unknown Author',
+        author_email: '',
+        committer_name: 'Unknown Committer',
+        committer_email: '',
+        message: 'Unknown Commit Message' },
+     branch: 'hotfix',
+     remotes: [] });
+
     done();
   });
 };
