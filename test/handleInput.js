@@ -10,7 +10,7 @@ describe("handleInput", function(){
       });
   it ("returns an error when there's an error getting options", function(done){
     sinon.stub(index, 'getOptions', function(cb){
-      return cb("some error", {}); 
+      return cb("some error", {});
     });
     var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
@@ -21,7 +21,7 @@ describe("handleInput", function(){
   });
   it ("returns an error when there's an error converting", function(done){
     sinon.stub(index, 'getOptions', function(cb){
-      return cb(null, {}); 
+      return cb(null, {});
     });
     sinon.stub(index, 'convertLcovToCoveralls', function(input, options, cb){
       cb("some error");
@@ -35,7 +35,7 @@ describe("handleInput", function(){
   });
   it ("returns an error when there's an error sending", function(done){
     sinon.stub(index, 'getOptions', function(cb){
-      return cb(null, {}); 
+      return cb(null, {});
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb("some error");
@@ -49,7 +49,7 @@ describe("handleInput", function(){
   });
   it ("returns an error when there's a bad status code", function(done){
     sinon.stub(index, 'getOptions', function(cb){
-      return cb(null, {}); 
+      return cb(null, {});
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb(null, {statusCode : 500}, "body");
@@ -63,15 +63,16 @@ describe("handleInput", function(){
   });
   it ("completes successfully when there are no errors", function(done){
     sinon.stub(index, 'getOptions', function(cb){
-      return cb(null, {}); 
+      return cb(null, {});
     });
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb(null, {statusCode : 200}, "body");
     });
     var path = __dirname + "/../fixtures/onefile.lcov";
     var input = fs.readFileSync(path, "utf8");
-    index.handleInput(input, function(err){
+    index.handleInput(input, function(err, body){
       (err === null).should.equal(true);
+      body.should.equal('body');
       done();
     });
   });
