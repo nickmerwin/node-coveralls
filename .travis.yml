@@ -3,5 +3,5 @@ node_js:
   - "node"
   - "8"
   - "6"
-script: make test-coveralls
+script: npm run test-coveralls
 sudo: false

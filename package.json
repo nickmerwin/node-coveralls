@@ -10,7 +10,13 @@
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
   "scripts": {
-    "test": "snyk test && make test"
+    "lint": "jshint ./lib ./test ./index.js",
+    "mocha": "_mocha -b -R spec",
+    "test-cov": "istanbul cover npm run mocha",
+    "pretest-coveralls": "npm run pretest",
+    "test-coveralls": "istanbul cover npm run mocha -- --report lcovonly && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
+    "pretest": "cross-env-shell \"echo TRAVIS_JOB_ID $TRAVIS_JOB_ID\"",
+    "test": "snyk test && npm run lint && npm run mocha"
   },
   "bin": {
     "coveralls": "./bin/coveralls.js"
@@ -38,11 +44,13 @@
     "request": "^2.86.0"
   },
   "devDependencies": {
+    "cross-env": "^5.2.1",
     "istanbul": "^0.4.5",
     "jshint": "^2.10.1",
     "mocha": "^6.1.4",
     "mocha-lcov-reporter": "^1.2.0",
     "should": "^9.0.2",
+    "shx": "^0.3.2",
     "sinon-restore": "^1.0.1",
     "snyk": "^1.134.2"
   },
