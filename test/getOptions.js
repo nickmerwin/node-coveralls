@@ -437,9 +437,11 @@ var testGitlab = function(sut, done) {
   process.env.CI_BUILD_ID = "1234";
   process.env.CI_BUILD_REF = "e3e3e3e3e3e3e3e3e";
   process.env.CI_BUILD_REF_NAME = "feature";
+  process.env.CI_MERGE_REQUEST_IID = "1";
   sut(function(err, options){
     options.service_name.should.equal("gitlab-ci");
     options.service_job_id.should.equal("1234");
+    options.service_pull_request.should.equal("1");
     options.git.should.eql({ head:
                                { id: 'e3e3e3e3e3e3e3e3e',
                                  author_name: 'Unknown Author',
@@ -495,7 +497,7 @@ var testBuildkite = function(sut, done) {
   });
 };
 
-    
+
 var testSemaphore = function(sut, done) {
   process.env.SEMAPHORE = true;
   process.env.SEMAPHORE_BUILD_NUMBER = '1234';

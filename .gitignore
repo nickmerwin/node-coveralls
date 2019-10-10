@@ -6,3 +6,4 @@ npm-debug.log
 
 # Webstorm IDE
 .idea
+.DS_Store
