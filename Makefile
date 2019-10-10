@@ -5,7 +5,7 @@ test:
 	@NODE_ENV=test ./node_modules/.bin/mocha -b --reporter $(REPORTER)
 
 lint:
-	./node_modules/.bin/jshint ./lib ./test ./index.js
+	./node_modules/.bin/jshint ./bin ./lib ./test ./index.js
 
 test-cov:
 	$(MAKE) lint
