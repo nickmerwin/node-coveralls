@@ -1,3 +1,4 @@
+var sysPath = require('path');
 var should = require('should');
 var sinon = require('sinon-restore');
 var index = require('../index');
@@ -12,7 +13,7 @@ describe("handleInput", function(){
     sinon.stub(index, 'getOptions', function(cb){
       return cb("some error", {});
     });
-    var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = sysPath.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(path, "utf8");
     index.handleInput(input, function(err){
       err.should.equal("some error");
@@ -26,7 +27,7 @@ describe("handleInput", function(){
     sinon.stub(index, 'convertLcovToCoveralls', function(input, options, cb){
       cb("some error");
     });
-    var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = sysPath.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(path, "utf8");
     index.handleInput(input, function(err){
       err.should.equal("some error");
@@ -40,7 +41,7 @@ describe("handleInput", function(){
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb("some error");
     });
-    var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = sysPath.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(path, "utf8");
     index.handleInput(input, function(err){
       err.should.equal("some error");
@@ -54,7 +55,7 @@ describe("handleInput", function(){
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb(null, {statusCode : 500}, "body");
     });
-    var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = sysPath.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(path, "utf8");
     index.handleInput(input, function(err){
       err.should.equal("Bad response: 500 body");
@@ -68,7 +69,7 @@ describe("handleInput", function(){
     sinon.stub(index, 'sendToCoveralls', function(postData, cb){
       cb(null, {statusCode : 200}, "body");
     });
-    var path = __dirname + "/../fixtures/onefile.lcov";
+    var path = sysPath.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(path, "utf8");
     index.handleInput(input, function(err, body){
       (err === null).should.equal(true);
