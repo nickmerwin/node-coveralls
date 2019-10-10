@@ -1,16 +1,20 @@
-var should = require('should');
-var request = require('request');
-var sinon = require('sinon-restore');
-var index = require('../index');
-logger = require('log-driver')({level : false});
+'use strict';
 
-describe("sendToCoveralls", function(){
-  var realCoverallsHost;
-  beforeEach(function() {
+const should = require('should');
+const request = require('request');
+const sinon = require('sinon-restore');
+const logDriver = require('log-driver');
+const index = require('..');
+
+logDriver({ level: false });
+
+describe('sendToCoveralls', () => {
+  let realCoverallsHost;
+  beforeEach(() => {
     realCoverallsHost = process.env.COVERALLS_ENDPOINT;
   });
 
-  afterEach(function() {
+  afterEach(() => {
     sinon.restoreAll();
     if (realCoverallsHost !== undefined) {
       process.env.COVERALLS_ENDPOINT = realCoverallsHost;
@@ -19,16 +23,16 @@ describe("sendToCoveralls", function(){
     }
   });
 
-  it ("passes on the correct params to request.post", function(done){
-    sinon.stub(request, 'post', function(obj, cb){
+  it('passes on the correct params to request.post', done => {
+    sinon.stub(request, 'post', (obj, cb) => {
       obj.url.should.equal('https://coveralls.io/api/v1/jobs');
-      obj.form.should.eql({json : '{"some":"obj"}'});
+      obj.form.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
     });
 
-    var obj = {"some":"obj"};
-    
-    index.sendToCoveralls(obj, function(err, response, body){
+    const obj = { 'some': 'obj' };
+
+    index.sendToCoveralls(obj, (err, response, body) => {
       err.should.equal('err');
       response.should.equal('response');
       body.should.equal('body');
@@ -36,39 +40,40 @@ describe("sendToCoveralls", function(){
     });
   });
 
-  it ("allows sending to enterprise url", function(done){
+  it('allows sending to enterprise url', done => {
     process.env.COVERALLS_ENDPOINT = 'https://coveralls-ubuntu.domain.com';
-    sinon.stub(request, 'post', function(obj, cb){
+    sinon.stub(request, 'post', (obj, cb) => {
       obj.url.should.equal('https://coveralls-ubuntu.domain.com/api/v1/jobs');
-      obj.form.should.eql({json : '{"some":"obj"}'});
+      obj.form.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
     });
 
-    var obj = {"some":"obj"};
-    index.sendToCoveralls(obj, function(err, response, body){
+    const obj = { 'some': 'obj' };
+    index.sendToCoveralls(obj, (err, response, body) => {
       err.should.equal('err');
       response.should.equal('response');
       body.should.equal('body');
       done();
     });
   });
-  it ("writes output to stdout when --stdout is passed", function(done) {
-    var obj = {"some":"obj"};
-    
+  it('writes output to stdout when --stdout is passed', done => {
+    const obj = { 'some': 'obj' };
+
     // set up mock process.stdout.write temporarily
-    var origStdoutWrite = process.stdout.write;
+    const origStdoutWrite = process.stdout.write;
     process.stdout.write = function(string) {
-      if (string == JSON.stringify(obj)) {
+      if (string === JSON.stringify(obj)) {
         process.stdout.write = origStdoutWrite;
         return done();
       }
-      
+
       origStdoutWrite.apply(this, arguments);
     };
-    
+
     index.options.stdout = true;
-    
-    index.sendToCoveralls(obj, function(err, response, body) {
+
+    index.sendToCoveralls(obj, (err, response) => {
+      should.not.exist(err);
       response.statusCode.should.equal(200);
     });
   });
