@@ -12,9 +12,9 @@
   "scripts": {
     "lint": "jshint ./lib ./test ./index.js",
     "mocha": "_mocha -b -R spec",
-    "test-cov": "istanbul cover npm run mocha",
+    "test-cov": "nyc npm run mocha",
     "pretest-coveralls": "npm run pretest",
-    "test-coveralls": "istanbul cover npm run mocha -- --report lcovonly && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
+    "test-coveralls": "nyc npm run mocha && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
     "pretest": "cross-env-shell \"echo TRAVIS_JOB_ID $TRAVIS_JOB_ID\"",
     "test": "snyk test && npm run lint && npm run mocha"
   },
@@ -45,10 +45,9 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.1",
-    "istanbul": "^0.4.5",
     "jshint": "^2.10.1",
     "mocha": "^6.1.4",
-    "mocha-lcov-reporter": "^1.2.0",
+    "nyc": "^14.1.1",
     "should": "^9.0.2",
     "shx": "^0.3.2",
     "sinon-restore": "^1.0.1",
@@ -66,5 +65,11 @@
     "url": "git://github.com/nickmerwin/node-coveralls.git"
   },
   "author": "Gregg Caines",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  }
 }
