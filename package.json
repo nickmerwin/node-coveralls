@@ -5,7 +5,7 @@
     "coverage",
     "coveralls"
   ],
-  "version": "3.0.7",
+  "version": "3.0.8",
   "bugs": {
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
@@ -30,6 +30,7 @@
     "Adam Moss (https://github.com/adam-moss)"
   ],
   "dependencies": {
+    "cobertura-parse": "^1.0.5",
     "growl": "~> 1.10.0",
     "js-yaml": "^3.13.1",
     "lcov-parse": "^0.0.10",
