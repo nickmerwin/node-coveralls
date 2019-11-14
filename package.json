@@ -10,7 +10,7 @@
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
   "scripts": {
-    "lint": "jshint ./lib ./test ./index.js",
+    "lint": "xo",
     "mocha": "_mocha -b -R spec",
     "test-cov": "nyc npm run mocha",
     "test-coveralls": "nyc npm run mocha && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
@@ -41,12 +41,12 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
-    "jshint": "^2.11.0",
     "mocha": "^6.2.3",
     "nyc": "^14.1.1",
     "should": "^9.0.2",
     "shx": "^0.3.2",
-    "sinon": "^7.5.0"
+    "sinon": "^7.5.0",
+    "xo": "^0.24.0"
   },
   "engines": {
     "node": ">=6"
@@ -68,7 +68,42 @@
     ]
   },
   "files": [
-    "{bin,lib}/*.js",
+    "bin/coveralls.js",
+    "lib/*.js",
     "index.js"
-  ]
+  ],
+  "xo": {
+    "space": true,
+    "ignores": [
+      "test/fixtures/"
+    ],
+    "rules": {
+      "capitalized-comments": "off",
+      "camelcase": "off",
+      "import/order": "off",
+      "no-negated-condition": "off",
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "quote-props": [
+        "error",
+        "consistent"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ],
+      "spaced-comment": "off",
+      "unicorn/filename-case": "off"
+    },
+    "overrides": [
+      {
+        "files": "test/*.js",
+        "envs": [
+          "mocha"
+        ]
+      }
+    ]
+  }
 }
