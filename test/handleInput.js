@@ -14,9 +14,7 @@ describe('handleInput', () => {
     sinon.restoreAll();
   });
   it('returns an error when there\'s an error getting options', done => {
-    sinon.stub(index, 'getOptions', cb => {
-      return cb('some error', {});
-    });
+    sinon.stub(index, 'getOptions', cb => cb('some error', {}));
     const path = sysPath.join(__dirname, '/../fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
     index.handleInput(input, err => {
@@ -25,9 +23,7 @@ describe('handleInput', () => {
     });
   });
   it('returns an error when there\'s an error converting', done => {
-    sinon.stub(index, 'getOptions', cb => {
-      return cb(null, {});
-    });
+    sinon.stub(index, 'getOptions', cb => cb(null, {}));
     sinon.stub(index, 'convertLcovToCoveralls', (input, options, cb) => {
       cb('some error');
     });
@@ -39,9 +35,7 @@ describe('handleInput', () => {
     });
   });
   it('returns an error when there\'s an error sending', done => {
-    sinon.stub(index, 'getOptions', cb => {
-      return cb(null, {});
-    });
+    sinon.stub(index, 'getOptions', cb => cb(null, {}));
     sinon.stub(index, 'sendToCoveralls', (postData, cb) => {
       cb('some error');
     });
@@ -53,9 +47,7 @@ describe('handleInput', () => {
     });
   });
   it('returns an error when there\'s a bad status code', done => {
-    sinon.stub(index, 'getOptions', cb => {
-      return cb(null, {});
-    });
+    sinon.stub(index, 'getOptions', cb => cb(null, {}));
     sinon.stub(index, 'sendToCoveralls', (postData, cb) => {
       cb(null, { statusCode: 500 }, 'body');
     });
@@ -67,9 +59,7 @@ describe('handleInput', () => {
     });
   });
   it('completes successfully when there are no errors', done => {
-    sinon.stub(index, 'getOptions', cb => {
-      return cb(null, {});
-    });
+    sinon.stub(index, 'getOptions', cb => cb(null, {}));
     sinon.stub(index, 'sendToCoveralls', (postData, cb) => {
       cb(null, { statusCode: 200 }, 'body');
     });

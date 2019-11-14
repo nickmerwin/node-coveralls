@@ -80,9 +80,7 @@ describe('convertLcovToCoveralls', () => {
     };
 
     const originalExistsSync = fs.existsSync;
-    fs.existsSync = () => {
-      return true;
-    };
+    fs.existsSync = () => true;
 
     convertLcovToCoveralls(input, { filepath: libpath }, (err, output) => {
       fs.readFileSync = originalReadFileSync;
@@ -111,9 +109,7 @@ describe('convertLcovToCoveralls', () => {
     };
 
     const originalExistsSync = fs.existsSync;
-    fs.existsSync = () => {
-      return true;
-    };
+    fs.existsSync = () => true;
 
     convertLcovToCoveralls(input, { filepath: libpath }, (err, output) => {
       fs.readFileSync = originalReadFileSync;
@@ -142,9 +138,7 @@ describe('convertLcovToCoveralls', () => {
     };
 
     const originalExistsSync = fs.existsSync;
-    fs.existsSync = () => {
-      return false;
-    };
+    fs.existsSync = () => false;
 
     convertLcovToCoveralls(input, { filepath: libpath }, (err, output) => {
       fs.readFileSync = originalReadFileSync;
@@ -173,9 +167,7 @@ describe('convertLcovToCoveralls', () => {
     };
 
     const originalExistsSync = fs.existsSync;
-    fs.existsSync = () => {
-      return true;
-    };
+    fs.existsSync = () => true;
 
     convertLcovToCoveralls(input, { filepath: libpath }, (err, output) => {
       fs.readFileSync = originalReadFileSync;
