@@ -349,19 +349,25 @@ const testJenkins = (sut, done) => {
   process.env.BUILD_ID = '1234';
   process.env.GIT_COMMIT = 'a12s2d3df4f435g45g45g67h5g6';
   process.env.GIT_BRANCH = 'master';
+
+  const git = {
+    head: {
+      id: 'a12s2d3df4f435g45g45g67h5g6',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'master',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('jenkins');
     options.service_job_id.should.equal('1234');
-    options.git.should.eql({ head:
-                               { id: 'a12s2d3df4f435g45g45g67h5g6',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-    branch: 'master',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -372,20 +378,26 @@ const testCircleCi = (sut, done) => {
   process.env.CIRCLE_BUILD_NUM = '1234';
   process.env.CIRCLE_SHA1 = 'e3e3e3e3e3e3e3e3e';
   process.env.CI_PULL_REQUEST = 'http://github.com/node-coveralls/pull/3';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'master',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('circleci');
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('3');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-    branch: 'master',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -398,19 +410,25 @@ const testCodeship = (sut, done) => {
   process.env.CI_COMMITTER_NAME = 'John Doe';
   process.env.CI_COMMITTER_EMAIL = 'jd@example.com';
   process.env.CI_COMMIT_MESSAGE = 'adadadadadadadadadad';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'John Doe',
+      committer_email: 'jd@example.com',
+      message: 'adadadadadadadadadad'
+    },
+    branch: 'master',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('codeship');
     options.service_job_id.should.equal('1234');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'John Doe',
-                                 committer_email: 'jd@example.com',
-                                 message: 'adadadadadadadadadad' },
-    branch: 'master',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -425,19 +443,24 @@ const testDrone = (sut, done) => {
   process.env.DRONE_COMMIT_AUTHOR_EMAIL = 'john@doe.com';
   process.env.DRONE_COMMIT_MESSAGE = 'msgmsgmsg';
 
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'john doe',
+      committer_email: 'john@doe.com',
+      message: 'msgmsgmsg'
+    },
+    branch: 'master',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('drone');
     options.service_job_id.should.equal('1234');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'john doe',
-                                 committer_email: 'john@doe.com',
-                                 message: 'msgmsgmsg' },
-    branch: 'master',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -447,19 +470,25 @@ const testWercker = (sut, done) => {
   process.env.WERCKER_BUILD_ID = '1234';
   process.env.WERCKER_GIT_COMMIT = 'e3e3e3e3e3e3e3e3e';
   process.env.WERCKER_GIT_BRANCH = 'master';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'master',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('wercker');
     options.service_job_id.should.equal('1234');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-    branch: 'master',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -471,20 +500,26 @@ const testGitlab = (sut, done) => {
   process.env.CI_BUILD_REF = 'e3e3e3e3e3e3e3e3e';
   process.env.CI_BUILD_REF_NAME = 'feature';
   process.env.CI_MERGE_REQUEST_IID = '1';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'feature',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('gitlab-ci');
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('1');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-    branch: 'feature',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -493,18 +528,24 @@ const testSurf = (sut, done) => {
   process.env.CI_NAME = 'surf';
   process.env.SURF_SHA1 = 'e3e3e3e3e3e3e3e3e';
   process.env.SURF_REF = 'feature';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'feature',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('surf');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-    branch: 'feature',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -517,18 +558,24 @@ const testBuildkite = (sut, done) => {
   process.env.BUILDKITE_BUILD_CREATOR = 'john doe';
   process.env.BUILDKITE_BUILD_CREATOR_EMAIL = 'john@doe.com';
   process.env.BUILDKITE_MESSAGE = 'msgmsgmsg';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'john doe',
+      committer_email: 'john@doe.com',
+      message: 'msgmsgmsg'
+    },
+    branch: 'feature',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('buildkite');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'john doe',
-                                 committer_email: 'john@doe.com',
-                                 message: 'msgmsgmsg' },
-    branch: 'feature',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -539,19 +586,24 @@ const testSemaphore = (sut, done) => {
   process.env.REVISION = 'e3e3e3e3e3e3e3e3e';
   process.env.BRANCH_NAME = 'master';
 
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'master',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('semaphore');
     options.service_job_id.should.equal('1234');
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-    branch: 'master',
-    remotes: [] });
+    options.git.should.eql(git);
     done();
   });
 };
@@ -563,22 +615,25 @@ const testAzurePipelines = (sut, done) => {
   process.env.BUILD_BUILDID = '1234';
   process.env.SYSTEM_PULLREQUEST_PULLREQUESTNUMBER = '123';
 
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'hotfix',
+    remotes: []
+  };
+
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('Azure Pipelines');
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('123');
-
-    options.git.should.eql({ head:
-      { id: 'e3e3e3e3e3e3e3e3e',
-        author_name: 'Unknown Author',
-        author_email: '',
-        committer_name: 'Unknown Committer',
-        committer_email: '',
-        message: 'Unknown Commit Message' },
-    branch: 'hotfix',
-    remotes: [] });
-
+    options.git.should.eql(git);
     done();
   });
 };
