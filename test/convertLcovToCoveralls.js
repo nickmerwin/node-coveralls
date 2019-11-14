@@ -71,12 +71,12 @@ describe('convertLcovToCoveralls', () => {
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
     const originalReadFileSync = fs.readFileSync;
-    fs.readFileSync = function(filepath) {
+    fs.readFileSync = (filepath, ...args) => {
       if (filepath === sourcepath) {
         return '';
       }
 
-      return originalReadFileSync.apply(fs, arguments);
+      return originalReadFileSync.apply(fs, args);
     };
 
     const originalExistsSync = fs.existsSync;
@@ -100,12 +100,12 @@ describe('convertLcovToCoveralls', () => {
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
     const originalReadFileSync = fs.readFileSync;
-    fs.readFileSync = function(filepath) {
+    fs.readFileSync = (filepath, ...args) => {
       if (filepath === sourcepath) {
         return '';
       }
 
-      return originalReadFileSync.apply(fs, arguments);
+      return originalReadFileSync.apply(fs, args);
     };
 
     const originalExistsSync = fs.existsSync;
@@ -129,12 +129,12 @@ describe('convertLcovToCoveralls', () => {
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
     const originalReadFileSync = fs.readFileSync;
-    fs.readFileSync = function(filepath) {
+    fs.readFileSync = (filepath, ...args) => {
       if (filepath === sourcepath) {
         return '';
       }
 
-      return originalReadFileSync.apply(fs, arguments);
+      return originalReadFileSync.apply(fs, args);
     };
 
     const originalExistsSync = fs.existsSync;
@@ -158,12 +158,12 @@ describe('convertLcovToCoveralls', () => {
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
     const originalReadFileSync = fs.readFileSync;
-    fs.readFileSync = function(filepath) {
+    fs.readFileSync = (filepath, ...args) => {
       if (filepath === sourcepath) {
         return '';
       }
 
-      return originalReadFileSync.apply(fs, arguments);
+      return originalReadFileSync.apply(fs, args);
     };
 
     const originalExistsSync = fs.existsSync;

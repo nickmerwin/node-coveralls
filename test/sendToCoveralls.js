@@ -61,13 +61,13 @@ describe('sendToCoveralls', () => {
 
     // set up mock process.stdout.write temporarily
     const origStdoutWrite = process.stdout.write;
-    process.stdout.write = function(string) {
+    process.stdout.write = function(string, ...args) {
       if (string === JSON.stringify(obj)) {
         process.stdout.write = origStdoutWrite;
         return done();
       }
 
-      origStdoutWrite.apply(this, arguments);
+      origStdoutWrite.apply(this, args);
     };
 
     index.options.stdout = true;
