@@ -554,8 +554,7 @@ function ensureLocalGitContext(options) {
   var baseDir = process.cwd(), dir = baseDir, gitDir;
   while (path.resolve('/') !== dir) {
     gitDir = path.join(dir, '.git');
-    var existsSync = fs.existsSync || path.existsSync;
-    if (existsSync(path.join(gitDir, 'HEAD')))
+    if (fs.existsSync(path.join(gitDir, 'HEAD')))
       break;
 
     dir = path.dirname(dir);
