@@ -29,7 +29,7 @@ jobs:
         run: npm install # switch to `npm ci` when Node.js 6 support is dropped
 
       - name: Run tests
-        run: make test-coveralls
+        run: npm run test-coveralls
         env:
           COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
           COVERALLS_GIT_BRANCH: "${{ github.ref }}"
