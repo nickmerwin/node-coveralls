@@ -87,7 +87,7 @@ describe('convertLcovToCoveralls', () => {
       fs.existsSync = originalExistsSync;
 
       should.not.exist(err);
-      output.source_files[0].name.should.equal(path.join('svgo', 'config.js'));
+      output.source_files[0].name.should.equal(path.join("svgo", "config.js"));
       done();
     });
   });
