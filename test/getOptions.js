@@ -155,6 +155,9 @@ describe('getOptions', () => {
   it('should set service_name and service_job_id if it\'s running on Gitlab', done => {
     testGitlab(getOptions, done);
   });
+  it ("should set service_name and service_job_id if it's running on AppVeyor", done => {
+    testAppVeyor(getOptions, done);
+  });
   it('should set service_name and service_job_id if it\'s running via Surf', done => {
     testSurf(getOptions, done);
   });
@@ -520,6 +523,30 @@ const testGitlab = (sut, done) => {
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('1');
     options.git.should.eql(git);
+    done();
+  });
+};
+
+const testAppVeyor = function(sut, done) {
+  process.env.APPVEYOR = true;
+  process.env.APPVEYOR_BUILD_ID = "1234";
+  process.env.APPVEYOR_BUILD_NUMBER = "5678";
+  process.env.APPVEYOR_REPO_COMMIT = "e3e3e3e3e3e3e3e3e";
+  process.env.APPVEYOR_REPO_BRANCH = "feature";
+
+  sut(function(err, options){
+    options.service_name.should.equal("appveyor");
+    options.service_job_id.should.equal("1234");
+    options.service_job_number.should.equal("5678");
+    options.git.should.eql({ head:
+                               { id: 'e3e3e3e3e3e3e3e3e',
+                                 author_name: 'Unknown Author',
+                                 author_email: '',
+                                 committer_name: 'Unknown Committer',
+                                 committer_email: '',
+                                 message: 'Unknown Commit Message' },
+                              branch: 'feature',
+                              remotes: [] });
     done();
   });
 };
