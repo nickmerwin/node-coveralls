@@ -36,6 +36,7 @@
     "Adam Moss (https://github.com/adam-moss)"
   ],
   "dependencies": {
+    "cobertura-parse": "^1.0.5",
     "js-yaml": "^3.13.1",
     "lcov-parse": "^1.0.0",
     "log-driver": "^1.2.7",
