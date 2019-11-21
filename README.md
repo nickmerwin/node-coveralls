@@ -1,6 +1,6 @@
 # node-coveralls
 
-[![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url]
+[![Build Status][ci-image]][ci-url] [![Coverage Status][coveralls-image]][coveralls-url]
 [![Known Vulnerabilities](https://snyk.io/test/github/nickmerwin/node-coveralls/badge.svg)](https://snyk.io/test/github/nickmerwin/node-coveralls)
 
 [Coveralls.io](https://coveralls.io/) support for node.js.  Get the great coverage reporting of coveralls.io and add a cool coverage button ( like the one above ) to your README.
@@ -147,8 +147,8 @@ If you're running locally, you must have a `.coveralls.yml` file, as documented 
 
 If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COMMIT` environment-variable to the commit hash you wish to reference. If you don't want to use a hash, you can set it to `HEAD` to supply coveralls with the latest commit data. This requires git to be installed and executable on the current PATH.
 
-[travis-image]: https://travis-ci.org/nickmerwin/node-coveralls.svg?branch=master
-[travis-url]: https://travis-ci.org/nickmerwin/node-coveralls
+[ci-image]: https://github.com/nickmerwin/node-coveralls/workflows/Tests/badge.svg
+[ci-url]: https://github.com/nickmerwin/node-coveralls/actions?workflow=Tests
 
 [coveralls-image]: https://coveralls.io/repos/nickmerwin/node-coveralls/badge.svg?branch=master&service=github
 [coveralls-url]: https://coveralls.io/github/nickmerwin/node-coveralls?branch=master
