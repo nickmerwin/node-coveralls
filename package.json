@@ -36,7 +36,6 @@
     "Adam Moss (https://github.com/adam-moss)"
   ],
   "dependencies": {
-    "growl": "^1.10.5",
     "js-yaml": "^3.13.1",
     "lcov-parse": "^1.0.0",
     "log-driver": "^1.2.7",
