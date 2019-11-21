@@ -58,5 +58,9 @@
     "url": "git://github.com/nickmerwin/node-coveralls.git"
   },
   "author": "Gregg Caines",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "files": [
+    "{bin,lib}/*.js",
+    "index.js"
+  ]
 }
