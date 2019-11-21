@@ -1,6 +1,7 @@
 node_modules/
 coverage/
 lib-cov/
+.nyc_output/
 coverage.json
 npm-debug.log
 
