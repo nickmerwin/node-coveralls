@@ -57,8 +57,8 @@ function _cleanTempGitDir() {
 
 function _deleteFolderRecursive(dir) {
 
-  if (!dir.match('node-coveralls/test')) {
-    throw new Error('Tried to clean a temp git directory that did not match path: node-coveralls/test');
+  if (!dir.includes(path.normalize('node-coveralls/test'))) {
+    throw new Error('Tried to clean a temp git directory that did not match path: ' + path.normalize('node-coveralls/test'));
   }
 
   if(fs.existsSync(dir)) {

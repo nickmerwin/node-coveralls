@@ -9,9 +9,9 @@ logger = require('log-driver')({level : false});
 describe("convertLcovToCoveralls", function(){
   it ("should convert a simple lcov file", function(done){
     delete process.env.TRAVIS;
-    var lcovpath = __dirname + "/../fixtures/onefile.lcov";
+    var lcovpath = path.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(lcovpath, "utf8");
-    var libpath = __dirname + "/../fixtures/lib";
+    var libpath = path.join(__dirname, "/../fixtures/lib");
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
       should.not.exist(err);
       output.source_files[0].name.should.equal("index.js");
@@ -33,7 +33,7 @@ describe("convertLcovToCoveralls", function(){
     process.env.COVERALLS_PARALLEL = "true";
 
     getOptions(function(err, options){
-      var lcovpath = __dirname + "/../fixtures/onefile.lcov";
+      var lcovpath = path.join(__dirname, "/../fixtures/onefile.lcov");
       var input = fs.readFileSync(lcovpath, "utf8");
       var libpath = "fixtures/lib";
       options.filepath = libpath;
@@ -48,7 +48,7 @@ describe("convertLcovToCoveralls", function(){
   });
   it ("should work with a relative path as well", function(done){
     delete process.env.TRAVIS;
-    var lcovpath = __dirname + "/../fixtures/onefile.lcov";
+    var lcovpath = path.join(__dirname, "/../fixtures/onefile.lcov");
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "fixtures/lib";
     convertLcovToCoveralls(input, {filepath: libpath}, function(err, output){
@@ -61,7 +61,7 @@ describe("convertLcovToCoveralls", function(){
 
   it ("should convert absolute input paths to relative", function(done){
     delete process.env.TRAVIS;
-    var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
+    var lcovpath = path.join(__dirname, "/../fixtures/istanbul.lcov");
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
     var sourcepath = path.resolve(libpath, "svgo/config.js");
@@ -83,14 +83,14 @@ describe("convertLcovToCoveralls", function(){
       fs.existsSync = originalExistsSync;
 
       should.not.exist(err);
-      output.source_files[0].name.should.equal(path.join("svgo", "config.js"));
+      output.source_files[0].name.should.equal(path.posix.join("svgo", "config.js"));
       done();
     });
   });
 
   it ("should handle branch coverage data", function(done){
     process.env.TRAVIS_JOB_ID = -1;
-    var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
+    var lcovpath = path.join(__dirname, "/../fixtures/istanbul.lcov");
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
     var sourcepath = path.resolve(libpath, "svgo/config.js");
@@ -119,7 +119,7 @@ describe("convertLcovToCoveralls", function(){
 
   it ("should ignore files that do not exists", function(done){
     delete process.env.TRAVIS;
-    var lcovpath = __dirname + "/../fixtures/istanbul.lcov";
+    var lcovpath = path.join(__dirname, "/../fixtures/istanbul.lcov");
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
     var sourcepath = path.resolve(libpath, "svgo/config.js");
@@ -148,7 +148,7 @@ describe("convertLcovToCoveralls", function(){
 
   it ("should parse file paths concatenated by typescript and ng 2", function(done) {
     process.env.TRAVIS_JOB_ID = -1;
-    var lcovpath = __dirname + "/../fixtures/istanbul.remap.lcov";
+    var lcovpath = path.join(__dirname, "/../fixtures/istanbul.remap.lcov");
     var input = fs.readFileSync(lcovpath, "utf8");
     var libpath = "/Users/deepsweet/Dropbox/projects/svgo/lib";
     var sourcepath = path.resolve(libpath, "svgo/config.js");
@@ -170,7 +170,7 @@ describe("convertLcovToCoveralls", function(){
       fs.existsSync = originalExistsSync;
 
       should.not.exist(err);
-      output.source_files[0].name.should.equal(path.join("svgo", "config.js"));
+      output.source_files[0].name.should.equal(path.posix.join("svgo", "config.js"));
       done();
     });
   });
