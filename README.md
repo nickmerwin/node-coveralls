@@ -33,6 +33,7 @@ There are optional environment variables for other build systems as well:
 * COVERALLS_RUN_AT  (a date string for the time that the job ran.  RFC 3339 dates work.  This defaults to your
 build system's date/time if you don't set it.)
 * COVERALLS_PARALLEL (more info here: https://docs.coveralls.io/parallel-build-webhook)
+* CI_PULL_REQUEST (link to a pull request url, e.g. https://github.com/fake/fake/pulls/123)
 ### [Jest](https://facebook.github.io/jest/)
 - Install [jest](https://facebook.github.io/jest/docs/en/getting-started.html)
 - Use the following to run tests and push files to coveralls: 
