@@ -5,7 +5,7 @@
 
 [Coveralls.io](https://coveralls.io/) support for Node.js. Get the great coverage reporting of coveralls.io and add a cool coverage button (like the one above) to your README.
 
-Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/)
+Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/), [GitHub Actions CI](https://github.com/features/actions)
 
 ## Installation:
 
@@ -31,12 +31,25 @@ This library currently supports [Travis CI](https://travis-ci.org/) with no extr
 
 - `COVERALLS_SERVICE_NAME` (the name of your build system)
 - `COVERALLS_REPO_TOKEN` (the secret repo token from coveralls.io)
+- `COVERALLS_GIT_BRANCH` (the branch name)
 
 There are optional environment variables for other build systems as well:
 
 - `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build job)
 - `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it.)
 - `COVERALLS_PARALLEL` (more info here: <https://docs.coveralls.io/parallel-build-webhook>)
+
+### GitHub Actions CI
+
+If you are using GitHub Actions CI, you should look into [coverallsapp/github-action](https://github.com/coverallsapp/github-action).
+
+If you prefer to use this package you can do it like this:
+
+```yml
+env:
+  COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
+  COVERALLS_GIT_BRANCH: "${{ github.ref }}"
+```
 
 ### [Jest](https://jestjs.io/)
 
