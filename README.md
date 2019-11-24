@@ -12,6 +12,7 @@ Add the latest version of `coveralls` to your package.json:
 ```
 npm install coveralls --save-dev
 ```
+The command (`coveralls`) can be used from the command line.
 
 If you're using mocha, add `mocha-lcov-reporter` to your package.json:
 ```
@@ -20,9 +21,9 @@ npm install mocha-lcov-reporter --save-dev
 
 ## Usage:
 
-This script ( `bin/coveralls.js` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
+This command ( `coveralls` ) can take standard input from any tool that emits the lcov data format (including [mocha](http://mochajs.org/)'s [LCov reporter](https://npmjs.org/package/mocha-lcov-reporter)) and send it to coveralls.io to report your code coverage there.
 
-Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
+Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `coveralls`.
 
 This library currently supports [travis-ci](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you're using a different build system, there are a few environment variables that are necessary:
 * COVERALLS_SERVICE_NAME  (the name of your build system)
@@ -49,7 +50,7 @@ Check out an example [here](https://github.com/Ethan-Arrowood/harperdb-connect/b
 ```sh
 NODE_ENV=test YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha \
   --require blanket \
-  --reporter mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+  --reporter mocha-lcov-reporter | coveralls
 ```
 ### [Mocha](http://mochajs.org/) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
@@ -57,7 +58,7 @@ Instrumenting your app for coverage is probably harder than it needs to be (read
 
 In mocha, if you've got your code instrumented for coverage, the command for a travis build would look something like this:
 ```sh
-YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+YOURPACKAGE_COVERAGE=1 ./node_modules/.bin/mocha test -R mocha-lcov-reporter | coveralls
 ```
 Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Makefile) from one of my projects for an example, especially the test-coveralls build target.  Note: Travis runs `npm test`, so whatever target you create in your Makefile must be the target that `npm test` runs (This is set in package.json's 'scripts' property).
 
@@ -66,13 +67,13 @@ Check out an example [Makefile](https://github.com/cainus/urlgrey/blob/master/Ma
 **With Mocha:**
 
 ```sh
-istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage
 ```
 
 **With Jasmine:**
 
 ```sh
-istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage
 ```
 
 ### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
@@ -109,7 +110,7 @@ Client-side JS code coverage using [PhantomJS](https://github.com/ariya/phantomj
 - Run your tests with a command like this:
 
 ```sh
-./node_modules/.bin/poncho -R lcov test/test.html | ./node_modules/coveralls/bin/coveralls.js
+./node_modules/.bin/poncho -R lcov test/test.html | coveralls
 ```
 
 ### [Lab](https://github.com/hapijs/lab)
