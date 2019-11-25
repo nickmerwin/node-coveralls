@@ -37,6 +37,7 @@ jobs:
 
       - name: Run lint
         run: npm run lint
+        if: !(matrix.node == 8 && matrix.os == 'windows-latest')
 
       - name: Run tests
         run: npm run test-cov
