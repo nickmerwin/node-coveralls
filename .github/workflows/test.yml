@@ -33,7 +33,7 @@ jobs:
 
       - name: Install npm dependencies (npm ci)
         run: npm ci
-        if: matrix.node >= 8
+        if: (matrix.node >= 8 && matrix.os == 'ubuntu-latest') || (matrix.node >= 10 && matrix.os == 'windows-latest')
 
       - name: Run lint
         run: npm run lint
