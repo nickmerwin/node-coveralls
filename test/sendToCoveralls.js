@@ -1,7 +1,7 @@
 'use strict';
 
 const should = require('should');
-const request = require('request');
+const axios = require('axios');
 const sinon = require('sinon-restore');
 const logDriver = require('log-driver');
 const index = require('..');
@@ -23,10 +23,10 @@ describe('sendToCoveralls', () => {
     }
   });
 
-  it('passes on the correct params to request.post', done => {
-    sinon.stub(request, 'post', (obj, cb) => {
+  it('passes on the correct params to axios.post', done => {
+    sinon.stub(axios, 'post', (obj, cb) => {
       obj.url.should.equal('https://coveralls.io/api/v1/jobs');
-      obj.form.should.eql({ json: '{"some":"obj"}' });
+      obj.data.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
     });
 
@@ -42,9 +42,9 @@ describe('sendToCoveralls', () => {
 
   it('allows sending to enterprise url', done => {
     process.env.COVERALLS_ENDPOINT = 'https://coveralls-ubuntu.domain.com';
-    sinon.stub(request, 'post', (obj, cb) => {
+    sinon.stub(axios, 'post', (obj, cb) => {
       obj.url.should.equal('https://coveralls-ubuntu.domain.com/api/v1/jobs');
-      obj.form.should.eql({ json: '{"some":"obj"}' });
+      obj.data.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
     });
 
@@ -61,7 +61,7 @@ describe('sendToCoveralls', () => {
 
     // set up mock process.stdout.write temporarily
     const origStdoutWrite = process.stdout.write;
-    process.stdout.write = function(string, ...args) {
+    process.stdout.write = function (string, ...args) {
       if (string === JSON.stringify(obj)) {
         process.stdout.write = origStdoutWrite;
         return done();
