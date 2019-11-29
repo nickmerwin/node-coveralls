@@ -25,7 +25,8 @@ describe('sendToCoveralls', () => {
 
   it('passes on the correct params to axios.post', done => {
     sinon.stub(axios, 'post', (obj, cb) => {
-      obj.url.should.equal('https://coveralls.io/api/v1/jobs');
+      obj.baseURL.should.equal('https://coveralls.io');
+      obj.url.should.equal('/api/v1/jobs');
       obj.data.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
     });
@@ -43,7 +44,8 @@ describe('sendToCoveralls', () => {
   it('allows sending to enterprise url', done => {
     process.env.COVERALLS_ENDPOINT = 'https://coveralls-ubuntu.domain.com';
     sinon.stub(axios, 'post', (obj, cb) => {
-      obj.url.should.equal('https://coveralls-ubuntu.domain.com/api/v1/jobs');
+      obj.baseURL.should.equal(process.env.COVERALLS_ENDPOINT);
+      obj.url.should.equal('/api/v1/jobs');
       obj.data.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
     });
