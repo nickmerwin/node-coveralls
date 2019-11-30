@@ -15,7 +15,7 @@ describe('handleInput', () => {
   });
   it('returns an error when there\'s an error getting options', done => {
     sinon.stub(index, 'getOptions', cb => cb('some error', {}));
-    const path = sysPath.join(__dirname, '/../fixtures/onefile.lcov');
+    const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
     index.handleInput(input, err => {
       err.should.equal('some error');
@@ -27,7 +27,7 @@ describe('handleInput', () => {
     sinon.stub(index, 'convertLcovToCoveralls', (input, options, cb) => {
       cb('some error');
     });
-    const path = sysPath.join(__dirname, '/../fixtures/onefile.lcov');
+    const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
     index.handleInput(input, err => {
       err.should.equal('some error');
@@ -39,7 +39,7 @@ describe('handleInput', () => {
     sinon.stub(index, 'sendToCoveralls', (postData, cb) => {
       cb('some error');
     });
-    const path = sysPath.join(__dirname, '/../fixtures/onefile.lcov');
+    const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
     index.handleInput(input, err => {
       err.should.equal('some error');
@@ -51,7 +51,7 @@ describe('handleInput', () => {
     sinon.stub(index, 'sendToCoveralls', (postData, cb) => {
       cb(null, { statusCode: 500 }, 'body');
     });
-    const path = sysPath.join(__dirname, '/../fixtures/onefile.lcov');
+    const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
     index.handleInput(input, err => {
       err.should.equal('Bad response: 500 body');
@@ -63,7 +63,7 @@ describe('handleInput', () => {
     sinon.stub(index, 'sendToCoveralls', (postData, cb) => {
       cb(null, { statusCode: 200 }, 'body');
     });
-    const path = sysPath.join(__dirname, '/../fixtures/onefile.lcov');
+    const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
     index.handleInput(input, (err, body) => {
       should.not.exist(err);
