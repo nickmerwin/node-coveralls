@@ -1,24 +1,21 @@
 {
   "name": "coveralls",
   "description": "takes json-cov output into stdin and POSTs to coveralls.io",
+  "version": "3.1.0",
   "keywords": [
     "coverage",
     "coveralls"
   ],
-  "version": "3.1.0",
+  "author": "Gregg Caines",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nickmerwin/node-coveralls.git"
+  },
   "bugs": {
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
-  "scripts": {
-    "lint": "xo",
-    "mocha": "_mocha -b -R spec",
-    "test-cov": "nyc npm run mocha",
-    "test-coveralls": "nyc npm run mocha && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
-    "test": "npm run lint && npm run mocha"
-  },
-  "bin": {
-    "coveralls": "./bin/coveralls.js"
-  },
+  "homepage": "https://github.com/nickmerwin/node-coveralls#readme",
   "maintainers": [
     "Nick Merwin <nick@coveralls.io> (https://coveralls.io)"
   ],
@@ -33,6 +30,20 @@
     "Arpad Borsos <arpad.borsos@googlemail.com> (http://swatinem.de/)",
     "Adam Moss (https://github.com/adam-moss)"
   ],
+  "bin": {
+    "coveralls": "./bin/coveralls.js"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "lint": "xo",
+    "mocha": "_mocha -b -R spec",
+    "test-cov": "nyc npm run mocha",
+    "test-coveralls": "nyc npm run mocha && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
+    "test": "npm run lint && npm run mocha"
+  },
   "dependencies": {
     "js-yaml": "^3.13.1",
     "lcov-parse": "^1.0.0",
@@ -51,27 +62,17 @@
   "engines": {
     "node": ">=6"
   },
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nickmerwin/node-coveralls.git"
-  },
-  "author": "Gregg Caines",
-  "license": "BSD-2-Clause",
+  "files": [
+    "bin/coveralls.js",
+    "lib/*.js",
+    "index.js"
+  ],
   "nyc": {
     "reporter": [
       "lcov",
       "text-summary"
     ]
   },
-  "files": [
-    "bin/coveralls.js",
-    "lib/*.js",
-    "index.js"
-  ],
   "xo": {
     "space": true,
     "ignores": [
