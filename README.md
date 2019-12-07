@@ -56,7 +56,7 @@ env:
 - Use the following to run tests and push files to coveralls:
 
   ```sh
-  jest --coverage --coverageReporters=text-lcov | coveralls
+  jest --coverage && coveralls < coverage/lcov.info
   ```
 
 Check out an example [here](https://github.com/Ethan-Arrowood/harperdb-connect/blob/master/.travis.yml) which makes use of Travis CI build stages
