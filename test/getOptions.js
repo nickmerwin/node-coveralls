@@ -170,6 +170,9 @@ describe('getOptions', () => {
   it('should set service_name and service_job_id if it\'s running via Azure Pipelines', done => {
     testAzurePipelines(getOptions, done);
   });
+  it('should set service_name and service_job_id if it\'s running via CodeFresh', done => {
+    testCodefresh(getOptions, done);
+  });
   it('should override set options with user options', done => {
     const userOptions = { service_name: 'OVERRIDDEN_SERVICE_NAME' };
     process.env.COVERALLS_SERVICE_NAME = 'SERVICE_NAME';
@@ -660,6 +663,37 @@ const testAzurePipelines = (sut, done) => {
     options.service_name.should.equal('Azure Pipelines');
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('123');
+    options.git.should.eql(git);
+    done();
+  });
+};
+
+const testCodefresh = (sut, done) => {
+  process.env.CF_BRANCH = 'hotfix';
+  process.env.CF_REVISION = 'e3e3e3e3e3e3e3e3e';
+  process.env.CF_BUILD_ID = '1234';
+  process.env.CF_COMMIT_AUTHOR = 'john doe';
+  process.env.CF_COMMIT_MESSAGE = 'msgmsgmsg';
+  process.env.CF_PULL_REQUEST_ID = '3';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'john doe',
+      committer_email: '',
+      message: 'msgmsgmsg'
+    },
+    branch: 'hotfix',
+    remotes: []
+  };
+
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_name.should.equal('Codefresh');
+    options.service_job_id.should.equal('1234');
+    options.service_pull_request.should.equal('3');
     options.git.should.eql(git);
     done();
   });
