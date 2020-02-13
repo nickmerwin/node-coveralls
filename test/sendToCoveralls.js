@@ -26,7 +26,7 @@ describe('sendToCoveralls', () => {
   it('passes on the correct params to https.request', done => {
     sinon.stub(request, 'post', (url, form, cb) => {
       url.should.equal('https://coveralls.io/api/v1/jobs');
-      form.should.eql('{"some":"obj"}');
+      form.should.equal('{"some":"obj"}');
       cb('err', 'response', 'body');
     });
 
