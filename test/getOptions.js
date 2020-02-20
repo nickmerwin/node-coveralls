@@ -45,6 +45,9 @@ describe('getBaseOptions', () => {
   it('should set service_name and service_job_id if it\'s running on travis-ci', done => {
     testTravisCi(getBaseOptions, done);
   });
+  it('should set service_name and service_job_id if it\'s running on travis-pro', done => {
+    testTravisPro(getBaseOptions, done);
+  });
   it('should set service_name and service_job_id if it\'s running on jenkins', done => {
     testJenkins(getBaseOptions, done);
   });
@@ -136,6 +139,9 @@ describe('getOptions', () => {
   });
   it('should set service_name and service_job_id if it\'s running on travis-ci', done => {
     testTravisCi(getOptions, done);
+  });
+  it('should set service_name and service_job_id if it\'s running on travis-pro', done => {
+    testTravisPro(getOptions, done);
   });
   it('should set service_name and service_job_id if it\'s running on jenkins', done => {
     testJenkins(getOptions, done);
@@ -343,6 +349,23 @@ const testTravisCi = (sut, done) => {
     options.service_name.should.equal('travis-ci');
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('123');
+    done();
+  });
+};
+
+const testTravisPro = (sut, done) => {
+  const file = path.join(process.cwd(), '.coveralls.yml');
+  const service_name = 'travis-pro';
+  fs.writeFileSync(file, `service_name: ${service_name}`);
+  process.env.TRAVIS = 'TRUE';
+  process.env.TRAVIS_JOB_ID = '1234';
+  process.env.TRAVIS_COMMIT = 'a12s2d3df4f435g45g45g67h5g6';
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_name.should.equal(service_name);
+    options.service_job_id.should.equal('1234');
+    options.git.head.id.should.equal('a12s2d3df4f435g45g45g67h5g6');
+    fs.unlinkSync(file);
     done();
   });
 };
