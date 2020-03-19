@@ -134,7 +134,10 @@ describe('getOptions', () => {
   it('should set service_name if it exists', done => {
     testServiceName(getOptions, done);
   });
-  it('should set service_pull_request if it exists', done => {
+  it ("should set service_number if it exists", done => {
+    testServiceNumber(getOptions, done);
+  });
+  it("should set service_pull_request if it exists", done => {
     testServicePullRequest(getOptions, done);
   });
   it('should set service_name and service_job_id if it\'s running on travis-ci', done => {
@@ -330,6 +333,15 @@ const testServiceName = (sut, done) => {
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('SERVICE_NAME');
+    done();
+  });
+};
+
+const testServiceNumber = (sut, done) => {
+  process.env.COVERALLS_SERVICE_NUMBER = 'SERVICE_NUMBER';
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_number.should.equal('SERVICE_NUMBER');
     done();
   });
 };
