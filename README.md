@@ -34,7 +34,8 @@ This library currently supports [Travis CI](https://travis-ci.org/) with no extr
 
 There are optional environment variables for other build systems as well:
 
-- `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build job)
+- `COVERALLS_SERVICE_NUMBER` (an id that uniquely identifies the build)
+- `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build's job)
 - `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it.)
 - `COVERALLS_PARALLEL` (more info here: <https://docs.coveralls.io/parallel-build-webhook>)
 
