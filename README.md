@@ -4,7 +4,7 @@
 
 [Coveralls.io](https://coveralls.io/) support for Node.js. Get the great coverage reporting of coveralls.io and add a cool coverage button (like the one above) to your README.
 
-Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/), [GitHub Actions CI](https://github.com/features/actions)
+Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/), [GitHub Actions CI](https://github.com/features/actions), [CodeFresh](https://codefresh.io)
 
 ## Installation:
 
@@ -53,7 +53,7 @@ env:
 ### [Jest](https://jestjs.io/)
 
 - Install [jest](https://jestjs.io/docs/en/getting-started)
-- Use the following to run tests and push files to coveralls:
+- Use the following to run tests and push files to coveralls on success:
 
   ```sh
   jest --coverage && coveralls < coverage/lcov.info
