@@ -4,7 +4,7 @@
 
 [Coveralls.io](https://coveralls.io/) support for Node.js. Get the great coverage reporting of coveralls.io and add a cool coverage button (like the one above) to your README.
 
-Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/), [GitHub Actions CI](https://github.com/features/actions)
+Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/), [GitHub Actions CI](https://github.com/features/actions), [CodeFresh](https://codefresh.io)
 
 ## Installation:
 
@@ -34,7 +34,8 @@ This library currently supports [Travis CI](https://travis-ci.org/) with no extr
 
 There are optional environment variables for other build systems as well:
 
-- `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build job)
+- `COVERALLS_SERVICE_NUMBER` (an id that uniquely identifies the build)
+- `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build's job)
 - `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it.)
 - `COVERALLS_PARALLEL` (more info here: <https://docs.coveralls.io/parallel-build-webhook>)
 
@@ -53,10 +54,10 @@ env:
 ### [Jest](https://jestjs.io/)
 
 - Install [jest](https://jestjs.io/docs/en/getting-started)
-- Use the following to run tests and push files to coveralls:
+- Use the following to run tests and push files to coveralls on success:
 
   ```sh
-  jest --coverage --coverageReporters=text-lcov | coveralls
+  jest --coverage && coveralls < coverage/lcov.info
   ```
 
 Check out an example [here](https://github.com/Ethan-Arrowood/harperdb-connect/blob/master/.travis.yml) which makes use of Travis CI build stages
