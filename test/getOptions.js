@@ -249,7 +249,7 @@ const testGitBranchDetection = (sut, done) => {
     if (localGit.branch) {
       options.git.branch.should.equal(localGit.branch);
     } else {
-      options.git.should.not.have.key('branch');
+      options.should.not.have.key('git');
     }
 
     localGit.wrapUp();
