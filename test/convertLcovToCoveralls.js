@@ -34,6 +34,7 @@ describe('convertLcovToCoveralls', () => {
     process.env.COVERALLS_REPO_TOKEN = 'REPO_TOKEN';
     process.env.CI_PULL_REQUEST = 'https://github.com/fake/fake/pulls/123';
     process.env.COVERALLS_PARALLEL = 'true';
+    process.env.COVERALLS_FLAG_NAME = 'FLAG_NAME';
 
     getOptions((err, options) => {
       const lcovpath = path.join(__dirname, '/../fixtures/onefile.lcov');
@@ -49,6 +50,7 @@ describe('convertLcovToCoveralls', () => {
         output.service_job_id.should.equal('SERVICE_JOB_ID');
         output.service_pull_request.should.equal('123');
         output.parallel.should.equal(true);
+        output.flag_name.should.equal('FLAG_NAME');
         //output.git.should.equal("GIT_HASH");
         done();
       });
