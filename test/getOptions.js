@@ -379,7 +379,7 @@ const testTravisPro = (sut, done) => {
     should.not.exist(err);
     options.service_name.should.equal(service_name);
     options.service_job_id.should.equal('1234');
-    options.git.head.id.should.equal('a12s2d3df4f435g45g45g67h5g6');
+    options.git.head.id.should.equal('HEAD');
     fs.unlinkSync(file);
     done();
   });
