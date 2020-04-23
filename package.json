@@ -38,11 +38,11 @@
     "lcov-parse": "^1.0.0",
     "log-driver": "^1.2.7",
     "minimist": "^1.2.5",
-    "request": "^2.88.0"
+    "request": "^2.88.2"
   },
   "devDependencies": {
-    "jshint": "^2.10.3",
-    "mocha": "^6.2.2",
+    "jshint": "^2.11.0",
+    "mocha": "^6.2.3",
     "nyc": "^14.1.1",
     "should": "^9.0.2",
     "shx": "^0.3.2",
