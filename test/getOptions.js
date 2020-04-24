@@ -358,13 +358,13 @@ const testServicePullRequest = (sut, done) => {
 const testTravisCi = (sut, done) => {
   process.env.TRAVIS = 'TRUE';
   process.env.TRAVIS_BUILD_NUMBER = '1';
-  process.env.TRAVIS_JOB_NUMBER = '1.1';
+  process.env.TRAVIS_JOB_ID = '12';
   process.env.TRAVIS_PULL_REQUEST = '123';
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('travis-ci');
     options.service_number.should.equal('1');
-    options.service_job_number.should.equal('1.1');
+    options.service_job_id.should.equal('12');
     options.service_pull_request.should.equal('123');
     done();
   });
