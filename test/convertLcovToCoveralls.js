@@ -31,6 +31,7 @@ describe('convertLcovToCoveralls', () => {
     process.env.COVERALLS_SERVICE_NAME = 'SERVICE_NAME';
     process.env.COVERALLS_SERVICE_NUMBER = 'SERVICE_NUMBER';
     process.env.COVERALLS_SERVICE_JOB_ID = 'SERVICE_JOB_ID';
+    process.env.COVERALLS_SERVICE_JOB_NUMBER = 'SERVICE_JOB_NUMBER';
     process.env.COVERALLS_REPO_TOKEN = 'REPO_TOKEN';
     process.env.CI_PULL_REQUEST = 'https://github.com/fake/fake/pulls/123';
     process.env.COVERALLS_PARALLEL = 'true';
@@ -48,6 +49,7 @@ describe('convertLcovToCoveralls', () => {
         output.service_name.should.equal('SERVICE_NAME');
         output.service_number.should.equal('SERVICE_NUMBER');
         output.service_job_id.should.equal('SERVICE_JOB_ID');
+        output.service_job_number.should.equal('SERVICE_JOB_NUMBER');
         output.service_pull_request.should.equal('123');
         output.parallel.should.equal(true);
         output.flag_name.should.equal('FLAG_NAME');

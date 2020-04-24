@@ -357,12 +357,14 @@ const testServicePullRequest = (sut, done) => {
 
 const testTravisCi = (sut, done) => {
   process.env.TRAVIS = 'TRUE';
-  process.env.TRAVIS_JOB_ID = '1234';
+  process.env.TRAVIS_BUILD_NUMBER = '1';
+  process.env.TRAVIS_JOB_ID = '12';
   process.env.TRAVIS_PULL_REQUEST = '123';
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('travis-ci');
-    options.service_job_id.should.equal('1234');
+    options.service_number.should.equal('1');
+    options.service_job_id.should.equal('12');
     options.service_pull_request.should.equal('123');
     done();
   });
@@ -373,12 +375,12 @@ const testTravisPro = (sut, done) => {
   const service_name = 'travis-pro';
   fs.writeFileSync(file, `service_name: ${service_name}`);
   process.env.TRAVIS = 'TRUE';
-  process.env.TRAVIS_JOB_ID = '1234';
+  process.env.TRAVIS_BUILD_NUMBER = '1234';
   process.env.TRAVIS_COMMIT = 'a12s2d3df4f435g45g45g67h5g6';
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal(service_name);
-    options.service_job_id.should.equal('1234');
+    options.service_number.should.equal('1234');
     options.git.head.id.should.equal('HEAD');
     fs.unlinkSync(file);
     done();
@@ -416,7 +418,8 @@ const testJenkins = (sut, done) => {
 const testCircleCi = (sut, done) => {
   process.env.CIRCLECI = true;
   process.env.CIRCLE_BRANCH = 'master';
-  process.env.CIRCLE_BUILD_NUM = '1234';
+  process.env.CIRCLE_WORKFLOW_ID = '1';
+  process.env.CIRCLE_BUILD_NUM = '2';
   process.env.CIRCLE_SHA1 = 'e3e3e3e3e3e3e3e3e';
   process.env.CI_PULL_REQUEST = 'http://github.com/node-coveralls/pull/3';
 
@@ -436,7 +439,8 @@ const testCircleCi = (sut, done) => {
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('circleci');
-    options.service_job_id.should.equal('1234');
+    options.service_number.should.equal('1');
+    options.service_job_number.should.equal('2');
     options.service_pull_request.should.equal('3');
     options.git.should.eql(git);
     done();
