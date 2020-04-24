@@ -34,8 +34,10 @@ This library currently supports [Travis CI](https://travis-ci.org/) with no extr
 
 There are optional environment variables for other build systems as well:
 
-- `COVERALLS_SERVICE_NUMBER` (an id that uniquely identifies the build)
+- `COVERALLS_FLAG_NAME` (a flag name to differentiate jobs, e.g. Unit, Functional, Integration)
+- `COVERALLS_SERVICE_NUMBER` (a number that uniquely identifies the build)
 - `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build's job)
+- `COVERALLS_SERVICE_JOB_NUMBER` (a number that uniquely identifies the build's job)
 - `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it.)
 - `COVERALLS_PARALLEL` (more info here: <https://docs.coveralls.io/parallel-build-webhook>)
 
@@ -50,6 +52,10 @@ env:
   COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
   COVERALLS_GIT_BRANCH: "${{ github.ref }}"
 ```
+
+### [CircleCI Orb](https://circleci.com)
+
+See our Orb here for quick integration: [coveralls/coveralls](https://circleci.com/orbs/registry/orb/coveralls/coveralls)
 
 ### [Jest](https://jestjs.io/)
 
