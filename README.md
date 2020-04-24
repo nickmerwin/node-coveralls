@@ -49,7 +49,7 @@ Parallel runs example [workflow.yml](https://github.com/coverallsapp/coveralls-n
 
 ### [CircleCI Orb](https://circleci.com)
 
-Here's our Orb here for quick integration: [coveralls/coveralls](https://circleci.com/orbs/registry/orb/coveralls/coveralls)
+Here's our Orb for quick integration: [coveralls/coveralls](https://circleci.com/orbs/registry/orb/coveralls/coveralls)
 
 Workflow example: [config.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.circleci/config.yml)
 
