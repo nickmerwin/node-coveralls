@@ -39,23 +39,23 @@ There are optional environment variables for other build systems as well:
 - `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build's job)
 - `COVERALLS_SERVICE_JOB_NUMBER` (a number that uniquely identifies the build's job)
 - `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it.)
-- `COVERALLS_PARALLEL` (more info here: <https://docs.coveralls.io/parallel-build-webhook>)
+- `COVERALLS_PARALLEL` (set true when running jobs in parallel, requires a completion webhook. More info here: <https://docs.coveralls.io/parallel-build-webhook>)
 
 ### GitHub Actions CI
 
 If you are using GitHub Actions CI, you should look into [coverallsapp/github-action](https://github.com/coverallsapp/github-action).
 
-If you prefer to use this package you can do it like this:
-
-```yml
-env:
-  COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
-  COVERALLS_GIT_BRANCH: "${{ github.ref }}"
-```
+Parallel runs example [workflow.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.github/workflows/workflow.yml)
 
 ### [CircleCI Orb](https://circleci.com)
 
-See our Orb here for quick integration: [coveralls/coveralls](https://circleci.com/orbs/registry/orb/coveralls/coveralls)
+Here's our Orb here for quick integration: [coveralls/coveralls](https://circleci.com/orbs/registry/orb/coveralls/coveralls)
+
+Workflow example: [config.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.circleci/config.yml)
+
+### [Travis-CI](https://travis-ci.org)
+
+Parallel jobs example: [.travis.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.travis.yml)
 
 ### [Jest](https://jestjs.io/)
 
