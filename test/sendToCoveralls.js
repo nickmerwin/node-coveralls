@@ -2,7 +2,7 @@
 
 const should = require('should');
 const request = require('request');
-const sinon = require('sinon').sandbox.create();
+const sinon = require('sinon');
 const logDriver = require('log-driver');
 const index = require('..');
 
