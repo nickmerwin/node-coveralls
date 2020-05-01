@@ -4,7 +4,17 @@
 
 [Coveralls.io](https://coveralls.io/) support for Node.js. Get the great coverage reporting of coveralls.io and add a cool coverage button (like the one above) to your README.
 
-Supported CI services: [Travis CI](https://travis-ci.org/), [CodeShip](https://codeship.com/), [CircleCI](https://circleci.com/), [Jenkins](https://jenkins.io/), [Gitlab CI](https://gitlab.com/), [AppVeyor](https://www.appveyor.com/), [Buildkite](https://buildkite.com/), [GitHub Actions CI](https://github.com/features/actions), [CodeFresh](https://codefresh.io)
+## Supported CI services:
+
+* [Travis CI](https://travis-ci.org/)
+* [CodeShip](https://codeship.com/)
+* [CircleCI](https://circleci.com/)
+* [Jenkins](https://jenkins.io/)
+* [Gitlab CI](https://gitlab.com/)
+* [AppVeyor](https://www.appveyor.com/)
+* [Buildkite](https://buildkite.com/)
+* [GitHub Actions CI](https://github.com/features/actions)
+* [CodeFresh](https://codefresh.io/)
 
 ## Installation:
 
@@ -26,7 +36,7 @@ This script `bin/coveralls.js` can take standard input from any tool that emits 
 
 Once your app is instrumented for coverage, and building, you need to pipe the lcov output to `./node_modules/coveralls/bin/coveralls.js`.
 
-This library currently supports [Travis CI](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you're using a different build system, there are a few environment variables that are necessary:
+This library currently supports [Travis CI](https://travis-ci.org/) with no extra effort beyond piping the lcov output to coveralls. However, if you're using a different build system, there are a few **necessary** environment variables:
 
 - `COVERALLS_SERVICE_NAME` (the name of your build system)
 - `COVERALLS_REPO_TOKEN` (the secret repo token from coveralls.io)
@@ -36,10 +46,10 @@ There are optional environment variables for other build systems as well:
 
 - `COVERALLS_FLAG_NAME` (a flag name to differentiate jobs, e.g. Unit, Functional, Integration)
 - `COVERALLS_SERVICE_NUMBER` (a number that uniquely identifies the build)
-- `COVERALLS_SERVICE_JOB_ID` (an id that uniquely identifies the build's job)
+- `COVERALLS_SERVICE_JOB_ID` (an ID that uniquely identifies the build's job)
 - `COVERALLS_SERVICE_JOB_NUMBER` (a number that uniquely identifies the build's job)
-- `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it.)
-- `COVERALLS_PARALLEL` (set true when running jobs in parallel, requires a completion webhook. More info here: <https://docs.coveralls.io/parallel-build-webhook>)
+- `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it)
+- `COVERALLS_PARALLEL` (set to `true` when running jobs in parallel, requires a completion webhook. More info here: <https://docs.coveralls.io/parallel-build-webhook>)
 
 ### GitHub Actions CI
 
@@ -47,13 +57,13 @@ If you are using GitHub Actions CI, you should look into [coverallsapp/github-ac
 
 Parallel runs example [workflow.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.github/workflows/workflow.yml)
 
-### [CircleCI Orb](https://circleci.com)
+### [CircleCI Orb](https://circleci.com/)
 
 Here's our Orb for quick integration: [coveralls/coveralls](https://circleci.com/orbs/registry/orb/coveralls/coveralls)
 
 Workflow example: [config.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.circleci/config.yml)
 
-### [Travis-CI](https://travis-ci.org)
+### [Travis-CI](https://travis-ci.org/)
 
 Parallel jobs example: [.travis.yml](https://github.com/coverallsapp/coveralls-node-demo/blob/master/.travis.yml)
 
@@ -82,7 +92,7 @@ Check out an example [here](https://github.com/Ethan-Arrowood/harperdb-connect/b
 
 ### [Mocha](https://mochajs.org/) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
-Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://seejohncode.com/2012/03/13/setting-up-mocha-jscoverage//)), but that's also a necessary step.
+Instrumenting your app for coverage is probably harder than it needs to be (read [here](http://seejohncode.com/2012/03/13/setting-up-mocha-jscoverage/)), but that's also a necessary step.
 
 In mocha, if you've got your code instrumented for coverage, the command for a Travis CI build would look something like this:
 
@@ -108,7 +118,7 @@ istanbul cover jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.inf
 
 ### [Nodeunit](https://github.com/caolan/nodeunit) + [JSCoverage](https://github.com/fishbar/jscoverage)
 
-Depend on nodeunit, jscoverage and coveralls:
+Depend on nodeunit, jscoverage, and coveralls:
 
 ```sh
 npm install nodeunit jscoverage coveralls --save-dev
@@ -160,7 +170,7 @@ Works with almost any testing framework. Simply execute
 nyc npm test && nyc report --reporter=text-lcov | coveralls
 ```
 
-### [TAP](https://github.com/isaacs/node-tap)
+### [TAP](https://github.com/tapjs/node-tap)
 
 Simply run your tap tests with the `COVERALLS_REPO_TOKEN` environment
 variable set and tap will automatically use `nyc` to report
@@ -185,9 +195,9 @@ If you want to send commit data to coveralls, you can set the `COVERALLS_GIT_COM
 
 ## Contributing
 
-I generally don't accept pull requests that are untested, or break the build, because I'd like to keep the quality high (this is a coverage tool after all!).
+I generally don't accept pull requests that are untested or break the build, because I'd like to keep the quality high (this is a coverage tool after all!).
 
-I also don't care for "soft-versioning" or "optimistic versioning" (dependencies that have ^, x, > in them, or anything other than numbers and dots). There have been too many problems with bad semantic versioning in dependencies, and I'd rather have a solid library than a bleeding edge one.
+I also don't care for "soft-versioning" or "optimistic versioning" (dependencies that have ^, x, > in them, or anything other than numbers and dots). There have been too many problems with bad semantic versioning in dependencies, and I'd rather have a solid library than a bleeding-edge one.
 
 
 [ci-image]: https://github.com/nickmerwin/node-coveralls/workflows/Tests/badge.svg
