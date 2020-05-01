@@ -78,8 +78,9 @@
       "test/fixtures/"
     ],
     "rules": {
-      "capitalized-comments": "off",
       "camelcase": "off",
+      "capitalized-comments": "off",
+      "handle-callback-err": "error",
       "import/order": "off",
       "no-negated-condition": "off",
       "object-curly-spacing": [
