@@ -1,7 +1,7 @@
 'use strict';
 
 const should = require('should');
-const request = require('request');
+const request = require('teeny-request').teenyRequest;
 const sinon = require('sinon');
 const logDriver = require('log-driver');
 const index = require('..');
@@ -23,8 +23,8 @@ describe('sendToCoveralls', () => {
     }
   });
 
-  it('passes on the correct params to request.post', done => {
-    sinon.stub(request, 'post').callsFake((obj, cb) => {
+  it('passes on the correct params to teeny-request', done => {
+    sinon.stub(request).callsFake((obj, cb) => {
       obj.url.should.equal('https://coveralls.io/api/v1/jobs');
       obj.form.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
@@ -42,7 +42,7 @@ describe('sendToCoveralls', () => {
 
   it('allows sending to enterprise url', done => {
     process.env.COVERALLS_ENDPOINT = 'https://coveralls-ubuntu.domain.com';
-    sinon.stub(request, 'post').callsFake((obj, cb) => {
+    sinon.stub(request).callsFake((obj, cb) => {
       obj.url.should.equal('https://coveralls-ubuntu.domain.com/api/v1/jobs');
       obj.form.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');

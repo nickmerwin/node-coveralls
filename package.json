@@ -49,7 +49,7 @@
     "lcov-parse": "^1.0.0",
     "log-driver": "^1.2.7",
     "minimist": "^1.2.5",
-    "request": "^2.88.2"
+    "teeny-request": "^6.0.3"
   },
   "devDependencies": {
     "mocha": "^6.2.3",
