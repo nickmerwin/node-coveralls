@@ -10,9 +10,7 @@ logDriver({ level: false });
 
 describe('convertLcovToCoveralls', () => {
   it('should convert a simple lcov file', done => {
-    delete process.env.TRAVIS;
-    const lcovpath = path.join(__dirname, './fixtures/onefile.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/onefile.lcov');
     const libpath = path.join(__dirname, './fixtures/lib');
     convertLcovToCoveralls(input, { filepath: libpath }, (err, output) => {
       should.not.exist(err);
@@ -25,8 +23,7 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should error out properly', done => {
-    const lcovpath = path.join(__dirname, './fixtures/broken.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/broken.lcov');
     const libpath = path.join(__dirname, './fixtures/lib');
     convertLcovToCoveralls(input, { filepath: libpath }, err => {
       err.should.equal('Failed to parse string');
@@ -35,7 +32,6 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should pass on all appropriate parameters from the environment', done => {
-    delete process.env.TRAVIS;
     process.env.COVERALLS_GIT_COMMIT = 'GIT_HASH';
     process.env.COVERALLS_GIT_BRANCH = 'master';
     process.env.COVERALLS_SERVICE_NAME = 'SERVICE_NAME';
@@ -48,8 +44,7 @@ describe('convertLcovToCoveralls', () => {
     process.env.COVERALLS_FLAG_NAME = 'FLAG_NAME';
 
     getOptions((err, options) => {
-      const lcovpath = path.join(__dirname, './fixtures/onefile.lcov');
-      const input = fs.readFileSync(lcovpath, 'utf8');
+      const input = path.join(__dirname, './fixtures/onefile.lcov');
       const libpath = 'fixtures/lib';
 
       should.not.exist(err);
@@ -70,9 +65,7 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should work with a relative path as well', done => {
-    delete process.env.TRAVIS;
-    const lcovpath = path.join(__dirname, './fixtures/onefile.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/onefile.lcov');
     const libpath = 'test/fixtures/lib';
     convertLcovToCoveralls(input, { filepath: libpath }, (err, output) => {
       should.not.exist(err);
@@ -83,9 +76,7 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should convert absolute input paths to relative', done => {
-    delete process.env.TRAVIS;
-    const lcovpath = path.join(__dirname, './fixtures/istanbul.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/istanbul.lcov');
     const libpath = '/Users/deepsweet/Dropbox/projects/svgo/lib';
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
@@ -112,9 +103,7 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should handle branch coverage data', done => {
-    process.env.TRAVIS_JOB_ID = -1;
-    const lcovpath = path.join(__dirname, './fixtures/istanbul.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/istanbul.lcov');
     const libpath = '/Users/deepsweet/Dropbox/projects/svgo/lib';
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
@@ -141,9 +130,7 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should ignore files that do not exists', done => {
-    delete process.env.TRAVIS;
-    const lcovpath = path.join(__dirname, './fixtures/istanbul.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/istanbul.lcov');
     const libpath = '/Users/deepsweet/Dropbox/projects/svgo/lib';
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
@@ -170,9 +157,7 @@ describe('convertLcovToCoveralls', () => {
   });
 
   it('should parse file paths concatenated by typescript and ng 2', done => {
-    process.env.TRAVIS_JOB_ID = -1;
-    const lcovpath = path.join(__dirname, './fixtures/istanbul.remap.lcov');
-    const input = fs.readFileSync(lcovpath, 'utf8');
+    const input = path.join(__dirname, './fixtures/istanbul.remap.lcov');
     const libpath = '/Users/deepsweet/Dropbox/projects/svgo/lib';
     const sourcepath = path.resolve(libpath, 'svgo/config.js');
 
