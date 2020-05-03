@@ -24,6 +24,16 @@ describe('convertLcovToCoveralls', () => {
     });
   });
 
+  it('should error out properly', done => {
+    const lcovpath = path.join(__dirname, './fixtures/broken.lcov');
+    const input = fs.readFileSync(lcovpath, 'utf8');
+    const libpath = path.join(__dirname, './fixtures/lib');
+    convertLcovToCoveralls(input, { filepath: libpath }, err => {
+      err.should.equal('Failed to parse string');
+      done();
+    });
+  });
+
   it('should pass on all appropriate parameters from the environment', done => {
     delete process.env.TRAVIS;
     process.env.COVERALLS_GIT_COMMIT = 'GIT_HASH';
