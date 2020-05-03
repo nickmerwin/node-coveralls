@@ -22,8 +22,8 @@ describe('convertLcovToCoveralls', () => {
     });
   });
 
-  it('should error out properly', done => {
-    const input = path.join(__dirname, './fixtures/broken.lcov');
+  it('should error out if the lcov file does not exist', done => {
+    const input = path.join(__dirname, './i-dont-exist.lcov');
     const libpath = path.join(__dirname, './fixtures/lib');
     convertLcovToCoveralls(input, { filepath: libpath }, err => {
       err.should.equal('Failed to parse string');
