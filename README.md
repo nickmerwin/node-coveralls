@@ -15,6 +15,7 @@
 * [Buildkite](https://buildkite.com/)
 * [GitHub Actions CI](https://github.com/features/actions)
 * [CodeFresh](https://codefresh.io/)
+* [AWS CodeBuild](https://docs.aws.amazon.com/codebuild/index.html)
 
 ## Installation:
 
