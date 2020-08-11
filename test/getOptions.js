@@ -723,7 +723,7 @@ const testAwsCodeBuild = (sut, done) => {
   process.env.CODEBUILD_BUILD_ARN = 'arn:build:1';
   process.env.CODEBUILD_BUILD_ID = '1234';
   process.env.CODEBUILD_RESOLVED_SOURCE_VERSION = 'e3e3e3e3e3e3e3e3e';
-  process.env.CODEBUILD_SOURCE_VERSION = 'hotfix';
+  process.env.CODEBUILD_WEBHOOK_HEAD_REF = 'refs/heads/hotfix';
   process.env.CODEBUILD_WEBHOOK_TRIGGER = 'pr/123';
 
   const git = {
