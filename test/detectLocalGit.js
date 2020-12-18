@@ -12,12 +12,12 @@ const TEMP_GIT_DIR = path.join(TEST_DIR, '.git');
 
 describe('detectLocalGit', () => {
   before(() => {
-    _makeTempGitDir();
+    _makeTemporaryGitDir();
     process.chdir(TEST_DIR);
   });
 
   after(() => {
-    _cleanTempGitDir();
+    _cleanTemporaryGitDir();
     process.chdir(ORIGINAL_CWD);
   });
 
@@ -31,8 +31,8 @@ describe('detectLocalGit', () => {
   });
 });
 
-function _makeTempGitDir() {
-  _cleanTempGitDir();
+function _makeTemporaryGitDir() {
+  _cleanTemporaryGitDir();
 
   const dir = TEMP_GIT_DIR;
 
@@ -49,7 +49,7 @@ function _makeTempGitDir() {
 'ffffffffffffffffffffffffffffffffffffffff refs/remotes/origin/other\n');
 }
 
-function _cleanTempGitDir() {
+function _cleanTemporaryGitDir() {
   _deleteFolderRecursive(TEMP_GIT_DIR);
 }
 

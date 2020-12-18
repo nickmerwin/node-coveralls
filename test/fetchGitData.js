@@ -101,17 +101,17 @@ describe('fetchGitData', () => {
       'branch': {
         'covert': 'to a string'
       }
-    }, (err, str) => {
+    }, (err, string) => {
       should.not.exist(err);
-      str.branch.should.be.String();
+      string.branch.should.be.String();
       fetchGitData({
         'head': {
           'id': 'COMMIT_HASH'
         },
         'branch': ['convert', 'to', 'a', 'string']
-      }, (err, str) => {
+      }, (err, string) => {
         should.not.exist(err);
-        str.branch.should.be.String();
+        string.branch.should.be.String();
         done();
       });
     });
@@ -122,9 +122,9 @@ describe('fetchGitData', () => {
         'id': 'COMMIT_HASH'
       },
       'remotes': 'convert from string to an array'
-    }, (err, arr) => {
+    }, (err, array) => {
       should.not.exist(err);
-      arr.remotes.should.be.instanceof(Array);
+      array.remotes.should.be.instanceof(Array);
       fetchGitData({
         'head': {
           'id': 'COMMIT_HASH'
@@ -132,9 +132,9 @@ describe('fetchGitData', () => {
         'remotes': {
           'convert': 'from object to an array'
         }
-      }, (err, arr) => {
+      }, (err, array) => {
         should.not.exist(err);
-        arr.remotes.should.be.instanceof(Array);
+        array.remotes.should.be.instanceof(Array);
         done();
       });
     });

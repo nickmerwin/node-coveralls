@@ -49,7 +49,7 @@ describe('handleInput', () => {
   it('returns an error when there\'s a bad status code', done => {
     sinon.stub(index, 'getOptions').callsFake(cb => cb(null, {}));
     sinon.stub(index, 'sendToCoveralls').callsFake((postData, cb) => {
-      cb(null, { statusCode: 500 }, 'body');
+      cb(null, { statusCode: 500, body: 'body' });
     });
     const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
@@ -61,7 +61,7 @@ describe('handleInput', () => {
   it('completes successfully when there are no errors', done => {
     sinon.stub(index, 'getOptions').callsFake(cb => cb(null, {}));
     sinon.stub(index, 'sendToCoveralls').callsFake((postData, cb) => {
-      cb(null, { statusCode: 200 }, 'body');
+      cb(null, { statusCode: 200, body: 'body' });
     });
     const path = sysPath.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(path, 'utf8');
