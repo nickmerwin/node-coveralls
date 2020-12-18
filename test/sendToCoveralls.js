@@ -40,6 +40,24 @@ describe('sendToCoveralls', () => {
     });
   });
 
+  it('when got rejects pass the error to the callback', done => {
+    const error = new Error('test error');
+    const spy = sinon.stub(got, 'post').rejects(error);
+    const object = { 'some': 'obj' };
+
+    index.sendToCoveralls(object, (err, response) => {
+      try {
+        spy.calledOnceWith('https://coveralls.io/api/v1/jobs', { json: object })
+          .should.be.true('GOT post not called with the correct values');
+        err.should.equal(error);
+        should(response).be.undefined();
+        done();
+      } catch (error) {
+        done(error);
+      }
+    });
+  });
+
   it('allows sending to enterprise url', done => {
     process.env.COVERALLS_ENDPOINT = 'https://coveralls-ubuntu.domain.com';
     const spy = sinon.stub(got, 'post').resolves('response');
