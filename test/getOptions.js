@@ -245,11 +245,10 @@ const testGitBranchDetection = (sut, done) => {
   const localGit = ensureLocalGitContext();
   sut((err, options) => {
     should.not.exist(err);
-
     if (localGit.branch) {
       options.git.branch.should.equal(localGit.branch);
     } else {
-      options.git.should.not.have.key('branch');
+      should(options.git.branch).be.undefined();
     }
 
     localGit.wrapUp();

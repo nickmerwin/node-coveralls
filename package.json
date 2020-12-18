@@ -1,7 +1,7 @@
 {
   "name": "coveralls",
   "description": "takes json-cov output into stdin and POSTs to coveralls.io",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "keywords": [
     "coverage",
     "coveralls"
@@ -28,7 +28,8 @@
     "Slotos <slotos@gmail.com> (http://slotos.net)",
     "mattjmorrison <mattjmorrison@mattjmorrison.com> (http://mattjmorrison.com)",
     "Arpad Borsos <arpad.borsos@googlemail.com> (http://swatinem.de/)",
-    "Adam Moss (https://github.com/adam-moss)"
+    "Adam Moss (https://github.com/adam-moss)",
+    "JT Turner <jtwebman@gmail.com> (https://github.com/jtwebman)"
   ],
   "bin": {
     "coveralls": "./bin/coveralls.js"
@@ -45,22 +46,22 @@
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
-    "js-yaml": "^3.13.1",
-    "lcov-parse": "^1.0.0",
-    "log-driver": "^1.2.7",
-    "minimist": "^1.2.5",
-    "request": "^2.88.2"
+    "got": "11.8.1",
+    "js-yaml": "3.14.1",
+    "lcov-parse": "1.0.0",
+    "log-driver": "1.2.7",
+    "minimist": "1.2.5"
   },
   "devDependencies": {
-    "mocha": "^6.2.3",
-    "nyc": "^14.1.1",
-    "should": "^9.0.2",
-    "shx": "^0.3.2",
-    "sinon": "^8.1.1",
-    "xo": "^0.24.0"
+    "mocha": "8.2.1",
+    "nyc": "15.1.0",
+    "should": "13.2.3",
+    "shx": "0.3.3",
+    "sinon": "9.2.2",
+    "xo": "0.36.1"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=10.19.0"
   },
   "files": [
     "bin/coveralls.js",
