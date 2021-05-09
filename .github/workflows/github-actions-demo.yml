@@ -19,7 +19,6 @@ jobs:
     - name: npm install, make test-coverage
       run: |
         npm install
-        npm audit fix
         make test-coverage
 
     - name: Coveralls
