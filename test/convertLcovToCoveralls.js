@@ -11,6 +11,7 @@ logDriver({ level: false });
 describe('convertLcovToCoveralls', () => {
   it('should convert a simple lcov file', done => {
     delete process.env.TRAVIS;
+    // here is a comment
     const lcovpath = path.join(__dirname, './fixtures/onefile.lcov');
     const input = fs.readFileSync(lcovpath, 'utf8');
     const libpath = path.join(__dirname, './fixtures/lib');
