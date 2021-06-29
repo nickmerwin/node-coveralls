@@ -15,6 +15,7 @@
 * [Buildkite](https://buildkite.com/)
 * [GitHub Actions CI](https://github.com/features/actions)
 * [CodeFresh](https://codefresh.io/)
+* [AWS CodeBuild](https://docs.aws.amazon.com/codebuild/index.html)
 
 ## Installation:
 
@@ -50,6 +51,7 @@ There are optional environment variables for other build systems as well:
 - `COVERALLS_SERVICE_JOB_NUMBER` (a number that uniquely identifies the build's job)
 - `COVERALLS_RUN_AT` (a date string for the time that the job ran. RFC 3339 dates work. This defaults to your build system's date/time if you don't set it)
 - `COVERALLS_PARALLEL` (set to `true` when running jobs in parallel, requires a completion webhook. More info here: <https://docs.coveralls.io/parallel-build-webhook>)
+- `COVERALLS_PROJECT_ROOT_PATH` (an absolute path to the root of your project. Useful if you have multiple projects in one repo (ie: /frontend, /backend) or run your coverage from a subdirectory)
 
 ### GitHub Actions CI
 
