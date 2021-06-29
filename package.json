@@ -1,7 +1,7 @@
 {
   "name": "coveralls",
   "description": "takes json-cov output into stdin and POSTs to coveralls.io",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "keywords": [
     "coverage",
     "coveralls"
@@ -52,11 +52,13 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "glob-parent": ">=5.1.2",
     "mocha": "^6.2.3",
     "nyc": "^14.1.1",
     "should": "^9.0.2",
     "shx": "^0.3.2",
     "sinon": "^8.1.1",
+    "trim-newlines": ">=3.0.1",
     "xo": "^0.24.0"
   },
   "engines": {
