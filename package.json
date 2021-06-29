@@ -1,26 +1,21 @@
 {
   "name": "coveralls",
   "description": "takes json-cov output into stdin and POSTs to coveralls.io",
+  "version": "3.1.1",
   "keywords": [
     "coverage",
     "coveralls"
   ],
-  "version": "3.0.8",
+  "author": "Gregg Caines",
+  "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nickmerwin/node-coveralls.git"
+  },
   "bugs": {
     "url": "https://github.com/nickmerwin/node-coveralls/issues"
   },
-  "scripts": {
-    "lint": "jshint ./lib ./test ./index.js",
-    "mocha": "_mocha -b -R spec",
-    "test-cov": "nyc npm run mocha",
-    "pretest-coveralls": "npm run pretest",
-    "test-coveralls": "nyc npm run mocha && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
-    "pretest": "cross-env-shell \"echo TRAVIS_JOB_ID $TRAVIS_JOB_ID\"",
-    "test": "snyk test && npm run lint && npm run mocha"
-  },
-  "bin": {
-    "coveralls": "./bin/coveralls.js"
-  },
+  "homepage": "https://github.com/nickmerwin/node-coveralls#readme",
   "maintainers": [
     "Nick Merwin <nick@coveralls.io> (https://coveralls.io)"
   ],
@@ -35,47 +30,84 @@
     "Arpad Borsos <arpad.borsos@googlemail.com> (http://swatinem.de/)",
     "Adam Moss (https://github.com/adam-moss)"
   ],
-  "dependencies": {
-    "cobertura-parse": "^1.0.5",
-    "js-yaml": "^3.13.1",
-    "lcov-parse": "^1.0.0",
-    "log-driver": "^1.2.7",
-    "minimist": "^1.2.0",
-    "request": "^2.88.0"
-  },
-  "devDependencies": {
-    "cross-env": "^5.2.1",
-    "nyc": "^14.1.1",
-    "istanbul": "^0.4.5",
-    "jshint": "^2.10.3",
-    "mocha": "^6.2.2",
-    "mocha-lcov-reporter": "^1.3.0",
-    "should": "^9.0.2",
-    "shx": "^0.3.2",
-    "sinon-restore": "^1.0.1",
-    "snyk": "^1.250.0"
-  },
-  "engines": {
-    "node": ">=6"
+  "bin": {
+    "coveralls": "./bin/coveralls.js"
   },
   "main": "index.js",
   "directories": {
     "test": "test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nickmerwin/node-coveralls.git"
+  "scripts": {
+    "lint": "xo",
+    "mocha": "_mocha -b -R spec",
+    "test-cov": "nyc npm run mocha",
+    "test-coveralls": "nyc npm run mocha && shx cat ./coverage/lcov.info | node ./bin/coveralls.js --verbose",
+    "test": "npm run lint && npm run mocha"
   },
-  "author": "Gregg Caines",
-  "license": "BSD-2-Clause",
+  "dependencies": {
+    "js-yaml": "^3.13.1",
+    "lcov-parse": "^1.0.0",
+    "log-driver": "^1.2.7",
+    "minimist": "^1.2.5",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "glob-parent": ">=5.1.2",
+    "mocha": "^6.2.3",
+    "nyc": "^14.1.1",
+    "should": "^9.0.2",
+    "shx": "^0.3.2",
+    "sinon": "^8.1.1",
+    "trim-newlines": ">=3.0.1",
+    "xo": "^0.24.0"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "files": [
+    "bin/coveralls.js",
+    "lib/*.js",
+    "index.js"
+  ],
   "nyc": {
     "reporter": [
       "lcov",
       "text-summary"
     ]
   },
-  "files": [
-    "{bin,lib}/*.js",
-    "index.js"
-  ]
+  "xo": {
+    "space": true,
+    "ignores": [
+      "test/fixtures/"
+    ],
+    "rules": {
+      "camelcase": "off",
+      "capitalized-comments": "off",
+      "handle-callback-err": "error",
+      "import/order": "off",
+      "no-negated-condition": "off",
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "quote-props": [
+        "error",
+        "consistent"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ],
+      "spaced-comment": "off",
+      "unicorn/filename-case": "off"
+    },
+    "overrides": [
+      {
+        "files": "test/*.js",
+        "envs": [
+          "mocha"
+        ]
+      }
+    ]
+  }
 }

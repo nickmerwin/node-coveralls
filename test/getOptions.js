@@ -45,6 +45,9 @@ describe('getBaseOptions', () => {
   it('should set service_name and service_job_id if it\'s running on travis-ci', done => {
     testTravisCi(getBaseOptions, done);
   });
+  it('should set service_name and service_job_id if it\'s running on travis-pro', done => {
+    testTravisPro(getBaseOptions, done);
+  });
   it('should set service_name and service_job_id if it\'s running on jenkins', done => {
     testJenkins(getBaseOptions, done);
   });
@@ -131,11 +134,17 @@ describe('getOptions', () => {
   it('should set service_name if it exists', done => {
     testServiceName(getOptions, done);
   });
+  it('should set service_number if it exists', done => {
+    testServiceNumber(getOptions, done);
+  });
   it('should set service_pull_request if it exists', done => {
     testServicePullRequest(getOptions, done);
   });
   it('should set service_name and service_job_id if it\'s running on travis-ci', done => {
     testTravisCi(getOptions, done);
+  });
+  it('should set service_name and service_job_id if it\'s running on travis-pro', done => {
+    testTravisPro(getOptions, done);
   });
   it('should set service_name and service_job_id if it\'s running on jenkins', done => {
     testJenkins(getOptions, done);
@@ -155,7 +164,7 @@ describe('getOptions', () => {
   it('should set service_name and service_job_id if it\'s running on Gitlab', done => {
     testGitlab(getOptions, done);
   });
-  it ("should set service_name and service_job_id if it's running on AppVeyor", done => {
+  it('should set service_name and service_job_id if it\'s running on AppVeyor', done => {
     testAppVeyor(getOptions, done);
   });
   it('should set service_name and service_job_id if it\'s running via Surf', done => {
@@ -169,6 +178,9 @@ describe('getOptions', () => {
   });
   it('should set service_name and service_job_id if it\'s running via Azure Pipelines', done => {
     testAzurePipelines(getOptions, done);
+  });
+  it('should set service_name and service_job_id if it\'s running via CodeFresh', done => {
+    testCodefresh(getOptions, done);
   });
   it('should override set options with user options', done => {
     const userOptions = { service_name: 'OVERRIDDEN_SERVICE_NAME' };
@@ -325,6 +337,15 @@ const testServiceName = (sut, done) => {
   });
 };
 
+const testServiceNumber = (sut, done) => {
+  process.env.COVERALLS_SERVICE_NUMBER = 'SERVICE_NUMBER';
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_number.should.equal('SERVICE_NUMBER');
+    done();
+  });
+};
+
 const testServicePullRequest = (sut, done) => {
   process.env.CI_PULL_REQUEST = 'https://github.com/fake/fake/pulls/123';
   sut((err, options) => {
@@ -336,13 +357,32 @@ const testServicePullRequest = (sut, done) => {
 
 const testTravisCi = (sut, done) => {
   process.env.TRAVIS = 'TRUE';
-  process.env.TRAVIS_JOB_ID = '1234';
+  process.env.TRAVIS_BUILD_NUMBER = '1';
+  process.env.TRAVIS_JOB_ID = '12';
   process.env.TRAVIS_PULL_REQUEST = '123';
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('travis-ci');
-    options.service_job_id.should.equal('1234');
+    options.service_number.should.equal('1');
+    options.service_job_id.should.equal('12');
     options.service_pull_request.should.equal('123');
+    done();
+  });
+};
+
+const testTravisPro = (sut, done) => {
+  const file = path.join(process.cwd(), '.coveralls.yml');
+  const service_name = 'travis-pro';
+  fs.writeFileSync(file, `service_name: ${service_name}`);
+  process.env.TRAVIS = 'TRUE';
+  process.env.TRAVIS_BUILD_NUMBER = '1234';
+  process.env.TRAVIS_COMMIT = 'a12s2d3df4f435g45g45g67h5g6';
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_name.should.equal(service_name);
+    options.service_number.should.equal('1234');
+    options.git.head.id.should.equal('HEAD');
+    fs.unlinkSync(file);
     done();
   });
 };
@@ -378,7 +418,8 @@ const testJenkins = (sut, done) => {
 const testCircleCi = (sut, done) => {
   process.env.CIRCLECI = true;
   process.env.CIRCLE_BRANCH = 'master';
-  process.env.CIRCLE_BUILD_NUM = '1234';
+  process.env.CIRCLE_WORKFLOW_ID = '1';
+  process.env.CIRCLE_BUILD_NUM = '2';
   process.env.CIRCLE_SHA1 = 'e3e3e3e3e3e3e3e3e';
   process.env.CI_PULL_REQUEST = 'http://github.com/node-coveralls/pull/3';
 
@@ -398,7 +439,8 @@ const testCircleCi = (sut, done) => {
   sut((err, options) => {
     should.not.exist(err);
     options.service_name.should.equal('circleci');
-    options.service_job_id.should.equal('1234');
+    options.service_number.should.equal('1');
+    options.service_job_number.should.equal('2');
     options.service_pull_request.should.equal('3');
     options.git.should.eql(git);
     done();
@@ -527,26 +569,32 @@ const testGitlab = (sut, done) => {
   });
 };
 
-const testAppVeyor = function(sut, done) {
+const testAppVeyor = (sut, done) => {
   process.env.APPVEYOR = true;
-  process.env.APPVEYOR_BUILD_ID = "1234";
-  process.env.APPVEYOR_BUILD_NUMBER = "5678";
-  process.env.APPVEYOR_REPO_COMMIT = "e3e3e3e3e3e3e3e3e";
-  process.env.APPVEYOR_REPO_BRANCH = "feature";
+  process.env.APPVEYOR_BUILD_ID = '1234';
+  process.env.APPVEYOR_BUILD_NUMBER = '5678';
+  process.env.APPVEYOR_REPO_COMMIT = 'e3e3e3e3e3e3e3e3e';
+  process.env.APPVEYOR_REPO_BRANCH = 'feature';
 
-  sut(function(err, options){
-    options.service_name.should.equal("appveyor");
-    options.service_job_id.should.equal("1234");
-    options.service_job_number.should.equal("5678");
-    options.git.should.eql({ head:
-                               { id: 'e3e3e3e3e3e3e3e3e',
-                                 author_name: 'Unknown Author',
-                                 author_email: '',
-                                 committer_name: 'Unknown Committer',
-                                 committer_email: '',
-                                 message: 'Unknown Commit Message' },
-                              branch: 'feature',
-                              remotes: [] });
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'Unknown Committer',
+      committer_email: '',
+      message: 'Unknown Commit Message'
+    },
+    branch: 'feature',
+    remotes: []
+  };
+
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_name.should.equal('appveyor');
+    options.service_job_id.should.equal('1234');
+    options.service_job_number.should.equal('5678');
+    options.git.should.eql(git);
     done();
   });
 };
@@ -660,6 +708,37 @@ const testAzurePipelines = (sut, done) => {
     options.service_name.should.equal('Azure Pipelines');
     options.service_job_id.should.equal('1234');
     options.service_pull_request.should.equal('123');
+    options.git.should.eql(git);
+    done();
+  });
+};
+
+const testCodefresh = (sut, done) => {
+  process.env.CF_BRANCH = 'hotfix';
+  process.env.CF_REVISION = 'e3e3e3e3e3e3e3e3e';
+  process.env.CF_BUILD_ID = '1234';
+  process.env.CF_COMMIT_AUTHOR = 'john doe';
+  process.env.CF_COMMIT_MESSAGE = 'msgmsgmsg';
+  process.env.CF_PULL_REQUEST_ID = '3';
+
+  const git = {
+    head: {
+      id: 'e3e3e3e3e3e3e3e3e',
+      author_name: 'Unknown Author',
+      author_email: '',
+      committer_name: 'john doe',
+      committer_email: '',
+      message: 'msgmsgmsg'
+    },
+    branch: 'hotfix',
+    remotes: []
+  };
+
+  sut((err, options) => {
+    should.not.exist(err);
+    options.service_name.should.equal('Codefresh');
+    options.service_job_id.should.equal('1234');
+    options.service_pull_request.should.equal('3');
     options.git.should.eql(git);
     done();
   });
