@@ -657,9 +657,10 @@ const testBuildkite = (sut, done) => {
 
 const testSemaphore = (sut, done) => {
   process.env.SEMAPHORE = true;
-  process.env.SEMAPHORE_BUILD_NUMBER = '1234';
-  process.env.REVISION = 'e3e3e3e3e3e3e3e3e';
-  process.env.BRANCH_NAME = 'master';
+  process.env.SEMAPHORE_WORKFLOW_ID = '1234';
+  process.env.SEMAPHORE_GIT_SHA = 'e3e3e3e3e3e3e3e3e';
+  process.env.SEMAPHORE_GIT_WORKING_BRANCH = 'master';
+  process.env SEMAPHORE_GIT_PR_NUMBER = '456';
 
   const git = {
     head: {
@@ -678,6 +679,7 @@ const testSemaphore = (sut, done) => {
     should.not.exist(err);
     options.service_name.should.equal('semaphore');
     options.service_job_id.should.equal('1234');
+    options.service_pull_request.should.equal('456');
     options.git.should.eql(git);
     done();
   });
