@@ -62,7 +62,7 @@
     "xo": "^0.24.0"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=8"
   },
   "files": [
     "bin/coveralls.js",
