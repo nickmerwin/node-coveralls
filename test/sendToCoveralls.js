@@ -2,7 +2,7 @@
 
 const should = require('should');
 const request = require('request');
-const sinon = require('sinon-restore');
+const sinon = require('sinon');
 const logDriver = require('log-driver');
 const index = require('..');
 
@@ -15,7 +15,7 @@ describe('sendToCoveralls', () => {
   });
 
   afterEach(() => {
-    sinon.restoreAll();
+    sinon.restore();
     if (realCoverallsHost !== undefined) {
       process.env.COVERALLS_ENDPOINT = realCoverallsHost;
     } else {
@@ -24,7 +24,7 @@ describe('sendToCoveralls', () => {
   });
 
   it('passes on the correct params to request.post', done => {
-    sinon.stub(request, 'post', (obj, cb) => {
+    sinon.stub(request, 'post').callsFake((obj, cb) => {
       obj.url.should.equal('https://coveralls.io/api/v1/jobs');
       obj.form.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
@@ -42,7 +42,7 @@ describe('sendToCoveralls', () => {
 
   it('allows sending to enterprise url', done => {
     process.env.COVERALLS_ENDPOINT = 'https://coveralls-ubuntu.domain.com';
-    sinon.stub(request, 'post', (obj, cb) => {
+    sinon.stub(request, 'post').callsFake((obj, cb) => {
       obj.url.should.equal('https://coveralls-ubuntu.domain.com/api/v1/jobs');
       obj.form.should.eql({ json: '{"some":"obj"}' });
       cb('err', 'response', 'body');
