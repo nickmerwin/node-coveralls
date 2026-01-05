@@ -1,3 +1,13 @@
+# IMPORTANT
+
+:no_entry_sign: This repo is no longer maintained. 
+
+See [Coveralls Docs](https://docs.coveralls.io/) for their currently-recommended [Javascript Language Integrations](https://docs.coveralls.io/javascript). 
+
+As of this writing, **[coveralls-next](https://github.com/jtwebman/coveralls-next)** is the recommended fork of this original integration. 
+
+🙏 Thanks to [@jtwebman](https://github.com/jtwebman) for picking up the torch. 🔥
+
 # node-coveralls
 
 [![Build Status][ci-image]][ci-url] [![Coverage Status][coveralls-image]][coveralls-url]
