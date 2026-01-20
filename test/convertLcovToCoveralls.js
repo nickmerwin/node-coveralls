@@ -72,6 +72,19 @@ describe('convertLcovToCoveralls', () => {
     });
   });
 
+  it('should allow specifying the project root', done => {
+    delete process.env.TRAVIS;
+    const lcovpath = path.join(__dirname, './fixtures/onefile.lcov');
+    const input = fs.readFileSync(lcovpath, 'utf8');
+    const libpath = 'test/fixtures/lib';
+    convertLcovToCoveralls(input, { filepath: libpath, project_root_path: path.join(__dirname, '..') }, (err, output) => {
+      should.not.exist(err);
+      output.source_files[0].name.should.equal('test/fixtures/lib/index.js');
+      output.source_files[0].source.split('\n').length.should.equal(173);
+      done();
+    });
+  });
+
   it('should convert absolute input paths to relative', done => {
     delete process.env.TRAVIS;
     const lcovpath = path.join(__dirname, './fixtures/istanbul.lcov');
